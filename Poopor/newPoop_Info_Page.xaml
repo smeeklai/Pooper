@@ -1,0 +1,165 @@
+﻿<phone:PhoneApplicationPage
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:es="clr-namespace:Microsoft.Expression.Shapes;assembly=Microsoft.Expression.Drawing"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:data="clr-namespace:Pooper.Data"
+    x:Class="Poopor.Poop_info_page"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+	<phone:PhoneApplicationPage.Resources>
+		<data:AccentColorNameToBrush x:Key="ColorNameToBrushConverter" />
+	</phone:PhoneApplicationPage.Resources>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,0">
+            <TextBlock Text="POOPOR" Style="{StaticResource PhoneTextNormalStyle}" FontSize="24" Foreground="#FF787B7C"/>
+            <TextBlock Text="New poop" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="78.667" Foreground="#FF787B7C" FontFamily="Segoe WP SemiLight"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.Resources>
+                <data:AccentColorNameToBrush x:Key="ColorNameToBrushConverter" />
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Margin="0,15">
+            	<Grid.ColumnDefinitions>
+            		<ColumnDefinition Width="Auto"/>
+            		<ColumnDefinition Width="Auto"/>
+            		<ColumnDefinition Width="Auto"/>
+            	</Grid.ColumnDefinitions>
+            	<toolkit:ListPicker x:Name="colorPicker" ItemsSource="{Binding}" FullModeHeader="Poop" CacheMode="BitmapCache" BorderBrush="#FF787B7C" Foreground="#FF787B7C" Margin="0,20,0,0" Grid.Column="2" Width="100" HorizontalContentAlignment="Center">
+            		<toolkit:ListPicker.ItemTemplate>
+            			<DataTemplate>
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="Edit" TextAlignment="Center"/>
+            				</StackPanel>
+            			</DataTemplate>
+            		</toolkit:ListPicker.ItemTemplate>
+            		<toolkit:ListPicker.FullModeItemTemplate>
+            			<DataTemplate>
+            				<StackPanel Orientation="Horizontal" Margin="0 21 0 20">
+            					<Rectangle Fill="{Binding Converter={StaticResource ColorNameToBrushConverter}}" Width="43" Height="43"/>
+            					<TextBlock Text="{Binding}"
+            						Margin="16 0 0 0"
+            						FontSize="43"
+            						FontFamily="{StaticResource PhoneFontFamilyLight}"/>
+            				</StackPanel>
+            			</DataTemplate>
+            		</toolkit:ListPicker.FullModeItemTemplate>
+            	</toolkit:ListPicker>
+            	<StackPanel Margin="15,0,0,0" Grid.Column="1" Width="120">
+            		<TextBlock TextWrapping="Wrap" Text="COLOR" Foreground="Black" FontFamily="Segoe WP Semibold" FontSize="32" Margin="0,7,0,0"/>
+            		<TextBlock x:Name="colorResult_text" TextWrapping="Wrap" Foreground="#FF787B7C" Margin="0">
+            			<Run FontSize="17.333" Text="Light Brown "/>
+            			<Run FontSize="14.667" Text="(Detected result)"/>
+            		</TextBlock>
+            	</StackPanel>
+                <es:Arc x:Name="colorResult" ArcThickness="1" ArcThicknessUnit="Percent" EndAngle="360" Fill="#FFCB9453" Margin="30,0,0,0" Stretch="None" Stroke="Black" StrokeThickness="0" StartAngle="0" UseLayoutRounding="False" Width="107"/>
+            </Grid>
+            <Border BorderThickness="0,0,0,1" VerticalAlignment="Bottom">
+                <Border.BorderBrush>
+                    <SolidColorBrush Color="#FF727272" Opacity="0.5"/>
+                </Border.BorderBrush>
+            </Border>
+            <Grid Margin="0,15" Grid.Row="1">
+            	<Grid.ColumnDefinitions>
+            		<ColumnDefinition Width="Auto"/>
+            		<ColumnDefinition Width="Auto"/>
+            		<ColumnDefinition Width="Auto"/>
+            	</Grid.ColumnDefinitions>
+            	<toolkit:ListPicker x:Name="shapePicker" ItemsSource="{Binding}" FullModeHeader="Poop" CacheMode="BitmapCache" BorderBrush="#FF787B7C" Foreground="#FF787B7C" Margin="0,20,0,0" Grid.Column="2" Width="100" HorizontalContentAlignment="Center">
+            		<toolkit:ListPicker.ItemTemplate>
+            			<DataTemplate>
+            				<StackPanel HorizontalAlignment="Center">
+            					<TextBlock Text="Edit" TextAlignment="Center"/>
+            				</StackPanel>
+            			</DataTemplate>
+            		</toolkit:ListPicker.ItemTemplate>
+            		<toolkit:ListPicker.FullModeItemTemplate>
+            			<DataTemplate>
+            				<StackPanel Orientation="Horizontal" Margin="0 21 0 20">
+            					<Rectangle Fill="{Binding Converter={StaticResource ColorNameToBrushConverter}}" Width="43" Height="43"/>
+            					<TextBlock Text="{Binding}"
+            						Margin="16 0 0 0"
+            						FontSize="43"
+            						FontFamily="{StaticResource PhoneFontFamilyLight}"/>
+            				</StackPanel>
+            			</DataTemplate>
+            		</toolkit:ListPicker.FullModeItemTemplate>
+            	</toolkit:ListPicker>
+            	<StackPanel Margin="15,0,0,0" Grid.Column="1" Width="120">
+            		<TextBlock TextWrapping="Wrap" Text="SHAPE" Foreground="Black" FontFamily="Segoe WP Semibold" FontSize="32" Margin="0,4,0,0"/>
+            		<TextBlock x:Name="shapeResult_text" TextWrapping="Wrap" Foreground="#FF787B7C" Margin="0" Text="Separate hard lumps"/>
+            	</StackPanel>
+            	<es:Arc x:Name="shapeResult" ArcThickness="1" ArcThicknessUnit="Percent" EndAngle="360" Fill="#FFCB9453" Margin="30,0,0,0" Stretch="None" Stroke="Black" StrokeThickness="0" StartAngle="0" UseLayoutRounding="False" Width="107"/>
+            </Grid>
+            <Border BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Grid.Row="1">
+                <Border.BorderBrush>
+                    <SolidColorBrush Color="#FF727272" Opacity="0.5"/>
+                </Border.BorderBrush>
+            </Border>
+            <StackPanel Orientation="Horizontal" Margin="0,15" Grid.Row="2">
+                <Image x:Name="pain_level_picture" HorizontalAlignment="Center" Width="108" Margin="30,0,0,0" Source="/Assets/img/nohurt.png"/>
+                <StackPanel Margin="15,0,0,0" Width="311">
+                    <TextBlock TextWrapping="Wrap" Text="PAIN LEVEL" Foreground="Black" FontFamily="Segoe WP Semibold" FontSize="24"/>
+                    <TextBlock x:Name="pain_level_description" TextWrapping="Wrap" Foreground="#FF787B7C" FontSize="17.333" Text="Normal pain"/>
+                    <Slider x:Name="painLevel_slider" FontSize="18.667" Padding="0" 
+                            Margin="-24,-5,24,0" Foreground="#FF1BA1E2" BorderBrush="Black" BorderThickness="2" 
+                            Maximum="5" Minimum="1" SmallChange="1"
+                            >
+                    	<Slider.Background>
+                    		<ImageBrush ImageSource="Assets/img/slider.png"/>
+                    	</Slider.Background>
+                    </Slider>
+                </StackPanel>
+            </StackPanel>
+            <Border BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Grid.Row="2">
+                <Border.BorderBrush>
+                    <SolidColorBrush Color="#FF727272" Opacity="0.5"/>
+                </Border.BorderBrush>
+            </Border>
+            <StackPanel Orientation="Horizontal" Margin="0,15" Grid.Row="3">
+                <Image x:Name="blood_amount_picture" HorizontalAlignment="Center" Width="108" Margin="30,0,0,-1" Source="/Assets/img/nohurt.png"/>
+                <StackPanel Margin="15,0,0,0">
+                    <TextBlock TextWrapping="Wrap" Text="BLOOD AMOUNT" Foreground="Black" FontFamily="Segoe WP Semibold" FontSize="24"/>
+                    <TextBlock x:Name="blood_amount_description" TextWrapping="Wrap" Foreground="#FF787B7C" FontSize="17.333" Text="5 Blood Amount Measurement"/>
+                    <Slider x:Name="blood_amount_slider" FontSize="18.667" Padding="0" 
+                    	Margin="-24,-5,24,0" Foreground="#FF1BA1E2" BorderBrush="Black" BorderThickness="2" 
+                    	Maximum="5" Minimum="1" SmallChange="1"
+                            Width="311"
+                            >
+                    	<Slider.Background>
+                    		<ImageBrush ImageSource="Assets/img/slider.png"/>
+                    	</Slider.Background>
+                    </Slider>
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+        <Button x:Name="newPoop_submit_button" Content="Submit" VerticalAlignment="Center" Grid.Row="2" Background="#FF1BA1E2" FontSize="30.667" Click="newPoop_submit_button_Click"/>
+    </Grid>
+
+</phone:PhoneApplicationPage>

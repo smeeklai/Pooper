@@ -1,0 +1,63 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Poopor.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="#FF1BA1E2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,0">
+        	<Image x:Name="icon" Source="/Assets/img/logo.png" Height="227" Margin="0,20,0,0" HorizontalAlignment="Center"/>
+        	<TextBlock x:Name="appName" TextWrapping="Wrap" TextAlignment="Center" FontFamily="Segoe WP SemiLight" FontSize="78.667" Margin="0,-10,0,0" HorizontalAlignment="Center">
+        		<Run Text="POOPOR"/>
+        	</TextBlock>
+        	<TextBlock x:Name="motto" TextWrapping="Wrap" Text="We are with you every pooping times" FontFamily="Segoe WP SemiLight" FontSize="24" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,-10,0,0"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0" VerticalAlignment="Bottom">
+        	<Grid.RowDefinitions>
+        		<RowDefinition/>
+        		<RowDefinition/>
+        		<RowDefinition/>
+        	</Grid.RowDefinitions>
+        	<StackPanel x:Name="username_area" Margin="0">
+        		<TextBlock x:Name="email_textBlock" TextWrapping="Wrap" Text="Email" FontFamily="Segoe WP SemiLight" FontSize="22.667" HorizontalAlignment="Left" Margin="12,0,0,0"/>
+        		<TextBox x:Name="email_textBox" TextWrapping="Wrap" BorderThickness="3" Margin="0,-5,0,0" FontFamily="Segoe WP SemiLight" FontSize="26.667"/>
+        	</StackPanel>
+        	<StackPanel x:Name="password_area" Grid.Row="1" UseLayoutRounding="True" Margin="0,0,0,15">
+        		<TextBlock x:Name="password_textBlock" TextWrapping="Wrap" Text="Password" FontFamily="Segoe WP SemiLight" FontSize="22.667" Margin="12,0,0,0"/>
+        		<PasswordBox x:Name="password_Box" FontFamily="Segoe WP SemiLight" FontSize="26.667" Margin="0,-5,0,0"/>
+        	</StackPanel>
+        	<Grid x:Name="button_area" Grid.Row="2">
+        		<Grid.ColumnDefinitions>
+        			<ColumnDefinition/>
+        			<ColumnDefinition/>
+        		</Grid.ColumnDefinitions>
+        		<Grid.RowDefinitions>
+        			<RowDefinition/>
+        			<RowDefinition/>
+        		</Grid.RowDefinitions>
+        		<Button x:Name="signIn_button" Content="Sign In" UseLayoutRounding="True" Padding="10,0,10,6" FontSize="30.667" Margin="0,-10,-5,-6" FontFamily="Segoe WP SemiLight" Click="signIn_button_Click"/>
+        		<Button x:Name="logIn_button" Content="Log In" Grid.Column="1" Padding="10,0,10,6" FontFamily="Segoe WP SemiLight" FontSize="30.667" Margin="-5,-10,0,-6" Click="logIn_button_Click"/>
+        		<Button x:Name="useAsGuest_button" Content="Use as Guest" Grid.ColumnSpan="2" Padding="10,0,10,6" FontSize="30.667" Margin="0,-10,0,0" FontFamily="Segoe WP SemiLight" Grid.Row="1" Click="useAsGuest_button_Click"/>
+        	</Grid>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

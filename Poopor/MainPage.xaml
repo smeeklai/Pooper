@@ -1,0 +1,86 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Poopor.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{x:Null}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,12,0">
+            <TextBlock Text="POOPOR" Foreground="#FF787B7C" FontSize="24" Margin="0,0,12,0">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource PhoneTextBlockBase}" TargetType="TextBlock"/>
+                </TextBlock.Style>
+            </TextBlock>
+            <TextBlock Text="Home" Margin="-4,-17,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="#FF787B7C" FontSize="78.667"/>
+            <Border BorderThickness="0,1">
+            	<Border.Background>
+            		<SolidColorBrush Color="#FFDEDEDE" Opacity="0.99"/>
+            	</Border.Background>
+            	<Border.BorderBrush>
+            		<SolidColorBrush Color="#FF787878"/>
+            	</Border.BorderBrush>
+            	<TextBlock TextWrapping="Wrap" Text="TIPS TODAY" FontFamily="Segoe WP Semibold" FontSize="24" TextAlignment="Center" Foreground="#FF787B7C"/>
+            </Border>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        	<Grid.RowDefinitions>
+        		<RowDefinition Height="Auto"/>
+        		<RowDefinition/>
+        	</Grid.RowDefinitions>
+        	<Image HorizontalAlignment="Center" VerticalAlignment="Top" Source="tips today ex.jpg"/>
+        	<Grid Grid.Row="1">
+        		<Grid.ColumnDefinitions>
+        			<ColumnDefinition/>
+        			<ColumnDefinition/>
+        		</Grid.ColumnDefinitions>
+        		<Grid.RowDefinitions>
+        			<RowDefinition/>
+        			<RowDefinition/>
+        		</Grid.RowDefinitions>
+        		<Button x:Name="newPoop_button" BorderThickness="0" Background="#FF1BA1E2" FontFamily="Segoe WP" FontSize="24" Padding="10,5,10,6" Margin="0,0,-7,-7" Click="newPoop_button_Click">
+        			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        				<Image Source="newrec.png" Height="133" Width="149"/>
+        				<TextBlock TextWrapping="Wrap" Text="NEW POOP" FontSize="24" Foreground="White" HorizontalAlignment="Center" Margin="0,-13,0,0" TextAlignment="Center"/>
+        			</StackPanel>
+        		</Button>
+        		<Button x:Name="dashboard_button" BorderThickness="0" Background="#FF1BA1E2" FontFamily="Segoe WP" FontSize="24" Grid.Column="1" Margin="-7,0,0,-7">
+        			<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+        				<Image Source="dashboard.png" Margin="0,-15,0,0"/>
+        				<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="DASHBOARD" VerticalAlignment="Top" Margin="0,-20,0,0" TextAlignment="Center"/>
+        			</StackPanel>
+        		</Button>
+        		<Button x:Name="getReport_button" BorderThickness="0" Background="#FF1BA1E2" FontFamily="Segoe WP" FontSize="24" Grid.Row="1" Margin="0,-7,-7,0">
+        			<StackPanel>
+        				<Image Source="report.png" Height="103" Width="98"/>
+        				<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="GET REPORT" TextAlignment="Center"/>
+        			</StackPanel>
+        		</Button>
+        		<Button x:Name="contactUs_button" BorderThickness="0" Background="#FF1BA1E2" FontFamily="Segoe WP" FontSize="24" Grid.Row="1" Grid.Column="1" Margin="-7,-7,0,0">
+        			<StackPanel HorizontalAlignment="Center">
+        				<Image Source="contact.png" Height="103" Width="143"/>
+        				<TextBlock TextWrapping="Wrap" Text="CONTACT US" HorizontalAlignment="Center" TextAlignment="Center"/>
+        			</StackPanel>
+        		</Button>
+        	</Grid>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>
