@@ -389,6 +389,7 @@ namespace Poopor
                 default:
                     break;
             }
+            Debug.WriteLine("Haha");
             return answer;
         }
 
