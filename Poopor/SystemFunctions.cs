@@ -44,6 +44,7 @@ namespace Poopor
 
         public static void SetProgressIndicatorProperties(bool isVisible)
         {
+            SystemTray.ProgressIndicator = new ProgressIndicator();
             SystemTray.ProgressIndicator.IsIndeterminate = isVisible;
             SystemTray.ProgressIndicator.IsVisible = isVisible;
         }
