@@ -23,7 +23,7 @@ namespace Poopor
 
         private void newPoop_button_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/PicturePage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/AdditionalHealthInfomation.xaml", UriKind.Relative));
         }
 
         private void buildApplicationBar()

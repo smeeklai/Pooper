@@ -126,7 +126,8 @@ namespace Poopor
                 {
                     img.SetSource(stream);
                     Debug.WriteLine("poop3 widgt: " + img.PixelWidth + " height: " + img.PixelHeight);
-            }*/
+                }*/
+            }
             NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml", UriKind.Relative));
             /*cam.AutoFocusCompleted += cam_AutoFocusCompleted;
             if (cam != null)
@@ -141,7 +142,7 @@ namespace Poopor
                 {
                     Debug.WriteLine("Error: " + ex.Message);
                 }
-        }
+            }*/
         }
 
         private void StoreImage(Stream stImg)
@@ -153,12 +154,11 @@ namespace Poopor
             wb = wb.Resize(653, 490, WriteableBitmapExtensions.Interpolation.Bilinear);
             Debug.WriteLine(wb.PixelWidth + " " + wb.PixelHeight);
 
-        // Informs when full resolution photo has been taken, saves to local media library and the local folder.
-        void cam_CaptureImageAvailable(object sender, Microsoft.Devices.ContentReadyEventArgs e)
-        {
-            String imgName = "poop" + savedCounter + ".jpg";
-            try
+            using (MemoryStream stream = new MemoryStream())
             {
+                wb.SaveJpeg(stream, wb.PixelWidth, wb.PixelHeight, 0, 100);
+                stream.Seek(0, SeekOrigin.Begin);
+                st = new MemoryStream(stream.GetBuffer());
                 // Save picture as JPEG to isolated storage.
                 using (IsolatedStorageFile isStore = IsolatedStorageFile.GetUserStoreForApplication())
                 {
@@ -170,7 +170,7 @@ namespace Poopor
                         byte[] readBuffer = new byte[4096];
                         int bytesRead = -1;
 
-                        // Copy the image to isolated storage. 
+                        // Copy the image to isolated storage.
                         Debug.WriteLine("Start storing image");
                         while ((bytesRead = stream.Read(readBuffer, 0, readBuffer.Length)) > 0)
                         {
@@ -181,7 +181,7 @@ namespace Poopor
 
                 Debug.WriteLine("Save image successfully" + imgName);
             }
-            }
+        }
 
         // Informs when full resolution photo has been taken, saves to local media library and the local folder.
         void cam_CaptureImageAvailable(object sender, Microsoft.Devices.ContentReadyEventArgs e)
