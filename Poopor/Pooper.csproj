@@ -207,6 +207,9 @@
     <Content Include="Assets\img\poopShape\stype7.png" />
     <Content Include="Assets\img\report.png" />
     <Content Include="Assets\img\painLevel\Severe.png" />
+    <Content Include="Assets\img\risk\anxiousrisk.png" />
+    <Content Include="Assets\img\risk\genrisk.png" />
+    <Content Include="Assets\img\risk\welldone_icon.png" />
     <Content Include="Assets\img\tips today ex.jpg" />
     <Content Include="Assets\img\painLevel\worst.png" />
     <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
@@ -238,9 +241,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\img\risk\anxiousrisk.png" />
-    <Resource Include="Assets\img\risk\genrisk.png" />
-    <Resource Include="Assets\img\risk\welldone_icon.png" />
     <Resource Include="Assets\img\slider.png" />
     <Resource Include="contact.png" />
     <Resource Include="dashboard.png" />
