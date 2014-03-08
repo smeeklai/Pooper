@@ -47,8 +47,8 @@
 			<TextBlock Text="POOPER" Style="{StaticResource PhoneTextNormalStyle}" FontSize="24"/>
 			<TextBlock Text="Health Info" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="78.667"/>
 		</StackPanel>
-		<ScrollViewer Grid.Row="1">
-			<Grid x:Name="ContentPanel" Height="611" Width="456">
+		<ScrollViewer Grid.Row="1" Margin="12,0">
+			<Grid x:Name="ContentPanel">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="Auto"/>
@@ -65,9 +65,9 @@
 					</Grid.ColumnDefinitions>
 					<StackPanel>
 						<TextBlock TextWrapping="Wrap" Text="Weight" FontFamily="Segoe WP SemiLight" FontSize="21.333"/>
-						<TextBox x:Name="temWeight_textBox" TextWrapping="Wrap" Margin="-5,-4,0,0" FontFamily="Segoe WP SemiLight" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="28" TextChanged="firstName_textBox_TextChanged"/>
+						<TextBox x:Name="temWeight_textBox" TextWrapping="Wrap" Margin="-5,-4,0,0" FontFamily="Segoe WP SemiLight" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="28" InputScope="Number"/>
 						<TextBlock TextWrapping="Wrap" Text="Height" FontFamily="Segoe WP SemiLight" FontSize="21.333"/>
-						<TextBox x:Name="textHeight_textBox" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" Margin="-5,-5,0,0" TextChanged="lastName_textBox_TextChanged"/>
+                        <TextBox x:Name="temHeight_textBox" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" Margin="-5,-5,0,0" InputScope="Number"/>
 					</StackPanel>
 					<Grid Grid.Column="1">
 						<Grid.RowDefinitions>
@@ -91,55 +91,55 @@
 						</StackPanel>
 					</Grid>
 				</Grid>
-				<StackPanel Grid.Row="1" Margin="0,5,0,0">
-					<Border BorderThickness="0,0,0,1" Margin="0,0,0,5">
-						<Border.BorderBrush>
-							<SolidColorBrush Color="White" Opacity="0.7"/>
-						</Border.BorderBrush>
-					</Border>
-					<StackPanel Orientation="Horizontal" Margin="0">
-						<CheckBox x:Name="temHealthInfo_checkBox1" Content="" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-						<TextBlock TextWrapping="Wrap" Text="Have any of your family members(first-degree relative) been diagnosed  with colon, rectum, ovarian, endometrium, or breast cancer?" FontFamily="Segoe WP SemiLight" Width="388" VerticalAlignment="Center"/>
-					</StackPanel>
-					<Border BorderThickness="0,0,0,1" Margin="0,10,0,0">
-						<Border.BorderBrush>
-							<SolidColorBrush Color="White" Opacity="0.7"/>
-						</Border.BorderBrush>
-					</Border>
-					<StackPanel Orientation="Horizontal">
-						<CheckBox x:Name="temHealthInfo_checkBox2" Content="" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-						<TextBlock TextWrapping="Wrap" Text="Have you been diagnosed with inflammatory bowel disease or colorectal polyps?" FontFamily="Segoe WP SemiLight" Width="388" VerticalAlignment="Center"/>
-					</StackPanel>
-					<Border BorderThickness="0,0,0,1" Margin="0">
-						<Border.BorderBrush>
-							<SolidColorBrush Color="White" Opacity="0.7"/>
-						</Border.BorderBrush>
-					</Border>
-					<StackPanel Orientation="Horizontal">
-						<CheckBox x:Name="temHealthInfo_checkBox3" Content="" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-						<TextBlock TextWrapping="Wrap" Text="Are you addicted to smoking or drinking alcohol?" FontFamily="Segoe WP SemiLight" Width="388" VerticalAlignment="Center"/>
-					</StackPanel>
-					<Border BorderThickness="0,0,0,1" Margin="0">
-						<Border.BorderBrush>
-							<SolidColorBrush Color="White" Opacity="0.7"/>
-						</Border.BorderBrush>
-					</Border>
-					<StackPanel Orientation="Horizontal">
-						<CheckBox x:Name="temHealthInfo_checkBox4" Content="" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-						<TextBlock TextWrapping="Wrap" Text="Have you or any of your family members(first-degree relative) been diagnosed with FAP(Familial adenometous polyposis) or HNPCC(Hereditary nonpolyposis colon cancer)?" FontFamily="Segoe WP SemiLight" Width="388" VerticalAlignment="Center"/>
-					</StackPanel>
-					<Border x:Name="femailOnly_border" BorderThickness="0,0,0,1" Margin="0">
-						<Border.BorderBrush>
-							<SolidColorBrush Color="White" Opacity="0.7"/>
-						</Border.BorderBrush>
-					</Border>
-					<StackPanel x:Name="femaleOnly_stackPanel" Orientation="Horizontal">
-						<CheckBox x:Name="temHealthInfo_checkBox5" Content="" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-						<TextBlock TextWrapping="Wrap" Text="Have you been diagnosed with ovarian, endometrium or breast cancer?" FontFamily="Segoe WP SemiLight" Width="388" VerticalAlignment="Center"/>
-					</StackPanel>
-				</StackPanel>
-
-			</Grid>
+                <StackPanel Grid.Row="1" Margin="0">
+                    <Border x:Name="femailOnly_border" BorderThickness="0,0,0,1" Margin="0,5,0,0">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="White" Opacity="0.7"/>
+                        </Border.BorderBrush>
+                    </Border>
+                    <StackPanel x:Name="femaleOnly_stackPanel" Orientation="Horizontal">
+                    	<CheckBox x:Name="temHealthInfo_checkBox5" Content="" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    	<TextBlock TextWrapping="Wrap" Text="Have you been diagnosed with ovarian, endometrium or breast cancer?" FontFamily="Segoe WP SemiLight" Width="388" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <Border BorderThickness="0,0,0,1" Margin="0,0,0,5">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="White" Opacity="0.7"/>
+                        </Border.BorderBrush>
+                    </Border>
+                    <StackPanel Orientation="Horizontal" Margin="0">
+                        <CheckBox x:Name="temHealthInfo_checkBox1" Content="" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock TextWrapping="Wrap" Text="Have any of your family members(first-degree relative) been diagnosed  with colon, rectum, ovarian, endometrium, or breast cancer?" FontFamily="Segoe WP SemiLight" Width="388" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <Border BorderThickness="0,0,0,1" Margin="0,10,0,0">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="White" Opacity="0.7"/>
+                        </Border.BorderBrush>
+                    </Border>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox x:Name="temHealthInfo_checkBox2" Content="" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock TextWrapping="Wrap" Text="Have you been diagnosed with inflammatory bowel disease or colorectal polyps?" FontFamily="Segoe WP SemiLight" Width="388" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <Border BorderThickness="0,0,0,1" Margin="0">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="White" Opacity="0.7"/>
+                        </Border.BorderBrush>
+                    </Border>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox x:Name="temHealthInfo_checkBox3" Content="" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock TextWrapping="Wrap" Text="Are you addicted to smoking or drinking alcohol?" FontFamily="Segoe WP SemiLight" Width="388" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <Border BorderThickness="0,0,0,1" Margin="0">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="White" Opacity="0.7"/>
+                        </Border.BorderBrush>
+                    </Border>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox x:Name="temHealthInfo_checkBox4" Content="" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock TextWrapping="Wrap" Text="Have you or any of your family members(first-degree relative) been diagnosed with FAP(Familial adenometous polyposis) or HNPCC(Hereditary nonpolyposis colon cancer)?" FontFamily="Segoe WP SemiLight" Width="388" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <Button x:Name="submit_button" Content="Submit" FontSize="26.667" Click="submit_button_Click"/>
+                </StackPanel>
+            </Grid>
 		</ScrollViewer>
 
         <!--ContentPanel - place additional content here-->

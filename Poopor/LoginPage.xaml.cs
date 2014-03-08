@@ -62,7 +62,7 @@ namespace Poopor
             {
                 if (String.IsNullOrWhiteSpace(email_textBox.Text) || String.IsNullOrWhiteSpace(password_Box.Password) == true)
                 {
-                    MessageBox.Show("Email and Password cannot be empty", AppResources.Warning, MessageBoxButton.OK);
+                    MessageBox.Show("Email or Password cannot be empty", AppResources.Warning, MessageBoxButton.OK);
                 }
                 else
                 {

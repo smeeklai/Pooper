@@ -35,6 +35,19 @@ namespace Poopor
             shapePicker.SelectionChanged += shapePicker_SelectionChanged;
         }
 
+        private void newPoop_submit_button_Click(object sender, RoutedEventArgs e)
+        {
+            if (SessionManagement.IsLoggedIn() == true)
+            {
+                NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
+            }
+            {
+                MessageBox.Show("Please answer us several health questions first. This can be avoided by siging up an account", "Health Infomation Required", MessageBoxButton.OK);
+                NavigationService.Navigate(new Uri("/AdditionalHealthInfomation.xaml", UriKind.Relative));
+            }
+            
+        }
+
         void shapePicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var picker = sender as ListPicker;
@@ -48,11 +61,6 @@ namespace Poopor
             var picker = sender as ListPicker;
             colorResult.Fill = AccentColorNameToBrush.ConvertStringToSolidColorBrush(picker.SelectedItem.ToString());
             colorResult_text.Text = picker.SelectedItem.ToString();
-        }
-
-        private void newPoop_submit_button_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
         }
 
         private void painLevel_slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
