@@ -10,7 +10,7 @@ using Microsoft.Phone.Shell;
 using System.Diagnostics;
 using System.Windows.Media.Imaging;
 using Poopor.Resources;
-using Pooper.Data;
+using Poopor.Data;
 
 namespace Poopor
 {
@@ -20,7 +20,11 @@ namespace Poopor
         {
             InitializeComponent();
 
-            DataContext = ColorExtensions.AccentColors();
+            //DataContext = ColorExtensions.AccentColors();
+            //DataContext = ShapeData.ShapeNames();
+            colorPicker.ItemsSource = ColorExtensions.AccentColors();
+            shapePicker.ItemsSource = ShapeData.ShapeNames();
+            
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -34,7 +38,8 @@ namespace Poopor
         void shapePicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var picker = sender as ListPicker;
-            shapeResult.Fill = AccentColorNameToBrush.ConvertStringToSolidColorBrush(picker.SelectedItem.ToString());
+            Debug.WriteLine(picker.SelectedItem.ToString());
+            shapeResult.Source = ShapeTypeToImg.ConvertShapeStringToImg(picker.SelectedItem.ToString());
             shapeResult_text.Text = picker.SelectedItem.ToString();
         }
 
@@ -53,27 +58,27 @@ namespace Poopor
         private void painLevel_slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (e.NewValue == 1) {
-                pain_level_picture.Source = new BitmapImage(new Uri("/Assets/img/nohurt.png", UriKind.RelativeOrAbsolute));
+                pain_level_picture.Source = new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute));
                 pain_level_description.Text = AppResources.PainLevel_Normal;
             }
             else if (e.NewValue <= 2) {
                 painLevel_slider.Value = 2;
-                pain_level_picture.Source = new BitmapImage(new Uri("/Assets/img/mild.png", UriKind.RelativeOrAbsolute));
+                pain_level_picture.Source = new BitmapImage(new Uri("/Assets/img/painLevel/mild.png", UriKind.RelativeOrAbsolute));
                 pain_level_description.Text = AppResources.PainLevel_Mild;
             }
             else if (e.NewValue <= 3) {
                 painLevel_slider.Value = 3;
-                pain_level_picture.Source = new BitmapImage(new Uri("/Assets/img/Moderate.png", UriKind.RelativeOrAbsolute));
+                pain_level_picture.Source = new BitmapImage(new Uri("/Assets/img/painLevel/Moderate.png", UriKind.RelativeOrAbsolute));
                 pain_level_description.Text = AppResources.PainLevel_Moderate;
             }
             else if (e.NewValue <= 4) {
                 painLevel_slider.Value = 4;
-                pain_level_picture.Source = new BitmapImage(new Uri("/Assets/img/Severe.png", UriKind.RelativeOrAbsolute));
+                pain_level_picture.Source = new BitmapImage(new Uri("/Assets/img/painLevel/Severe.png", UriKind.RelativeOrAbsolute));
                 pain_level_description.Text = AppResources.PainLevel_Severe;
             }
             else if (e.NewValue <= 5) {
                 painLevel_slider.Value = 5;
-                pain_level_picture.Source = new BitmapImage(new Uri("/Assets/img/worst.png", UriKind.RelativeOrAbsolute));
+                pain_level_picture.Source = new BitmapImage(new Uri("/Assets/img/painLevel/worst.png", UriKind.RelativeOrAbsolute));
                 pain_level_description.Text = AppResources.PainLevel_worst;
             }
         }
@@ -82,31 +87,31 @@ namespace Poopor
         {
             if (e.NewValue == 1)
             {
-                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/nohurt.png", UriKind.RelativeOrAbsolute));
+                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/bloodAmount/noblood.png", UriKind.RelativeOrAbsolute));
                 blood_amount_description.Text = AppResources.PainLevel_Normal;
             }
             else if (e.NewValue <= 2)
             {
                 blood_amount_slider.Value = 2;
-                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/mild.png", UriKind.RelativeOrAbsolute));
+                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/bloodAmount/littleblood.png", UriKind.RelativeOrAbsolute));
                 blood_amount_description.Text = AppResources.PainLevel_Mild;
             }
             else if (e.NewValue <= 3)
             {
                 blood_amount_slider.Value = 3;
-                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/Moderate.png", UriKind.RelativeOrAbsolute));
+                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/bloodAmount/mediumblood.png", UriKind.RelativeOrAbsolute));
                 blood_amount_description.Text = AppResources.PainLevel_Moderate;
             }
             else if (e.NewValue <= 4)
             {
                 blood_amount_slider.Value = 4;
-                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/Severe.png", UriKind.RelativeOrAbsolute));
+                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/bloodAmount/muchblood.png", UriKind.RelativeOrAbsolute));
                 blood_amount_description.Text = AppResources.PainLevel_Severe;
             }
             else if (e.NewValue <= 5)
             {
                 blood_amount_slider.Value = 5;
-                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/worst.png", UriKind.RelativeOrAbsolute));
+                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/bloodAmount/alotofblood.png", UriKind.RelativeOrAbsolute));
                 blood_amount_description.Text = AppResources.PainLevel_worst;
             }
         }

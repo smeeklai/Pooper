@@ -8,15 +8,16 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Poopor.Resources;
+using System.Diagnostics;
 
 namespace Poopor
 {
     public partial class MainPage : PhoneApplicationPage
     {
+
         public MainPage()
         {
             InitializeComponent();
-
             buildApplicationBar();
         }
 
@@ -25,7 +26,8 @@ namespace Poopor
             NavigationService.Navigate(new Uri("/PicturePage.xaml", UriKind.Relative));
         }
 
-        private void buildApplicationBar() {
+        private void buildApplicationBar()
+        {
             //Initialize ApplicationBar
             ApplicationBar = new ApplicationBar();
             ApplicationBar.Mode = ApplicationBarMode.Minimized;
@@ -46,6 +48,15 @@ namespace Poopor
         {
             await SessionManagement.Logout();
             NavigationService.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
+        }
+
+        private void OnFlick(object sender, FlickGestureEventArgs e)
+        {
+            // User flicked towards right
+            if (e.HorizontalVelocity > 0)
+            {
+                NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
+            }
         }
     }
 }

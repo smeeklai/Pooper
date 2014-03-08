@@ -54,7 +54,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Bin\x86\Debug</OutputPath>
-    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE;USE_WP8_NATIVE_SQLITE</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -92,6 +92,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AdditionalHealthInfomation.xaml.cs">
+      <DependentUpon>AdditionalHealthInfomation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -99,6 +102,8 @@
     <Compile Include="DatabaseFunctions.cs" />
     <Compile Include="Data\AccentColorNameToBrush.cs" />
     <Compile Include="Data\ColorExtensions.cs" />
+    <Compile Include="Data\ShapeData.cs" />
+    <Compile Include="Data\ShapeTypeToImg.cs" />
     <Compile Include="Poop_Table_SQLite.cs" />
     <Compile Include="RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>
@@ -139,6 +144,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="AdditionalHealthInfomation.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -180,19 +189,26 @@
     <Content Include="Assets\img\contact.png" />
     <Content Include="Assets\img\dashboard.png" />
     <Content Include="Assets\img\logo.png" />
-    <Content Include="Assets\img\lv1_activated.png" />
-    <Content Include="Assets\img\lv2_activated.png" />
-    <Content Include="Assets\img\lv3_activated.png" />
-    <Content Include="Assets\img\lv4_activated.png" />
-    <Content Include="Assets\img\lv5_activated.png" />
-    <Content Include="Assets\img\mild.png" />
-    <Content Include="Assets\img\Moderate.png" />
+    <Content Include="Assets\img\bloodAmount\alotofblood.png" />
+    <Content Include="Assets\img\bloodAmount\littleblood.png" />
+    <Content Include="Assets\img\bloodAmount\mediumblood.png" />
+    <Content Include="Assets\img\painLevel\mild.png" />
+    <Content Include="Assets\img\painLevel\Moderate.png" />
     <Content Include="Assets\img\newrec.png" />
-    <Content Include="Assets\img\nohurt.png" />
+    <Content Include="Assets\img\bloodAmount\muchblood.png" />
+    <Content Include="Assets\img\bloodAmount\noblood.png" />
+    <Content Include="Assets\img\painLevel\nohurt.png" />
+    <Content Include="Assets\img\poopShape\stype1.png" />
+    <Content Include="Assets\img\poopShape\stype2.png" />
+    <Content Include="Assets\img\poopShape\stype3.png" />
+    <Content Include="Assets\img\poopShape\stype4.png" />
+    <Content Include="Assets\img\poopShape\stype5.png" />
+    <Content Include="Assets\img\poopShape\stype6.png" />
+    <Content Include="Assets\img\poopShape\stype7.png" />
     <Content Include="Assets\img\report.png" />
-    <Content Include="Assets\img\Severe.png" />
+    <Content Include="Assets\img\painLevel\Severe.png" />
     <Content Include="Assets\img\tips today ex.jpg" />
-    <Content Include="Assets\img\worst.png" />
+    <Content Include="Assets\img\painLevel\worst.png" />
     <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -222,6 +238,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\img\risk\anxiousrisk.png" />
+    <Resource Include="Assets\img\risk\genrisk.png" />
+    <Resource Include="Assets\img\risk\welldone_icon.png" />
     <Resource Include="Assets\img\slider.png" />
     <Resource Include="contact.png" />
     <Resource Include="dashboard.png" />
