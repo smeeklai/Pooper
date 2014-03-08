@@ -22,7 +22,7 @@ namespace Poopor
 
         public AzureFunctions()
         {
-            SystemTray.ProgressIndicator = new ProgressIndicator();
+            
         }
 
         public async Task<Boolean> InsertData(object data)
@@ -86,7 +86,6 @@ namespace Poopor
             try
             {
                 items = await azure_userInfo_table.ToCollectionAsync();
-                Debug.WriteLine(items.Count);
                 Debug.WriteLine("Retrieve data successfully");
                 foreach (var item in items)
                 {

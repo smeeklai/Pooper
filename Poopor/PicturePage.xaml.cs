@@ -14,6 +14,9 @@ using Microsoft.Xna.Framework.Media;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Diagnostics;
+using System.Windows.Media.Imaging;
+using Windows.Storage.Streams;
+using System.Threading.Tasks;
 
 namespace Poopor
 {
@@ -21,10 +24,9 @@ namespace Poopor
     {
 
         // Variables
-        private int savedCounter = 0;
-        PhotoCamera cam;
-        MediaLibrary library = new MediaLibrary();
-        Popup p = new Popup();
+        private PhotoCamera cam;
+        private MediaLibrary library = new MediaLibrary();
+        private MemoryStream st = null;
 
         public Picture_page()
         {
@@ -43,9 +45,6 @@ namespace Poopor
                 cam = new Microsoft.Devices.PhotoCamera(CameraType.Primary);
                 // Event is fired when the PhotoCamera object has been initialized.
                 cam.Initialized += new EventHandler<Microsoft.Devices.CameraOperationCompletedEventArgs>(cam_Initialized);
-
-                // Event is fired when the capture sequence is complete.
-                cam.CaptureCompleted += new EventHandler<CameraOperationCompletedEventArgs>(cam_CaptureCompleted);
 
                 // Event is fired when the capture sequence is complete and an image is available.
                 cam.CaptureImageAvailable += new EventHandler<Microsoft.Devices.ContentReadyEventArgs>(cam_CaptureImageAvailable);
@@ -88,7 +87,6 @@ namespace Poopor
 
                 // Release memory, ensure garbage collection.
                 cam.Initialized -= cam_Initialized;
-                cam.CaptureCompleted -= cam_CaptureCompleted;
                 cam.CaptureImageAvailable -= cam_CaptureImageAvailable;
                 CameraButtons.ShutterKeyHalfPressed -= OnButtonHalfPress;
                 CameraButtons.ShutterKeyPressed -= OnButtonFullPress;
@@ -117,17 +115,21 @@ namespace Poopor
 
         private void ShutterButton_Click(object sender, RoutedEventArgs e)
         {
-            /*using (IsolatedStorageFile isStore = IsolatedStorageFile.GetUserStoreForApplication())
+            using (IsolatedStorageFile isStore = IsolatedStorageFile.GetUserStoreForApplication())
             {
                 String[] files = isStore.GetFileNames();
                 foreach (String s in files)
                 {
                     Debug.WriteLine(s);
                 }
-                //Debug.WriteLine(isStore.g);
-            }*/
-            NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml", UriKind.Relative));
-            /*cam.AutoFocusCompleted += cam_AutoFocusCompleted;
+                /*using (var stream = isStore.OpenFile("poop3.jpg", FileMode.Open, FileAccess.Read))
+                {
+                    img.SetSource(stream);
+                    Debug.WriteLine("poop3 widgt: " + img.PixelWidth + " height: " + img.PixelHeight);
+                }*/
+            }
+            //NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml", UriKind.Relative));
+            cam.AutoFocusCompleted += cam_AutoFocusCompleted;
             if (cam != null)
             {
                 try
@@ -138,39 +140,39 @@ namespace Poopor
                 }
                 catch (Exception ex)
                 {
-                    this.Dispatcher.BeginInvoke(delegate()
-                    {
-                        // Cannot capture an image until the previous capture has completed.
-                        //txtDebug.Text = ex.Message;
-                    });
+                    Debug.WriteLine("Error: " + ex.Message);
                 }
-            }*/
+            }
         }
 
-        void cam_CaptureCompleted(object sender, CameraOperationCompletedEventArgs e)
+        private void StoreImage(Stream stImg)
         {
-            // Increments the savedCounter variable used for generating JPEG file names.
-            savedCounter++;
-        }
+            String imgName = "Poop" + SessionManagement.GetImageSavedCounter() + ".jpg";
+            BitmapImage img = new BitmapImage();
+            img.SetSource(stImg);
+            WriteableBitmap wb = new WriteableBitmap(img);
+            wb = wb.Resize(653, 490, WriteableBitmapExtensions.Interpolation.Bilinear);
+            Debug.WriteLine(wb.PixelWidth + " " + wb.PixelHeight);
 
-        // Informs when full resolution photo has been taken, saves to local media library and the local folder.
-        void cam_CaptureImageAvailable(object sender, Microsoft.Devices.ContentReadyEventArgs e)
-        {
-            String imgName = "poop" + savedCounter + ".jpg";
-            try
+            using (MemoryStream stream = new MemoryStream())
             {
+                wb.SaveJpeg(stream, wb.PixelWidth, wb.PixelHeight, 0, 100);
+                stream.Seek(0, SeekOrigin.Begin);
+                st = new MemoryStream(stream.GetBuffer());
                 // Save picture as JPEG to isolated storage.
                 using (IsolatedStorageFile isStore = IsolatedStorageFile.GetUserStoreForApplication())
                 {
-                    
+                    if (isStore.FileExists(imgName))
+                        isStore.DeleteFile(imgName);
                     using (IsolatedStorageFileStream targetStream = isStore.OpenFile(imgName, FileMode.Create, FileAccess.Write))
                     {
                         // Initialize the buffer for 4KB disk pages.
                         byte[] readBuffer = new byte[4096];
                         int bytesRead = -1;
 
-                        // Copy the image to isolated storage. 
-                        while ((bytesRead = e.ImageStream.Read(readBuffer, 0, readBuffer.Length)) > 0)
+                        // Copy the image to isolated storage.
+                        Debug.WriteLine("Start storing image");
+                        while ((bytesRead = stream.Read(readBuffer, 0, readBuffer.Length)) > 0)
                         {
                             targetStream.Write(readBuffer, 0, bytesRead);
                         }
@@ -179,16 +181,28 @@ namespace Poopor
 
                 Debug.WriteLine("Save image successfully" + imgName);
             }
-            finally
-            {
-                // Close image stream
-                e.ImageStream.Close();
-            }
+        }
 
+        // Informs when full resolution photo has been taken, saves to local media library and the local folder.
+        void cam_CaptureImageAvailable(object sender, Microsoft.Devices.ContentReadyEventArgs e)
+        {
+            this.Dispatcher.BeginInvoke(delegate()
+            {
+                StoreImage(e.ImageStream);
+                AnalyzePoop();
+            });
             /*this.Dispatcher.BeginInvoke(delegate()
             {
                 NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml", UriKind.Relative));
             });*/
+        }
+
+        private void AnalyzePoop()
+        {
+            SystemFunctions.SetProgressIndicatorProperties(true);
+            SystemTray.ProgressIndicator.Text = "analyzing...";
+            Debug.WriteLine(st.Length);
+            st.Dispose();
         }
 
         // Provide auto-focus with a half button press using the hardware shutter button.
@@ -199,20 +213,11 @@ namespace Poopor
                 // Focus when a capture is not in progress.
                 try
                 {
-                    this.Dispatcher.BeginInvoke(delegate()
-                    {
-                        //txtDebug.Text = "Half Button Press: Auto Focus";
-                    });
-
                     cam.Focus();
                 }
                 catch (Exception focusError)
                 {
                     // Cannot focus when a capture is in progress.
-                    this.Dispatcher.BeginInvoke(delegate()
-                    {
-                        //txtDebug.Text = focusError.Message;
-                    });
                 }
             }
         }
@@ -230,7 +235,6 @@ namespace Poopor
         // Cancel the focus if the half button press is released using the hardware shutter button.
         private void OnButtonRelease(object sender, EventArgs e)
         {
-
             if (cam != null)
             {
                 cam.CancelFocus();
