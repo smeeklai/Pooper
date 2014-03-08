@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{x:Null}"
@@ -13,9 +14,31 @@
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
 
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -28,24 +51,42 @@
                 </TextBlock.Style>
             </TextBlock>
             <TextBlock Text="Home" Margin="-4,-17,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="#FF787B7C" FontSize="78.667"/>
-            <Border BorderThickness="0,1">
-            	<Border.Background>
-            		<SolidColorBrush Color="#FFDEDEDE" Opacity="0.99"/>
-            	</Border.Background>
-            	<Border.BorderBrush>
-            		<SolidColorBrush Color="#FF787878"/>
-            	</Border.BorderBrush>
-            	<TextBlock TextWrapping="Wrap" Text="TIPS TODAY" FontFamily="Segoe WP Semibold" FontSize="24" TextAlignment="Center" Foreground="#FF787B7C"/>
-            </Border>
         </StackPanel>
+        <Grid x:Name="healthInfo_grid" Margin="0" Grid.Row="1" Background="#FFFF3939">
+        	<Grid.RowDefinitions>
+        		<RowDefinition Height="Auto"/>
+        		<RowDefinition Height="Auto"/>
+        	</Grid.RowDefinitions>
+            <toolkit:GestureService.GestureListener>
+                <toolkit:GestureListener Flick="OnFlick"/>
+            </toolkit:GestureService.GestureListener>
+            <StackPanel>
+        		<TextBlock TextWrapping="Wrap" FontFamily="Segoe WP Semibold" Foreground="White" TextAlignment="Center" FontSize="21.333" Text="Detected! anxious signs of colon-rectum cancer"/>
+        	</StackPanel>
+        	<Grid Grid.Row="1">
+        		<Grid.ColumnDefinitions>
+        			<ColumnDefinition Width="Auto"/>
+        			<ColumnDefinition/>
+        		</Grid.ColumnDefinitions>
+        		<StackPanel Margin="15,0,5,0">
+        			<Image Source="Assets/img/risk/anxiousrisk.png" Margin="0"/>
+        			<TextBlock TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" FontSize="16" TextAlignment="Center" Foreground="White" Text="Consult with doctor" Margin="0" HorizontalAlignment="Center"/>
+        		</StackPanel>
+        		<StackPanel Margin="0" Grid.Column="1">
+        			<TextBlock TextWrapping="Wrap" Text="- Your first-relative relationship members have been diagnosed with FAP or HNPCC" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
+        			<TextBlock TextWrapping="Wrap" Text="- Recomendation 2" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
+        			<TextBlock TextWrapping="Wrap" Text="- Recomendation 3" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
+        		</StackPanel>
+        		<TextBlock x:Name="more_axiousSigns_text" TextWrapping="Wrap" Text="Slide rightward to see more details" Margin="0,0,5,0" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Foreground="White" FontFamily="Segoe WP SemiLight" FontSize="16"/>
+        	</Grid>
+        </Grid>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        <Grid x:Name="ContentPanel" Grid.Row="2" Margin="12,0,12,0">
         	<Grid.RowDefinitions>
         		<RowDefinition Height="Auto"/>
         		<RowDefinition/>
         	</Grid.RowDefinitions>
-        	<Image HorizontalAlignment="Center" VerticalAlignment="Top" Source="tips today ex.jpg"/>
         	<Grid Grid.Row="1">
         		<Grid.ColumnDefinitions>
         			<ColumnDefinition/>

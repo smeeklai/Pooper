@@ -35,13 +35,6 @@ namespace Poopor
             return false;
         }
 
-        public static Boolean IsContainedEmptyText(string text)
-        {
-            if (text.Length == 0)
-                return true;
-            return false;
-        }
-
         public static void SetProgressIndicatorProperties(bool isVisible)
         {
             SystemTray.ProgressIndicator = new ProgressIndicator();

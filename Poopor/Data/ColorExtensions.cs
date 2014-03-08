@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Media;
 
-namespace Pooper.Data
+namespace Poopor.Data
 {
     /// <summary>
     /// Adds extension methods relating to color.
@@ -17,16 +17,15 @@ namespace Pooper.Data
         /// <summary>
         /// An array of all the names of the accent colors.
         /// </summary>
-        private static string[] _accentColors = { "magenta", 
-                                                  "purple",
-                                                  "teal", 
-                                                  "lime", 
-                                                  "brown", 
-                                                  "pink", 
-                                                  "mango",
-                                                  "blue",
-                                                  "red",
-                                                  "green" };
+        private static string[] _accentColors = { "Maroon", 
+                                                  "Medium Brown",
+                                                  "Light Brown", 
+                                                  "Orange", 
+                                                  "Yellow", 
+                                                  "Red", 
+                                                  "Dark Green",
+                                                  "Clay",
+                                                  "Black" };
 
 
         /// <summary>
@@ -35,6 +34,11 @@ namespace Pooper.Data
         public static ReadOnlyCollection<string> AccentColors()
         {
             return new ReadOnlyCollection<string>(_accentColors);
+        }
+
+        public static string[] AA
+        {
+            get {return _accentColors; }
         }
 
         /// <summary>

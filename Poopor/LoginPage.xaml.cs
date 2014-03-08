@@ -60,15 +60,22 @@ namespace Poopor
             }
             else if (NetworkInterface.GetIsNetworkAvailable())
             {
-                var succeeded = await new AzureFunctions().CheckUserAuthentication(email_textBox.Text, password_Box.Password);
-                if (succeeded)
+                if (String.IsNullOrWhiteSpace(email_textBox.Text) || String.IsNullOrWhiteSpace(password_Box.Password) == true)
                 {
-                    SessionManagement.CreateLoginSession(email_textBox.Text);
-                    NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                    MessageBox.Show("Email or Password cannot be empty", AppResources.Warning, MessageBoxButton.OK);
                 }
                 else
                 {
-                    MessageBox.Show(AppResources.IncorrectEmailOrPasswordMsg, AppResources.IncorrectEmailOrPasswordTitle, MessageBoxButton.OK);
+                    var succeeded = await new AzureFunctions().CheckUserAuthentication(email_textBox.Text, password_Box.Password);
+                    if (succeeded)
+                    {
+                        SessionManagement.CreateLoginSession(email_textBox.Text);
+                        NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                    }
+                    else
+                    {
+                        MessageBox.Show(AppResources.IncorrectEmailOrPasswordMsg, AppResources.IncorrectEmailOrPasswordTitle, MessageBoxButton.OK);
+                    }
                 }
             }
             else

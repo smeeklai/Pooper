@@ -10,7 +10,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace Pooper.Data
+namespace Poopor.Data
 {
     /// <summary>
     /// A converter that takes a name of an accent color and returns a SolidColorBrush.
@@ -19,17 +19,15 @@ namespace Pooper.Data
     {
         private static Dictionary<string, SolidColorBrush> ColorNameToBrush = new Dictionary<string, SolidColorBrush>()
         {
-            { "magenta", 0xFFFF0097.ToSolidColorBrush() },
-            { "purple",  0xFFA200FF.ToSolidColorBrush() },
-            { "teal",    0xFF00ABA9.ToSolidColorBrush() },
-            { "lime",    0xFF8CBF26.ToSolidColorBrush() },
-            { "brown",   0xFFA05000.ToSolidColorBrush() },
-            { "pink",    0xFFE671B8.ToSolidColorBrush() },
-            { "orange",  0xFFF09609.ToSolidColorBrush() },
-            { "blue",    0xFF1BA1E2.ToSolidColorBrush() },
-            { "red",     0xFFE51400.ToSolidColorBrush() },
-            { "green",   0xFF339933.ToSolidColorBrush() },
-            { "mango",   0xFFF09609.ToSolidColorBrush() },
+            { "Maroon", 0xFF4B0000.ToSolidColorBrush() },
+            { "Medium Brown",  0xFF6C4B1B.ToSolidColorBrush() },
+            { "Light Brown",    0xFFD8BE70.ToSolidColorBrush() },
+            { "Orange",    0xFF9E3D02.ToSolidColorBrush() },
+            { "Yellow",   0xFFEBC314.ToSolidColorBrush() },
+            { "Red",    0xFFAA0000.ToSolidColorBrush() },
+            { "Dark Green",  0xFF0B2604.ToSolidColorBrush() },
+            { "Clay",    0xFFA0A0A0.ToSolidColorBrush() },
+            { "Black",     0xFF141414.ToSolidColorBrush() },
         };
 
         public static SolidColorBrush ConvertStringToSolidColorBrush(string colorName)
@@ -40,7 +38,7 @@ namespace Pooper.Data
             }
 
             SolidColorBrush brush = null;
-            if (ColorNameToBrush.TryGetValue(colorName.ToLowerInvariant(), out brush))
+            if (ColorNameToBrush.TryGetValue(colorName, out brush))
             {
                 return brush;
             }
@@ -66,7 +64,7 @@ namespace Pooper.Data
             }
 
             SolidColorBrush brush = null;
-            if (ColorNameToBrush.TryGetValue(v.ToLowerInvariant(), out brush))
+            if (ColorNameToBrush.TryGetValue(v, out brush))
             {
                 return brush;
             }

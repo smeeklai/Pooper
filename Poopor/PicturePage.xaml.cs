@@ -128,8 +128,8 @@ namespace Poopor
                     Debug.WriteLine("poop3 widgt: " + img.PixelWidth + " height: " + img.PixelHeight);
                 }*/
             }
-            //NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml", UriKind.Relative));
-            cam.AutoFocusCompleted += cam_AutoFocusCompleted;
+            NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml", UriKind.Relative));
+            /*cam.AutoFocusCompleted += cam_AutoFocusCompleted;
             if (cam != null)
             {
                 try
@@ -142,7 +142,7 @@ namespace Poopor
                 {
                     Debug.WriteLine("Error: " + ex.Message);
                 }
-            }
+            }*/
         }
 
         private void StoreImage(Stream stImg)

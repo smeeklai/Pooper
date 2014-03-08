@@ -15,6 +15,27 @@
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
 
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="#FF1BA1E2">
         <Grid.RowDefinitions>
@@ -28,7 +49,7 @@
         	<TextBlock Text="Sign Up" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="White" FontSize="78.667"/>
         </StackPanel>
 
-        <ScrollViewer Margin="0" Grid.Row="1" BorderThickness="12,0">
+        <ScrollViewer Margin="12,0" Grid.Row="1">
         	<Grid x:Name="ContentPanel">
         		<Grid.RowDefinitions>
         			<RowDefinition Height="Auto"/>

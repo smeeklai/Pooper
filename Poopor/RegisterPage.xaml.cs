@@ -239,7 +239,7 @@ namespace Poopor
 
         private void regisPassword_textBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (SystemFunctions.IsContainedEmptyText(regisPassword_textBox.Password))
+            if (String.IsNullOrEmpty(regisPassword_textBox.Password))
             {
                 regisPassword_textBox.BorderBrush = new SolidColorBrush(Colors.Red);
                 password_validation = false;
@@ -267,7 +267,7 @@ namespace Poopor
 
         private void firstName_textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (SystemFunctions.IsContainedEmptyText(firstName_textBox.Text))
+            if (String.IsNullOrEmpty(firstName_textBox.Text))
             {
                 firstName_textBox.BorderBrush = new SolidColorBrush(Colors.Red);
                 firstName_validation = false;
@@ -281,7 +281,7 @@ namespace Poopor
 
         private void lastName_textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (SystemFunctions.IsContainedEmptyText(lastName_textBox.Text))
+            if (String.IsNullOrEmpty(lastName_textBox.Text))
             {
                 lastName_textBox.BorderBrush = new SolidColorBrush(Colors.Red);
                 lastName_validation = false;
@@ -295,7 +295,7 @@ namespace Poopor
 
         private void weight_textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (SystemFunctions.IsContainedEmptyText(weight_textBox.Text))
+            if (String.IsNullOrEmpty(weight_textBox.Text))
             {
                 weight_textBox.BorderBrush = new SolidColorBrush(Colors.Red);
                 weight_validation = false;
@@ -309,7 +309,7 @@ namespace Poopor
 
         private void height_textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (SystemFunctions.IsContainedEmptyText(height_textBox.Text))
+            if (String.IsNullOrEmpty(height_textBox.Text))
             {
                 height_textBox.BorderBrush = new SolidColorBrush(Colors.Red);
                 height_validation = false;

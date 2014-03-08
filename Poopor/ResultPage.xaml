@@ -7,12 +7,34 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:es="clr-namespace:Microsoft.Expression.Shapes;assembly=Microsoft.Expression.Drawing"
     x:Class="Poopor.ResultPage"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
 	<Grid x:Name="LayoutRoot" Background="White">
@@ -58,8 +80,8 @@
 							<TextBlock x:Name="evaluationResult_text" TextWrapping="Wrap" Text="(Result....)" FontSize="18.667" Margin="0,10,0,0" Foreground="White"/>
 						</StackPanel>
 					</Grid>
-					<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Recommendations:" VerticalAlignment="Top" Grid.Row="1" FontSize="24" TextDecorations="Underline" Foreground="#FF080808" Margin="25,15,0,0"/>
-					<Grid Grid.Row="2" Margin="15,10,15,0">
+					<TextBlock x:Name="recommendation_textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Recommendations:" VerticalAlignment="Top" Grid.Row="1" FontSize="24" TextDecorations="Underline" Foreground="#FF080808" Margin="25,15,0,0" d:IsHidden="True"/>
+					<Grid x:Name="recommendationResult_area" Grid.Row="2" Margin="15,10,15,0" d:IsHidden="True">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition/>
 							<ColumnDefinition/>
@@ -74,8 +96,8 @@
 								<RowDefinition/>
 								<RowDefinition Height="Auto"/>
 							</Grid.RowDefinitions>
-							<Image VerticalAlignment="Top" Height="114" Source="/Assets/img/nohurt.png"/>
-							<TextBlock x:Name="recommendation_text1" TextWrapping="Wrap" Text="Water" Grid.Row="1" HorizontalAlignment="Center" FontSize="18.667"/>
+							<Image VerticalAlignment="Top" Height="100" Source="Assets/img/risk/anxiousrisk.png"/>
+							<TextBlock x:Name="recommendation_text1" TextWrapping="Wrap" Text="Consult a doctor to rule out upper GI bleeding" Grid.Row="1" HorizontalAlignment="Center" FontSize="13.333" TextAlignment="Center"/>
 						</Grid>
 						<Grid Grid.Column="1">
 							<Grid.RowDefinitions>
@@ -117,6 +139,9 @@
 							<Image VerticalAlignment="Top" Height="114" Source="/Assets/img/nohurt.png"/>
 							<TextBlock x:Name="recommendation_text6" TextWrapping="Wrap" Text="Water" Grid.Row="1" HorizontalAlignment="Center" FontSize="18.667"/>
 						</Grid>
+					</Grid>
+					<Grid x:Name="noRecommendationResult_area" Grid.Row="1" Grid.RowSpan="2">
+						<Image Source="Assets/img/risk/anxiousrisk.png" Margin="0,15,0,0"/>
 					</Grid>
 					<StackPanel Grid.Row="3">
 						<Button x:Name="okayResult_button" Content="Okay" Background="#FF1BA1E2" FontSize="30.667" Margin="0,0,0,-10"/>
