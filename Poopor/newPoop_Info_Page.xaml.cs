@@ -20,8 +20,6 @@ namespace Poopor
         {
             InitializeComponent();
 
-            //DataContext = ColorExtensions.AccentColors();
-            //DataContext = ShapeData.ShapeNames();
             colorPicker.ItemsSource = ColorExtensions.AccentColors();
             shapePicker.ItemsSource = ShapeData.ShapeNames();
             

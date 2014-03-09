@@ -52,7 +52,7 @@
             </TextBlock>
             <TextBlock Text="Home" Margin="-4,-17,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="#FF787B7C" FontSize="78.667"/>
         </StackPanel>
-        <Grid x:Name="healthInfo_grid" Margin="0" Grid.Row="1" Background="#FFFF3939">
+        <Grid x:Name="healthInfo_grid" Margin="0" Grid.Row="1" Background="#FFFF3939" Visibility="Collapsed">
         	<Grid.RowDefinitions>
         		<RowDefinition Height="Auto"/>
         		<RowDefinition Height="Auto"/>
@@ -60,25 +60,36 @@
             <toolkit:GestureService.GestureListener>
                 <toolkit:GestureListener Flick="OnFlick"/>
             </toolkit:GestureService.GestureListener>
-            <StackPanel>
-        		<TextBlock TextWrapping="Wrap" FontFamily="Segoe WP Semibold" Foreground="White" TextAlignment="Center" FontSize="21.333" Text="Detected! anxious signs of colon-rectum cancer"/>
-        	</StackPanel>
+            <TextBlock x:Name="header_textBlock" TextWrapping="Wrap" FontFamily="Segoe WP Semibold" Foreground="White" TextAlignment="Center" FontSize="21.333" Text="Detected! anxious signs of colon-rectum cancer"/>
         	<Grid Grid.Row="1">
         		<Grid.ColumnDefinitions>
         			<ColumnDefinition Width="Auto"/>
         			<ColumnDefinition/>
         		</Grid.ColumnDefinitions>
         		<StackPanel Margin="15,0,5,0">
-        			<Image Source="Assets/img/risk/anxiousrisk.png" Margin="0"/>
-        			<TextBlock TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" FontSize="16" TextAlignment="Center" Foreground="White" Text="Consult with doctor" Margin="0" HorizontalAlignment="Center"/>
+        			<Image x:Name="representation_image" Source="/Assets/img/risk/anxiousrisk.png" Margin="0"/>
+        			<TextBlock x:Name="suggestion_textBlock" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" FontSize="16" TextAlignment="Center" Foreground="White" Text="Consult with doctor" Margin="0" HorizontalAlignment="Center"/>
         		</StackPanel>
         		<StackPanel Margin="0" Grid.Column="1">
-        			<TextBlock TextWrapping="Wrap" Text="- Your first-relative relationship members have been diagnosed with FAP or HNPCC" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
-        			<TextBlock TextWrapping="Wrap" Text="- Recomendation 2" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
-        			<TextBlock TextWrapping="Wrap" Text="- Recomendation 3" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
+        			<TextBlock x:Name="moreInfo_textBlock1" TextWrapping="Wrap" Text="- Your first-relative relationship members have been diagnosed with FAP or HNPCC" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
+        			<TextBlock x:Name="moreInfo_textBlock2" TextWrapping="Wrap" Text="- Recomendation 2" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
+        			<TextBlock x:Name="moreInfo_textBlock3" TextWrapping="Wrap" Text="- Recomendation 3" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
         		</StackPanel>
         		<TextBlock x:Name="more_axiousSigns_text" TextWrapping="Wrap" Text="Slide rightward to see more details" Margin="0,0,5,0" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Foreground="White" FontFamily="Segoe WP SemiLight" FontSize="16"/>
         	</Grid>
+        </Grid>
+        <Grid x:Name="goodHealthInfo_grid" Margin="0" Grid.Row="1" Background="#FF61EB36">
+        	<Grid.RowDefinitions>
+        		<RowDefinition Height="Auto"/>
+        		<RowDefinition Height="Auto"/>
+        		<RowDefinition Height="Auto"/>
+        	</Grid.RowDefinitions>
+        	<toolkit:GestureService.GestureListener>
+        		<toolkit:GestureListener Flick="OnFlick"/>
+        	</toolkit:GestureService.GestureListener>
+        	<TextBlock TextWrapping="Wrap" FontFamily="Segoe WP Semibold" Foreground="White" TextAlignment="Center" FontSize="21.333" Text="No anxious signs of colon-rectum cancer"/>
+        	<TextBlock TextWrapping="Wrap" Text="Well done!" Grid.Row="2" HorizontalAlignment="Center" FontFamily="Segoe WP SemiLight" Foreground="White"/>
+        	<Image HorizontalAlignment="Center" Width="152" Grid.Row="1" Source="/Assets/img/risk/genrisk.png"/>
         </Grid>
 
         <!--ContentPanel - place additional content here-->

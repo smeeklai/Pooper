@@ -40,23 +40,16 @@ namespace Poopor
             // Check to see if the camera is available on the phone.
             if (PhotoCamera.IsCameraTypeSupported(CameraType.Primary) == true)
             {
-
                 // Otherwise, use standard camera on back of phone.
                 cam = new Microsoft.Devices.PhotoCamera(CameraType.Primary);
+
                 // Event is fired when the PhotoCamera object has been initialized.
+                SystemFunctions.SetProgressIndicatorProperties(true);
+                SystemTray.ProgressIndicator.Text = "Initializing camera...";
                 cam.Initialized += new EventHandler<Microsoft.Devices.CameraOperationCompletedEventArgs>(cam_Initialized);
 
                 // Event is fired when the capture sequence is complete and an image is available.
                 cam.CaptureImageAvailable += new EventHandler<Microsoft.Devices.ContentReadyEventArgs>(cam_CaptureImageAvailable);
-
-                // The event is fired when the shutter button receives a half press.
-                CameraButtons.ShutterKeyHalfPressed += OnButtonHalfPress;
-
-                // The event is fired when the shutter button receives a full press.
-                CameraButtons.ShutterKeyPressed += OnButtonFullPress;
-
-                // The event is fired when the shutter button is released.
-                CameraButtons.ShutterKeyReleased += OnButtonRelease;
 
                 //Set the VideoBrush source to the camera.
                 viewfinderBrush.SetSource(cam);
@@ -91,6 +84,7 @@ namespace Poopor
                 CameraButtons.ShutterKeyHalfPressed -= OnButtonHalfPress;
                 CameraButtons.ShutterKeyPressed -= OnButtonFullPress;
                 CameraButtons.ShutterKeyReleased -= OnButtonRelease;
+                ShutterButton.Click -= ShutterButton_Click;
 
             }
         }
@@ -103,12 +97,22 @@ namespace Poopor
         // Update the UI if initialization succeeds.
         void cam_Initialized(object sender, Microsoft.Devices.CameraOperationCompletedEventArgs e)
         {
+            // The event is fired when the shutter button receives a half press.
+            CameraButtons.ShutterKeyHalfPressed += OnButtonHalfPress;
+
+            // The event is fired when the shutter button receives a full press.
+            CameraButtons.ShutterKeyPressed += OnButtonFullPress;
+
+            // The event is fired when the shutter button is released.
+            CameraButtons.ShutterKeyReleased += OnButtonRelease;
+
+            ShutterButton.Click += ShutterButton_Click;
+
             if (e.Succeeded)
             {
                 this.Dispatcher.BeginInvoke(delegate()
                 {
-                    // Write message.
-                    //txtDebug.Text = "Camera initialized.";
+                    SystemFunctions.SetProgressIndicatorProperties(false);
                 });
             }
         }

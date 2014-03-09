@@ -28,6 +28,11 @@ namespace Poopor
 
         }
 
+        private void resultArea_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            //Navigate to risk signs explaination page
+        }
+
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()
         //{
