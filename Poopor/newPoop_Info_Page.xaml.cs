@@ -16,6 +16,21 @@ namespace Poopor
 {
     public partial class Poop_info_page : PhoneApplicationPage
     {
+        private Dictionary<double, string> painLevel_dictionary = new Dictionary<double, string>(){
+            {1, "no hurt"},
+            {2, "mild"},
+            {3, "moderate"},
+            {4, "severe"},
+            {5, "worst"}
+        };
+        private Dictionary<double, string> bloodAmount_dictionary = new Dictionary<double, string>(){
+            {1, "no blood"},
+            {2, "little blood"},
+            {3, "medium blood"},
+            {4, "much blood"},
+            {5, "a lot of blood"}
+        };
+
         public Poop_info_page()
         {
             InitializeComponent();
@@ -40,8 +55,8 @@ namespace Poopor
             {
                 string color = colorPicker.SelectedItem.ToString();
                 string shape = shapePicker.SelectedItem.ToString();
-                double painLevel = painLevel_slider.Value;
-                double bloodAmount = blood_amount_slider.Value;
+                string painLevel = painLevel_dictionary[painLevel_slider.Value];
+                string bloodAmount = bloodAmount_dictionary[blood_amount_slider.Value];
 
                 MessageBox.Show("Please answer us several health questions first. This can be avoided by siging up an account", "Health Infomation Required", MessageBoxButton.OK);
                 NavigationService.Navigate(new Uri("/AdditionalHealthInfomation.xaml?color=" + color + "?shape=" + shape + "?painLevel=" + painLevel

@@ -69,7 +69,7 @@
 						<RowDefinition/>
 						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
-					<Grid VerticalAlignment="Top" Background="#FFF2AF60">
+					<Grid x:Name="resultArea" VerticalAlignment="Top" Background="#FF63DE57">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="6*"/>
 							<ColumnDefinition Width="4*"/>
@@ -93,9 +93,9 @@
 								<TextBlock x:Name="bloodAmountRecord_textBlock" TextWrapping="Wrap" Text="TextBlock" FontFamily="Segoe WP SemiLight" FontSize="18.667" Foreground="White" Margin="5,0,0,0"/>
 							</StackPanel>
 						</StackPanel>
-						<StackPanel x:Name="resultArea" Grid.Column="1" Background="#FFF19120" Tap="resultArea_Tap">
-							<TextBlock x:Name="resultHeader_textBlock" TextWrapping="Wrap" Text="TAP HERE !" FontFamily="Segoe WP Semibold" FontSize="21.333" Foreground="White" HorizontalAlignment="Center"/>
-							<Image x:Name="resultImage" Source="/Assets/img/risk/anxiousrisk.png" HorizontalAlignment="Center" MaxWidth="152" MaxHeight="149" Width="130"/>
+						<StackPanel x:Name="cancer_area" Grid.Column="1" Background="#FF30C336">
+							<TextBlock x:Name="resultHeader_textBlock" TextWrapping="Wrap" Text="WELL DONE!" FontFamily="Segoe WP Semibold" FontSize="21.333" Foreground="White" HorizontalAlignment="Center"/>
+							<Image x:Name="resultImage" Source="/Assets/img/risk/welldone_icon.png" HorizontalAlignment="Center" MaxWidth="152" MaxHeight="149" Width="130"/>
 							<TextBlock x:Name="resultExplaination_textBlock" TextWrapping="Wrap" Text="No signs of colon-rectum cancer" Foreground="White" FontFamily="Segoe WP SemiLight" FontSize="16" HorizontalAlignment="Center" TextAlignment="Center"/>
 						</StackPanel>
 					</Grid>
@@ -159,8 +159,13 @@
 							<TextBlock x:Name="recommendation_text6" TextWrapping="Wrap" Text="Water" Grid.Row="1" HorizontalAlignment="Center" FontSize="18.667"/>
 						</Grid>
 					</Grid>
-					<Grid x:Name="noRecommendationResult_area" Grid.Row="1" Grid.RowSpan="2" Visibility="Collapsed">
-						<Image Source="Assets/img/risk/anxiousrisk.png" Margin="0,15,0,0"/>
+					<Grid x:Name="noRecommendationResult_area" Grid.Row="1" Grid.RowSpan="2" Margin="0,15,0,-5" Visibility="Collapsed">
+						<Grid.RowDefinitions>
+							<RowDefinition/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+						<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Well done! Keep doing!" Grid.Row="1" FontFamily="Segoe WP" FontSize="24" Foreground="Black"/>
+						<Image Source="/Assets/img/welldone_rec.png" Margin="0" HorizontalAlignment="Center"/>
 					</Grid>
 					<StackPanel Grid.Row="3">
 						<Button x:Name="okayResult_button" Content="Okay" Background="#FF1BA1E2" FontSize="30.667" Margin="0,0,0,-10"/>
@@ -211,9 +216,9 @@
 								<Image x:Name="shapeMeaning_image" HorizontalAlignment="Center" Height="100" VerticalAlignment="Center" Source="/Assets/img/poopShape/stype1.png"/>
 							</Grid>
 						</StackPanel>
-						<StackPanel Grid.Row="1" Background="#FFF5FF90">
-							<TextBlock TextWrapping="Wrap" Text="Recommendations:" FontSize="34.667" Margin="5,0,0,0" Foreground="#FF007FAA"/>
-							<StackPanel x:Name="recommendation_area" Margin="20,0,0,0">
+						<StackPanel x:Name="recommendations_area" Grid.Row="1" Background="#FFF5FF90">
+							<TextBlock x:Name="recommendations_header" TextWrapping="Wrap" Text="Recommendations:" FontSize="34.667" Margin="5,0,0,0" Foreground="#FF007FAA"/>
+							<StackPanel x:Name="recommendation_lists" Margin="20,0,0,0">
 								<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Foreground="#FF3C3C3C" FontSize="21.333" FontFamily="Segoe WP SemiLight"/>
 								<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Foreground="#FF3C3C3C" FontSize="21.333" FontFamily="Segoe WP SemiLight"/>
 								<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Foreground="#FF3C3C3C" FontSize="21.333" FontFamily="Segoe WP SemiLight"/>

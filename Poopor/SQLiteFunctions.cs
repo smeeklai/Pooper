@@ -54,6 +54,7 @@ namespace Poopor
 
         public UserInfo_Table_SQLite GetUserInfo(string userEmail)
         {
+            
             using (var db = new SQLiteConnection(dbPath))
             {
                 var existing = db.Query<UserInfo_Table_SQLite>("select * from UserInfo_Table_SQLite where Email='" + userEmail + "'").FirstOrDefault();
@@ -69,6 +70,7 @@ namespace Poopor
             using (var db = new SQLiteConnection(dbPath))
             {
                 var existing = db.Query<Poop_Table_SQLite>("select * from Poop_Table_SQLite where Email='" + userEmail + "'");
+                
                 if (existing != null)
                     return existing;
                 else

@@ -32,11 +32,11 @@ namespace Poopor
             test.Add("test2");
             test.Add("- Your first-relative relationship members have been diagnosed with FAP or HNPCC");
             userLastestResultsAndRecommendation.Add("userCancerSignMsg", test);
-            //var userLastestResultsAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
+            var userLastestResultsAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
             if (userLastestResultsAndRecommendation != null)
             {
                 object userHealthObj = null;
-                if (userLastestResultsAndRecommendation.TryGetValue("usercancersign", out userHealthObj))
+                if (userLastestResultsAndRecommendation.TryGetValue("UserCancerSign", out userHealthObj))
                 {
                     userHealth = userHealthObj as string;
                     if (!userHealth.Contains("normal"))
@@ -44,7 +44,8 @@ namespace Poopor
                 }
                 else
                     Debug.WriteLine("failed");
-            }*/
+            } else
+                Debug.WriteLine("no existed");*/
             buildApplicationBar();
         }
 

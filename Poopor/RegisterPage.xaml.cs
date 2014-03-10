@@ -130,7 +130,11 @@ namespace Poopor
                 if (azureResult == true && sqliteResult == false)
                     sqliteResult = await RegisterNewMemberToSQLite();
                 if (azureResult && sqliteResult == true)
+                {
+                    Debug.WriteLine("Register finished");
                     return true;
+                }
+                    
             }
             await CompleteSecondLevelValidation();
             return false;

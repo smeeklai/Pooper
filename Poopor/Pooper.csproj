@@ -212,6 +212,7 @@
     <Content Include="Assets\img\risk\welldone_icon.png" />
     <Content Include="Assets\img\tips today ex.jpg" />
     <Content Include="Assets\img\painLevel\worst.png" />
+    <Content Include="Assets\img\welldone_rec.png" />
     <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
