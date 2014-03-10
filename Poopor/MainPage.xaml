@@ -67,13 +67,13 @@
         			<ColumnDefinition/>
         		</Grid.ColumnDefinitions>
         		<StackPanel Margin="15,0,5,0">
-        			<Image x:Name="representation_image" Source="/Assets/img/risk/anxiousrisk.png" Margin="0"/>
+        			<Image x:Name="representation_image" Source="/Assets/img/risk/anxiousrisk.png" Margin="0,5,0,0"/>
         			<TextBlock x:Name="suggestion_textBlock" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" FontSize="16" TextAlignment="Center" Foreground="White" Text="Consult with doctor" Margin="0" HorizontalAlignment="Center"/>
         		</StackPanel>
         		<StackPanel Margin="0" Grid.Column="1">
         			<TextBlock x:Name="moreInfo_textBlock1" TextWrapping="Wrap" Text="- Your first-relative relationship members have been diagnosed with FAP or HNPCC" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
         			<TextBlock x:Name="moreInfo_textBlock2" TextWrapping="Wrap" Text="- Recomendation 2" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
-        			<TextBlock x:Name="moreInfo_textBlock3" TextWrapping="Wrap" Text="- Recomendation 3" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
+        			<TextBlock x:Name="moreInfo_textBlock3" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
         		</StackPanel>
         		<TextBlock x:Name="more_axiousSigns_text" TextWrapping="Wrap" Text="Slide rightward to see more details" Margin="0,0,5,0" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Foreground="White" FontFamily="Segoe WP SemiLight" FontSize="16"/>
         	</Grid>

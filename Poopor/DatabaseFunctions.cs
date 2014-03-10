@@ -11,6 +11,5 @@ namespace Poopor
         Task<Boolean> InsertData(object data);
         void UpdateData(object data);
         void DeleteData(string index);
-        void getData();
     }
 }

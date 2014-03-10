@@ -35,13 +35,22 @@ namespace Poopor
 
         private void newPoop_submit_button_Click(object sender, RoutedEventArgs e)
         {
-            if (SessionManagement.IsLoggedIn() == true)
+            Debug.WriteLine(SessionManagement.IsLoggedIn());
+            if (SessionManagement.IsLoggedIn() == false)
             {
-                NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
+                string color = colorPicker.SelectedItem.ToString();
+                string shape = shapePicker.SelectedItem.ToString();
+                double painLevel = painLevel_slider.Value;
+                double bloodAmount = blood_amount_slider.Value;
+
+                MessageBox.Show("Please answer us several health questions first. This can be avoided by siging up an account", "Health Infomation Required", MessageBoxButton.OK);
+                NavigationService.Navigate(new Uri("/AdditionalHealthInfomation.xaml?color=" + color + "?shape=" + shape + "?painLevel=" + painLevel
+                    + "?bloodAmount=" + bloodAmount, UriKind.Relative));
             }
             {
-                MessageBox.Show("Please answer us several health questions first. This can be avoided by siging up an account", "Health Infomation Required", MessageBoxButton.OK);
-                NavigationService.Navigate(new Uri("/AdditionalHealthInfomation.xaml", UriKind.Relative));
+                //---------------------------Call Bank & Fern Method here----------------------------------
+
+                NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
             }
             
         }

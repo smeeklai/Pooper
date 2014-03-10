@@ -9,15 +9,42 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Poopor.Resources;
 using System.Diagnostics;
+using SQLite;
+using System.IO;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Poopor
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        private string userHealth;
+        /*private Dictionary<string, object> userLastestResultsAndRecommendation = new Dictionary<string, object>()
+        {
+            {"usercancersign", "normal"},
+        };*/
 
         public MainPage()
         {
             InitializeComponent();
+            /*List<string> test = new List<string>();
+            test.Add("test1");
+            test.Add("test2");
+            test.Add("- Your first-relative relationship members have been diagnosed with FAP or HNPCC");
+            userLastestResultsAndRecommendation.Add("userCancerSignMsg", test);
+            //var userLastestResultsAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
+            if (userLastestResultsAndRecommendation != null)
+            {
+                object userHealthObj = null;
+                if (userLastestResultsAndRecommendation.TryGetValue("usercancersign", out userHealthObj))
+                {
+                    userHealth = userHealthObj as string;
+                    if (!userHealth.Contains("normal"))
+                        AdaptInterfaceToUserHealth(userHealth);
+                }
+                else
+                    Debug.WriteLine("failed");
+            }*/
             buildApplicationBar();
         }
 
@@ -25,6 +52,41 @@ namespace Poopor
         {
             NavigationService.Navigate(new Uri("/PicturePage.xaml", UriKind.Relative));
         }
+
+       /* private void AdaptInterfaceToUserHealth(string userHealth)
+        {
+            if (userHealth.Contains("suspicious"))
+            {
+                List<string> userCancerSignMsg = userLastestResultsAndRecommendation["userCancerSignMsg"] as List<string>;
+                goodHealthInfo_grid.Visibility = System.Windows.Visibility.Collapsed;
+                more_axiousSigns_text.Visibility = System.Windows.Visibility.Collapsed;
+                suggestion_textBlock.Text = "Be careful with your health";
+                representation_image.Source = new BitmapImage(new Uri("/Assets/img/risk/genrisk.png", UriKind.RelativeOrAbsolute));
+                healthInfo_grid.Visibility = System.Windows.Visibility.Visible;
+                SolidColorBrush newBgColor = new SolidColorBrush();
+                newBgColor.Color = Color.FromArgb(255, 241, 145, 32);
+                healthInfo_grid.Background = newBgColor;
+                header_textBlock.Text = "Detected! general signs of colon-rectum cancer";
+                try
+                {
+                    if (userCancerSignMsg[0] != null)
+                        moreInfo_textBlock1.Text = userCancerSignMsg[0];
+                    if (userCancerSignMsg[1] != null)
+                        moreInfo_textBlock2.Text = userCancerSignMsg[1];
+                    if (userCancerSignMsg[2] != null)
+                        moreInfo_textBlock3.Text = userCancerSignMsg[2];
+                }
+                catch (ArgumentOutOfRangeException error)
+                {
+
+                }
+            }
+            else if (userHealth.Contains("dangerous"))
+            {
+                goodHealthInfo_grid.Visibility = System.Windows.Visibility.Collapsed;
+                healthInfo_grid.Visibility = System.Windows.Visibility.Visible;
+            }
+        }*/
 
         private void buildApplicationBar()
         {
@@ -52,10 +114,13 @@ namespace Poopor
 
         private void OnFlick(object sender, FlickGestureEventArgs e)
         {
-            // User flicked towards right
-            if (e.HorizontalVelocity > 0)
+            if (userHealth.Contains("anxious"))
             {
-                NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
+                // User flicked towards right
+                if (e.HorizontalVelocity > 0)
+                {
+                    NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
+                }
             }
         }
     }

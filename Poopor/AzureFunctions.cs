@@ -56,19 +56,6 @@ namespace Poopor
             return false;
         }
 
-        public async void getData()
-        {
-            try
-            {
-                items = await azure_userInfo_table.ToCollectionAsync();
-                Debug.WriteLine(items.Count);
-            }
-            catch (MobileServiceInvalidOperationException e)
-            {
-                Debug.WriteLine(e.Message);
-            }
-        }
-
         public async void UpdateData(object data)
         {
 

@@ -14,6 +14,7 @@ namespace Poopor
         private static readonly String LOGIN_STATUS = "loginStatus";
         private static readonly String EMAIL = "email";
         private static readonly String IMAGE_SAVED_COUNTER = "imageSavedCounter";
+        private static readonly String USER_LASTEST_RESULT_AND_RECOMMENDATION = "userLastestResultAndRecommendation";
 
         public static Boolean IsLoggedIn()
         {
@@ -70,12 +71,31 @@ namespace Poopor
             settings.Save();
         }
 
+        public static void StoreUserLastestResultsAndRecommendation(Dictionary<string, object> lastestResultAndRecommendation)
+        {
+            if (settings.Contains(USER_LASTEST_RESULT_AND_RECOMMENDATION))
+                settings[USER_LASTEST_RESULT_AND_RECOMMENDATION] = lastestResultAndRecommendation;
+            else
+                settings.Add(USER_LASTEST_RESULT_AND_RECOMMENDATION, lastestResultAndRecommendation);
+            settings.Save();
+        }
+
+        public static Dictionary<string, object> GetUserLastestResultsAndRecommendation()
+        {
+            if (settings.Contains(USER_LASTEST_RESULT_AND_RECOMMENDATION))
+                return settings[USER_LASTEST_RESULT_AND_RECOMMENDATION] as Dictionary<string, object>;
+            else
+                return null;
+        }
+
         public static async Task<bool> Logout()
         {
             if (settings.Contains(LOGIN_STATUS))
                 settings.Remove(LOGIN_STATUS);
             if (settings.Contains(EMAIL))
                 settings.Remove(EMAIL);
+            if (settings.Contains(USER_LASTEST_RESULT_AND_RECOMMENDATION))
+                settings.Remove(USER_LASTEST_RESULT_AND_RECOMMENDATION);
             settings.Save();
             return true;
         }

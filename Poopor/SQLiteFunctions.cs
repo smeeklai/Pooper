@@ -52,6 +52,54 @@ namespace Poopor
             
         }
 
+        public UserInfo_Table_SQLite GetUserInfo(string userEmail)
+        {
+            using (var db = new SQLiteConnection(dbPath))
+            {
+                var existing = db.Query<UserInfo_Table_SQLite>("select * from UserInfo_Table_SQLite where Email='" + userEmail + "'").FirstOrDefault();
+                if (existing != null)
+                    return existing;
+                else
+                    return null;
+            }
+        }
+
+        public List<Poop_Table_SQLite> GetUserPoopData(string userEmail)
+        {
+            using (var db = new SQLiteConnection(dbPath))
+            {
+                var existing = db.Query<Poop_Table_SQLite>("select * from Poop_Table_SQLite where Email='" + userEmail + "'");
+                if (existing != null)
+                    return existing;
+                else
+                    return null;
+            }
+        }
+
+        public List<UserInfo_Table_SQLite> GetUserInfoByQuery(string query)
+        {
+            using (var db = new SQLiteConnection(dbPath))
+            {
+                var existing = db.Query<UserInfo_Table_SQLite>(query);
+                if (existing != null)
+                    return existing;
+                else
+                    return null;
+            }
+        }
+
+        public List<Poop_Table_SQLite> GetUserPoopDataByQuery(string query)
+        {
+            using (var db = new SQLiteConnection(dbPath))
+            {
+                var existing = db.Query<Poop_Table_SQLite>(query);
+                if (existing != null)
+                    return existing;
+                else
+                    return null;
+            }
+        }
+
         private Boolean IsUserInfo_Data(object data)
         {
             if (userInfo_table.GetType().Equals(data.GetType()))
@@ -79,12 +127,6 @@ namespace Poopor
             }
 
             return result;
-        }
-
-
-        public void getData()
-        {
-            throw new NotImplementedException();
         }
     }
 }

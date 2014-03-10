@@ -26,7 +26,7 @@ namespace Poopor
         // Variables
         private PhotoCamera cam;
         private MediaLibrary library = new MediaLibrary();
-        private MemoryStream st = null;
+        private WriteableBitmap wb;
 
         public Picture_page()
         {
@@ -151,18 +151,18 @@ namespace Poopor
 
         private void StoreImage(Stream stImg)
         {
-            String imgName = "Poop" + SessionManagement.GetImageSavedCounter() + ".jpg";
+            String imgName = SessionManagement.GetEmail() + "Poop" + SessionManagement.GetImageSavedCounter() + ".jpg";
             BitmapImage img = new BitmapImage();
             img.SetSource(stImg);
-            WriteableBitmap wb = new WriteableBitmap(img);
+            wb = new WriteableBitmap(img);
             wb = wb.Resize(653, 490, WriteableBitmapExtensions.Interpolation.Bilinear);
-            Debug.WriteLine(wb.PixelWidth + " " + wb.PixelHeight);
+            //Debug.WriteLine(wb.PixelWidth + " " + wb.PixelHeight);
 
             using (MemoryStream stream = new MemoryStream())
             {
                 wb.SaveJpeg(stream, wb.PixelWidth, wb.PixelHeight, 0, 100);
                 stream.Seek(0, SeekOrigin.Begin);
-                st = new MemoryStream(stream.GetBuffer());
+
                 // Save picture as JPEG to isolated storage.
                 using (IsolatedStorageFile isStore = IsolatedStorageFile.GetUserStoreForApplication())
                 {
@@ -192,8 +192,23 @@ namespace Poopor
         {
             this.Dispatcher.BeginInvoke(delegate()
             {
-                StoreImage(e.ImageStream);
-                AnalyzePoop();
+                if (SessionManagement.IsLoggedIn() == false)
+                {
+                    BitmapImage img = new BitmapImage();
+                    img.SetSource(e.ImageStream);
+                    wb = new WriteableBitmap(img);
+                    wb = wb.Resize(653, 490, WriteableBitmapExtensions.Interpolation.Bilinear);
+
+                    //----------------- call PP Method here----------------------
+                    AnalyzePoop();
+                }
+                else
+                {
+                    StoreImage(e.ImageStream);
+
+                    //----------------- call PP Method here----------------------
+                    AnalyzePoop();
+                }
             });
             /*this.Dispatcher.BeginInvoke(delegate()
             {
@@ -205,8 +220,6 @@ namespace Poopor
         {
             SystemFunctions.SetProgressIndicatorProperties(true);
             SystemTray.ProgressIndicator.Text = "analyzing...";
-            Debug.WriteLine(st.Length);
-            st.Dispose();
         }
 
         // Provide auto-focus with a half button press using the hardware shutter button.
