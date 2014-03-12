@@ -16,21 +16,6 @@ namespace Poopor
 {
     public partial class Poop_info_page : PhoneApplicationPage
     {
-        private Dictionary<double, string> painLevel_dictionary = new Dictionary<double, string>(){
-            {1, "no hurt"},
-            {2, "mild"},
-            {3, "moderate"},
-            {4, "severe"},
-            {5, "worst"}
-        };
-        private Dictionary<double, string> bloodAmount_dictionary = new Dictionary<double, string>(){
-            {1, "no blood"},
-            {2, "little blood"},
-            {3, "medium blood"},
-            {4, "much blood"},
-            {5, "a lot of blood"}
-        };
-
         public Poop_info_page()
         {
             InitializeComponent();
@@ -42,6 +27,10 @@ namespace Poopor
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
+            NavigationContext.QueryString.TryGetValue("poopColor", out poopColor);
+            isMelena = Convert.ToBoolean(NavigationContext.QueryString["melenaResult"]);
+            colorPicker.SelectedItem = poopColor;
             painLevel_slider.ValueChanged += painLevel_slider_ValueChanged;
             blood_amount_slider.ValueChanged += blood_amount_slider_ValueChanged;
             colorPicker.SelectionChanged += colorPicker_SelectionChanged;
@@ -73,7 +62,6 @@ namespace Poopor
 
                 NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
             }
-            
         }
 
         void shapePicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -151,5 +139,22 @@ namespace Poopor
                 blood_amount_description.Text = AppResources.PainLevel_worst;
             }
         }
+
+        private string poopColor;
+        private Boolean isMelena = false;
+        private Dictionary<double, string> painLevel_dictionary = new Dictionary<double, string>(){
+            {1, "no hurt"},
+            {2, "mild"},
+            {3, "moderate"},
+            {4, "severe"},
+            {5, "worst"}
+        };
+        private Dictionary<double, string> bloodAmount_dictionary = new Dictionary<double, string>(){
+            {1, "no blood"},
+            {2, "little blood"},
+            {3, "medium blood"},
+            {4, "much blood"},
+            {5, "a lot of blood"}
+        };
     }
 }

@@ -19,6 +19,7 @@ using System.Threading;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.MobileServices;
+using System.Windows.Threading;
 
 namespace Poopor
 {
@@ -30,6 +31,9 @@ namespace Poopor
         private MobileServiceCollection<Poop_Table_Azure, Poop_Table_Azure> userLastestPoopDataInAzure;
         private Poop_Table_Azure userLastestPoopRecordInAzure;
         private int isUpdateNeeded;
+        private AzureFunctions azureFunctions = new AzureFunctions();
+        private SQLiteFunctions sqliteFunctions = new SQLiteFunctions();
+        private DispatcherTimer timer = new DispatcherTimer();
         /*private Dictionary<string, object> userLastestResultsAndRecommendation = new Dictionary<string, object>()
         {
             {"usercancersign", "normal"},
@@ -64,7 +68,7 @@ namespace Poopor
         {
             if (SessionManagement.IsLoggedIn())
             {
-                var userLastestPoopDataInSQLite = new SQLiteFunctions().GetUserPoopData(SessionManagement.GetEmail());
+                var userLastestPoopDataInSQLite = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail());
                 if (userLastestPoopDataInSQLite.Count != 0)
                 {
                     userLastestpoopRecordInSqlite = userLastestPoopDataInSQLite.Last();
@@ -73,6 +77,16 @@ namespace Poopor
                         SystemTray.ProgressIndicator = new ProgressIndicator();
                         SystemTray.ProgressIndicator.Text = GetLastUpdatedTimeInText(userLastestpoopRecordInSqlite.Date_Time);
                         SystemTray.ProgressIndicator.IsVisible = true;
+
+                        timer.Interval = TimeSpan.FromMilliseconds(3000);
+
+                        timer.Tick += (sender, args) =>
+                        {
+                            SystemTray.ProgressIndicator.IsVisible = false;
+                            timer.Stop();
+                        };
+
+                        timer.Start();
                     }
                     else
                     {
@@ -85,10 +99,20 @@ namespace Poopor
                             SystemTray.ProgressIndicator = new ProgressIndicator();
                             SystemTray.ProgressIndicator.Text = "Data is up-to-date";
                             SystemTray.ProgressIndicator.IsVisible = true;
+
+                            timer.Interval = TimeSpan.FromMilliseconds(3000);
+
+                            timer.Tick += (sender, args) =>
+                            {
+                                SystemTray.ProgressIndicator.IsVisible = false;
+                                timer.Stop();
+                            };
+
+                            timer.Start();
                         }
                         else
                         {
-                            userLastestPoopDataInAzure = await new AzureFunctions().GetUserPoopDataInAzure(SessionManagement.GetEmail());
+                            userLastestPoopDataInAzure = await azureFunctions.GetUserPoopDataInAzure(SessionManagement.GetEmail());
                             userLastestPoopRecordInAzure = userLastestPoopDataInAzure.Last();
                             StartSyncUserLastestData();
                         }
@@ -139,14 +163,14 @@ namespace Poopor
 
         private async void SyncDataToSQLite()
         {
-            var result = await new AzureFunctions().GetUserPoopDataAfterInputDate(SessionManagement.GetEmail(), userLastestpoopRecordInSqlite.Date_Time);
+            var result = await azureFunctions.GetUserPoopDataAfterInputDate(SessionManagement.GetEmail(), userLastestpoopRecordInSqlite.Date_Time);
             Debug.WriteLine("There are {0} new data in Azure", result.Count);
             foreach (var item in result)
             {
                 Boolean resultOfInsertation = false;
                 while (resultOfInsertation == false)
                 {
-                    resultOfInsertation = await new SQLiteFunctions().InsertData(new Poop_Table_SQLite()
+                    resultOfInsertation = await sqliteFunctions.InsertData(new Poop_Table_SQLite()
                     {
                         Email = SessionManagement.GetEmail(),
                         Color = item.Color,
@@ -168,7 +192,7 @@ namespace Poopor
 
         private async void SyncDataToAzure()
         {
-            var tempResult = new SQLiteFunctions().GetUserPoopData(SessionManagement.GetEmail());
+            var tempResult = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail());
             var poopDataToBeAdded = new List<Poop_Table_SQLite>();
             tempResult.Reverse();
             foreach (var item in tempResult)
@@ -185,7 +209,7 @@ namespace Poopor
                 Boolean resultOfInsertation = false;
                 while (resultOfInsertation == false)
                 {
-                    resultOfInsertation = await new AzureFunctions().InsertData(new Poop_Table_Azure()
+                    resultOfInsertation = await azureFunctions.InsertData(new Poop_Table_Azure()
                     {
                         Email = SessionManagement.GetEmail(),
                         Color = item.Color,

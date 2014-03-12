@@ -17,6 +17,7 @@ using System.Diagnostics;
 using System.Windows.Media.Imaging;
 using Windows.Storage.Streams;
 using System.Threading.Tasks;
+using Poopor.Data;
 
 namespace Poopor
 {
@@ -132,7 +133,7 @@ namespace Poopor
                     Debug.WriteLine("poop3 widgt: " + img.PixelWidth + " height: " + img.PixelHeight);
                 }*/
             }
-            NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml?poopColor=Maroon&melenaResult=true", UriKind.Relative));
             /*cam.AutoFocusCompleted += cam_AutoFocusCompleted;
             if (cam != null)
             {
@@ -190,10 +191,11 @@ namespace Poopor
         }
 
         // Informs when full resolution photo has been taken, saves to local media library and the local folder.
-        async void cam_CaptureImageAvailable(object sender, Microsoft.Devices.ContentReadyEventArgs e)
+        void cam_CaptureImageAvailable(object sender, Microsoft.Devices.ContentReadyEventArgs e)
         {
-            this.Dispatcher.BeginInvoke(delegate()
+            this.Dispatcher.BeginInvoke(async delegate()
             {
+                SystemFunctions.SetProgressIndicatorProperties(true);
                 if (SessionManagement.IsLoggedIn() == false)
                 {
                     BitmapImage img = new BitmapImage();
@@ -202,27 +204,28 @@ namespace Poopor
                     poopImage = poopImage.Resize(653, 490, WriteableBitmapExtensions.Interpolation.Bilinear);
 
                     //----------------- call PP Method here----------------------
+                    SystemTray.ProgressIndicator.Text = "Analyzing poop color...";
+                    string poopColor = await PPMethod1(poopImage);
+                    //Boolean isMelena = await PPMethod2(poopColor);
+                    SystemFunctions.SetProgressIndicatorProperties(false);
+                    //NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml?poopColor=" + poopColor + "?melenaResult=" + isMelena, UriKind.Relative));
                 }
                 else
                 {
-                    SystemFunctions.SetProgressIndicatorProperties(true);
                     SystemTray.ProgressIndicator.Text = "Saving image...";
                     StoreImage(e.ImageStream);
                     //----------------- call PP Method here----------------------
                     SystemTray.ProgressIndicator.Text = "Analyzing poop color...";
-                    //string color = await PPMethod1(poopImage);
-                    //Boolean isMelena = await test();
+                    //string poopColor = await PPMethod1(poopImage);
+                    //Boolean isMelena = await PPMethod2(poopColor);
+                    SystemFunctions.SetProgressIndicatorProperties(false);
+                    //NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml?poopColor=" + poopColor + "?melenaResult=" + isMelena, UriKind.Relative));
                 }
             });
             /*this.Dispatcher.BeginInvoke(delegate()
             {
                 NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml", UriKind.Relative));
             });*/
-        }
-
-        private async Task<int> test()
-        {
-            return 0;
         }
            
         // Provide auto-focus with a half button press using the hardware shutter button.
