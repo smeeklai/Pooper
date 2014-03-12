@@ -21,12 +21,12 @@ namespace Poopor.Data
         {
             { "Maroon", 0xFF4B0000.ToSolidColorBrush() },
             { "Medium Brown",  0xFF6C4B1B.ToSolidColorBrush() },
-            { "Light Brown",    0xFFD8BE70.ToSolidColorBrush() },
+            { "Very light brown",    0xFFD8BE70.ToSolidColorBrush() },
             { "Orange",    0xFF9E3D02.ToSolidColorBrush() },
             { "Yellow",   0xFFEBC314.ToSolidColorBrush() },
-            { "Red",    0xFFAA0000.ToSolidColorBrush() },
+            { "Bright red",    0xFFAA0000.ToSolidColorBrush() },
             { "Dark Green",  0xFF0B2604.ToSolidColorBrush() },
-            { "Clay",    0xFFA0A0A0.ToSolidColorBrush() },
+            { "Gray",    0xFFA0A0A0.ToSolidColorBrush() },
             { "Black",     0xFF141414.ToSolidColorBrush() },
         };
 

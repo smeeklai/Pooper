@@ -92,6 +92,10 @@
 								<TextBlock TextWrapping="Wrap" Text="BLOOD AMOUNT:" FontSize="18.667" Margin="0" Foreground="#FF666666" FontFamily="Segoe WP Semibold"/>
 								<TextBlock x:Name="bloodAmountRecord_textBlock" TextWrapping="Wrap" Text="TextBlock" FontFamily="Segoe WP SemiLight" FontSize="18.667" Foreground="White" Margin="5,0,0,0"/>
 							</StackPanel>
+							<StackPanel Orientation="Horizontal">
+								<TextBlock TextWrapping="Wrap" Text="DATE:" FontFamily="Segoe WP Semibold" FontSize="18.667" Foreground="#FF666666"/>
+								<TextBlock x:Name="dateTimeRecord_textBlock" TextWrapping="Wrap" Text="TextBlock" FontFamily="Segoe WP SemiLight" FontSize="18.667" Foreground="White" Margin="5,0,0,0"/>
+							</StackPanel>
 						</StackPanel>
 						<StackPanel x:Name="cancer_area" Grid.Column="1" Background="#FF30C336">
 							<TextBlock x:Name="resultHeader_textBlock" TextWrapping="Wrap" Text="WELL DONE!" FontFamily="Segoe WP Semibold" FontSize="21.333" Foreground="White" HorizontalAlignment="Center"/>
@@ -115,48 +119,48 @@
 								<RowDefinition/>
 								<RowDefinition Height="Auto"/>
 							</Grid.RowDefinitions>
-							<Image x:Name="recommendation_image1" VerticalAlignment="Top" Source="Assets/img/risk/anxiousrisk.png"/>
-							<TextBlock x:Name="recommendation_text1" TextWrapping="Wrap" Text="Water" Grid.Row="1" HorizontalAlignment="Center" FontSize="18.667" TextAlignment="Center"/>
+							<Image x:Name="recommendation_image1" HorizontalAlignment="Center"/>
+							<TextBlock x:Name="recommendation_text1" TextWrapping="Wrap" Grid.Row="1" HorizontalAlignment="Center" FontSize="16" TextAlignment="Center"/>
 						</Grid>
 						<Grid Grid.Column="1" Margin="0,10,0,0">
 							<Grid.RowDefinitions>
 								<RowDefinition/>
 								<RowDefinition Height="Auto"/>
 							</Grid.RowDefinitions>
-							<Image x:Name="recommendation_image2" VerticalAlignment="Top" Source="/Assets/img/risk/anxiousrisk.png"/>
-							<TextBlock x:Name="recommendation_text2" TextWrapping="Wrap" Text="Water" Grid.Row="1" HorizontalAlignment="Center" FontSize="18.667"/>
+							<Image x:Name="recommendation_image2" HorizontalAlignment="Center"/>
+							<TextBlock x:Name="recommendation_text2" TextWrapping="Wrap" Grid.Row="1" HorizontalAlignment="Center" FontSize="16" TextAlignment="Center" />
 						</Grid>
 						<Grid Grid.Column="2" Margin="0,10,0,0">
 							<Grid.RowDefinitions>
 								<RowDefinition/>
 								<RowDefinition Height="Auto"/>
 							</Grid.RowDefinitions>
-							<Image x:Name="recommendation_image3" VerticalAlignment="Top" Source="/Assets/img/risk/anxiousrisk.png"/>
-							<TextBlock x:Name="recommendation_text3" TextWrapping="Wrap" Text="Water" Grid.Row="1" HorizontalAlignment="Center" FontSize="18.667"/>
+							<Image x:Name="recommendation_image3" HorizontalAlignment="Center"/>
+							<TextBlock x:Name="recommendation_text3" TextWrapping="Wrap" Grid.Row="1" HorizontalAlignment="Center" FontSize="16"/>
 						</Grid>
 						<Grid Grid.Row="1" Margin="0,10,0,0">
 							<Grid.RowDefinitions>
 								<RowDefinition/>
 								<RowDefinition Height="Auto"/>
 							</Grid.RowDefinitions>
-							<Image x:Name="recommendation_image4" VerticalAlignment="Top" Source="/Assets/img/risk/anxiousrisk.png"/>
-							<TextBlock x:Name="recommendation_text4" TextWrapping="Wrap" Text="Water" Grid.Row="1" HorizontalAlignment="Center" FontSize="18.667"/>
+							<Image x:Name="recommendation_image4" HorizontalAlignment="Center"/>
+							<TextBlock x:Name="recommendation_text4" TextWrapping="Wrap" Grid.Row="1" HorizontalAlignment="Center" FontSize="16"/>
 						</Grid>
 						<Grid Grid.Column="1" Grid.Row="1" Margin="0,10,0,0">
 							<Grid.RowDefinitions>
 								<RowDefinition/>
 								<RowDefinition Height="Auto"/>
 							</Grid.RowDefinitions>
-							<Image x:Name="recommendation_image5" VerticalAlignment="Top" Source="/Assets/img/risk/anxiousrisk.png"/>
-							<TextBlock x:Name="recommendation_text5" TextWrapping="Wrap" Text="Water" Grid.Row="1" HorizontalAlignment="Center" FontSize="18.667"/>
+							<Image x:Name="recommendation_image5" HorizontalAlignment="Center"/>
+							<TextBlock x:Name="recommendation_text5" TextWrapping="Wrap" Grid.Row="1" HorizontalAlignment="Center" FontSize="16"/>
 						</Grid>
 						<Grid Grid.Column="2" Grid.Row="1" Margin="0,10,0,0">
 							<Grid.RowDefinitions>
 								<RowDefinition/>
 								<RowDefinition Height="Auto"/>
 							</Grid.RowDefinitions>
-							<Image x:Name="recommendation_image6" VerticalAlignment="Top" Source="/Assets/img/risk/anxiousrisk.png"/>
-							<TextBlock x:Name="recommendation_text6" TextWrapping="Wrap" Text="Water" Grid.Row="1" HorizontalAlignment="Center" FontSize="18.667"/>
+							<Image x:Name="recommendation_image6" HorizontalAlignment="Center"/>
+							<TextBlock x:Name="recommendation_text6" TextWrapping="Wrap" Grid.Row="1" HorizontalAlignment="Center" FontSize="16"/>
 						</Grid>
 					</Grid>
 					<Grid x:Name="noRecommendationResult_area" Grid.Row="1" Grid.RowSpan="2" Margin="0,15,0,-5" Visibility="Collapsed">
@@ -184,54 +188,38 @@
 						</Grid.RowDefinitions>
 						<StackPanel Background="#FF82F1C4" Margin="0">
 							<TextBlock TextWrapping="Wrap" Text="Meaning" FontSize="34.667" Margin="5,0,0,0" Foreground="#FF007FAA"/>
-							<Grid Margin="20,0,0,0">
+							<Grid x:Name="poopColorMeaning_area" Margin="20,0,0,0">
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="Auto"/>
 									<ColumnDefinition/>
 								</Grid.ColumnDefinitions>
-								<es:Arc x:Name="colorMeaning_arc" ArcThickness="1" ArcThicknessUnit="Percent" EndAngle="360" Fill="#FF973E00" Height="100" Stretch="None" Stroke="#FF82F1C4" StartAngle="0" UseLayoutRounding="False" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-								<StackPanel x:Name="colorMeaning_area" Margin="10,0,0,0" Grid.Column="1">
+								<es:Arc x:Name="poopColorMeaning_arc" ArcThickness="1" ArcThicknessUnit="Percent" EndAngle="360" Fill="#FF973E00" Stretch="None" Stroke="#FF82F1C4" StartAngle="0" UseLayoutRounding="False" Width="100" Margin="0" Height="100" VerticalAlignment="Center"/>
+								<StackPanel Margin="10,0,0,0" Grid.Column="1">
 									<StackPanel Orientation="Horizontal" Margin="0">
 										<TextBlock TextWrapping="Wrap" Text="Color :" FontFamily="Segoe WP SemiLight" Foreground="Black" FontSize="26.667"/>
 										<TextBlock x:Name="colorResult_textBlock" TextWrapping="Wrap" Text="Light Brown" Margin="8,0,0,0" FontFamily="Segoe WP SemiLight" Foreground="#FFAC720C" FontSize="26.667"/>
 									</StackPanel>
-									<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Margin="10,0,0,0" FontFamily="Segoe WP SemiLight" Foreground="#FF3C3C3C" FontSize="21.333"/>
-									<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Margin="10,0,0,0" FontFamily="Segoe WP SemiLight" Foreground="#FF3C3C3C" FontSize="21.333"/>
+									<StackPanel x:Name="poopColorMeaning_lists" Margin="10,0,0,0"/>
 								</StackPanel>
 							</Grid>
-							<Grid Margin="20,10,0,5">
+							<Grid x:Name="poopShapeMeaning_area" Margin="20,10,0,5">
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="Auto"/>
 									<ColumnDefinition/>
 								</Grid.ColumnDefinitions>
-								<StackPanel x:Name="shapeMeaning_area" Margin="10,0,0,0" Grid.Column="1">
+								<StackPanel Margin="10,0,0,0" Grid.Column="1">
 									<StackPanel Orientation="Horizontal" Margin="0">
 										<TextBlock TextWrapping="Wrap" Text="Shape :" FontFamily="Segoe WP SemiLight" Foreground="Black" FontSize="26.667"/>
 										<TextBlock x:Name="shapeResult_textBlock" TextWrapping="Wrap" Text="Seperate Hard Lumps" Margin="8,0,0,0" FontFamily="Segoe WP SemiLight" Foreground="#FFAC720C" FontSize="26.667"/>
 									</StackPanel>
-									<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Margin="10,0,0,0" FontFamily="Segoe WP SemiLight" Foreground="#FF3C3C3C" FontSize="21.333"/>
-									<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Margin="10,0,0,0" FontFamily="Segoe WP SemiLight" Foreground="#FF3C3C3C" FontSize="21.333"/>
-									<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Margin="10,0,0,0" FontFamily="Segoe WP SemiLight" Foreground="#FF3C3C3C" FontSize="21.333"/>
+									<StackPanel x:Name="poopShapeMeaning_lists" Margin="10,0,0,0"/>
 								</StackPanel>
 								<Image x:Name="shapeMeaning_image" HorizontalAlignment="Center" Height="100" VerticalAlignment="Center" Source="/Assets/img/poopShape/stype1.png"/>
 							</Grid>
 						</StackPanel>
 						<StackPanel x:Name="recommendations_area" Grid.Row="1" Background="#FFF5FF90">
 							<TextBlock x:Name="recommendations_header" TextWrapping="Wrap" Text="Recommendations:" FontSize="34.667" Margin="5,0,0,0" Foreground="#FF007FAA"/>
-							<StackPanel x:Name="recommendation_lists" Margin="20,0,0,0">
-								<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Foreground="#FF3C3C3C" FontSize="21.333" FontFamily="Segoe WP SemiLight"/>
-								<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Foreground="#FF3C3C3C" FontSize="21.333" FontFamily="Segoe WP SemiLight"/>
-								<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Foreground="#FF3C3C3C" FontSize="21.333" FontFamily="Segoe WP SemiLight"/>
-								<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Foreground="#FF3C3C3C" FontSize="21.333" FontFamily="Segoe WP SemiLight"/>
-								<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Foreground="#FF3C3C3C" FontSize="21.333" FontFamily="Segoe WP SemiLight"/>
-								<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Foreground="#FF3C3C3C" FontSize="21.333" FontFamily="Segoe WP SemiLight"/>
-								<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Foreground="#FF3C3C3C" FontSize="21.333" FontFamily="Segoe WP SemiLight"/>
-								<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Foreground="#FF3C3C3C" FontSize="21.333" FontFamily="Segoe WP SemiLight"/>
-								<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Foreground="#FF3C3C3C" FontSize="21.333" FontFamily="Segoe WP SemiLight"/>
-								<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Foreground="#FF3C3C3C" FontSize="21.333" FontFamily="Segoe WP SemiLight"/>
-								<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Foreground="#FF3C3C3C" FontSize="21.333" FontFamily="Segoe WP SemiLight"/>
-								<TextBlock TextWrapping="Wrap" Text="- blablablablablabla" Foreground="#FF3C3C3C" FontSize="21.333" FontFamily="Segoe WP SemiLight"/>
-							</StackPanel>
+							<StackPanel x:Name="recommendation_lists" Margin="20,0,0,0"/>
 						</StackPanel>
 					</Grid>
 				</ScrollViewer>

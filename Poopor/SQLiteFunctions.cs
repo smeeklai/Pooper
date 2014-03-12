@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Poopor
 {
-    class SQLiteFunctions : DatabaseFunctions {
+    class SQLiteFunctions : DatabaseFunctions
+    {
 
         public static string dbPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "db.sqlite");
         private static Poop_Table_SQLite poop_table = new Poop_Table_SQLite();
@@ -44,17 +45,34 @@ namespace Poopor
 
         public void UpdateData(object data)
         {
-            
+
         }
 
         public void DeleteData(string index)
         {
-            
+
+        }
+
+        public void DeleteUserPoopData(string userEmail)
+        {
+            using (var db = new SQLiteConnection(dbPath))
+            {
+                var existing = db.Query<Poop_Table_SQLite>("select * from Poop_Table_SQLite where Email='" + userEmail + "'");
+                if (existing != null)
+                {
+                    foreach (var item in existing)
+                    {
+                        db.RunInTransaction(() =>
+                        {
+                            db.Delete(item);
+                        });
+                    }
+                }
+            }
         }
 
         public UserInfo_Table_SQLite GetUserInfo(string userEmail)
         {
-            
             using (var db = new SQLiteConnection(dbPath))
             {
                 var existing = db.Query<UserInfo_Table_SQLite>("select * from UserInfo_Table_SQLite where Email='" + userEmail + "'").FirstOrDefault();
@@ -70,7 +88,6 @@ namespace Poopor
             using (var db = new SQLiteConnection(dbPath))
             {
                 var existing = db.Query<Poop_Table_SQLite>("select * from Poop_Table_SQLite where Email='" + userEmail + "'");
-                
                 if (existing != null)
                     return existing;
                 else

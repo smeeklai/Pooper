@@ -123,6 +123,8 @@ namespace Poopor
 
         private async Task<Boolean> RegisterNewMember()
         {
+            SystemFunctions.SetProgressIndicatorProperties(true);
+            SystemTray.ProgressIndicator.Text = "Registering...";
             if (CheckSecondLevelValidation())
             {
                 if (azureResult == false)
@@ -514,31 +516,6 @@ namespace Poopor
                     break;
             }
             return answer;
-        }
-    }
-
-    public static class ToolkitExtensions
-    {
-        public static Task<CustomMessageBoxResult> ShowAsync(this CustomMessageBox source)
-        {
-
-            var completion = new TaskCompletionSource<CustomMessageBoxResult>();
-            // wire up the event that will be used as the result of this method
-            EventHandler<DismissedEventArgs> dismissed = null;
-
-            dismissed += (sender, args) =>
-            {
-
-                completion.SetResult(args.Result);
-
-                // make sure we unsubscribe from this!
-
-                source.Dismissed -= dismissed;
-
-            };
-            source.Dismissed += dismissed;
-            source.Show();
-            return completion.Task;
         }
     }
 }

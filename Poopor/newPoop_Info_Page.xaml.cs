@@ -50,20 +50,26 @@ namespace Poopor
 
         private void newPoop_submit_button_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine(SessionManagement.IsLoggedIn());
+            string color = colorPicker.SelectedItem.ToString();
+            string shape = shapePicker.SelectedItem.ToString();
+            string painLevel = painLevel_dictionary[painLevel_slider.Value];
+            string bloodAmount = bloodAmount_dictionary[blood_amount_slider.Value];
+
             if (SessionManagement.IsLoggedIn() == false)
             {
-                string color = colorPicker.SelectedItem.ToString();
-                string shape = shapePicker.SelectedItem.ToString();
-                string painLevel = painLevel_dictionary[painLevel_slider.Value];
-                string bloodAmount = bloodAmount_dictionary[blood_amount_slider.Value];
-
                 MessageBox.Show("Please answer us several health questions first. This can be avoided by siging up an account", "Health Infomation Required", MessageBoxButton.OK);
                 NavigationService.Navigate(new Uri("/AdditionalHealthInfomation.xaml?color=" + color + "?shape=" + shape + "?painLevel=" + painLevel
                     + "?bloodAmount=" + bloodAmount, UriKind.Relative));
             }
             {
                 //---------------------------Call Bank & Fern Method here----------------------------------
+
+                Poop_Table_SQLite newPoopData = new Poop_Table_SQLite();
+                newPoopData.Email = SessionManagement.GetEmail();
+                newPoopData.Color = color;
+                newPoopData.Shape = shape;
+                newPoopData.Pain_Level = painLevel;
+                newPoopData.Blood_Amount = bloodAmount;
 
                 NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
             }

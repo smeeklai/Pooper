@@ -26,7 +26,7 @@ namespace Poopor
         // Variables
         private PhotoCamera cam;
         private MediaLibrary library = new MediaLibrary();
-        private WriteableBitmap wb;
+        private WriteableBitmap poopImage;
 
         public Picture_page()
         {
@@ -151,24 +151,27 @@ namespace Poopor
 
         private void StoreImage(Stream stImg)
         {
+            String pathName;
             String imgName = SessionManagement.GetEmail() + "Poop" + SessionManagement.GetImageSavedCounter() + ".jpg";
             BitmapImage img = new BitmapImage();
             img.SetSource(stImg);
-            wb = new WriteableBitmap(img);
-            wb = wb.Resize(653, 490, WriteableBitmapExtensions.Interpolation.Bilinear);
+            poopImage = new WriteableBitmap(img);
+            poopImage = poopImage.Resize(653, 490, WriteableBitmapExtensions.Interpolation.Bilinear);
             //Debug.WriteLine(wb.PixelWidth + " " + wb.PixelHeight);
 
             using (MemoryStream stream = new MemoryStream())
             {
-                wb.SaveJpeg(stream, wb.PixelWidth, wb.PixelHeight, 0, 100);
+                poopImage.SaveJpeg(stream, poopImage.PixelWidth, poopImage.PixelHeight, 0, 100);
                 stream.Seek(0, SeekOrigin.Begin);
 
                 // Save picture as JPEG to isolated storage.
                 using (IsolatedStorageFile isStore = IsolatedStorageFile.GetUserStoreForApplication())
                 {
-                    if (isStore.FileExists(imgName))
-                        isStore.DeleteFile(imgName);
-                    using (IsolatedStorageFileStream targetStream = isStore.OpenFile(imgName, FileMode.Create, FileAccess.Write))
+                    if (!isStore.DirectoryExists("PoopImage")){
+                        isStore.CreateDirectory("PoopImage");
+                    }
+                    //new Uri(isStore.)
+                    using (IsolatedStorageFileStream targetStream = isStore.OpenFile(Path.Combine("PoopImage", imgName), FileMode.Create, FileAccess.Write))
                     {
                         // Initialize the buffer for 4KB disk pages.
                         byte[] readBuffer = new byte[4096];
@@ -182,13 +185,12 @@ namespace Poopor
                         }
                     }
                 }
-
                 Debug.WriteLine("Save image successfully" + imgName);
             }
         }
 
         // Informs when full resolution photo has been taken, saves to local media library and the local folder.
-        void cam_CaptureImageAvailable(object sender, Microsoft.Devices.ContentReadyEventArgs e)
+        async void cam_CaptureImageAvailable(object sender, Microsoft.Devices.ContentReadyEventArgs e)
         {
             this.Dispatcher.BeginInvoke(delegate()
             {
@@ -196,18 +198,20 @@ namespace Poopor
                 {
                     BitmapImage img = new BitmapImage();
                     img.SetSource(e.ImageStream);
-                    wb = new WriteableBitmap(img);
-                    wb = wb.Resize(653, 490, WriteableBitmapExtensions.Interpolation.Bilinear);
+                    poopImage = new WriteableBitmap(img);
+                    poopImage = poopImage.Resize(653, 490, WriteableBitmapExtensions.Interpolation.Bilinear);
 
                     //----------------- call PP Method here----------------------
-                    AnalyzePoop();
                 }
                 else
                 {
+                    SystemFunctions.SetProgressIndicatorProperties(true);
+                    SystemTray.ProgressIndicator.Text = "Saving image...";
                     StoreImage(e.ImageStream);
-
                     //----------------- call PP Method here----------------------
-                    AnalyzePoop();
+                    SystemTray.ProgressIndicator.Text = "Analyzing poop color...";
+                    //string color = await PPMethod1(poopImage);
+                    //Boolean isMelena = await test();
                 }
             });
             /*this.Dispatcher.BeginInvoke(delegate()
@@ -216,12 +220,11 @@ namespace Poopor
             });*/
         }
 
-        private void AnalyzePoop()
+        private async Task<int> test()
         {
-            SystemFunctions.SetProgressIndicatorProperties(true);
-            SystemTray.ProgressIndicator.Text = "analyzing...";
+            return 0;
         }
-
+           
         // Provide auto-focus with a half button press using the hardware shutter button.
         private void OnButtonHalfPress(object sender, EventArgs e)
         {
