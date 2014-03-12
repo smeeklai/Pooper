@@ -20,28 +20,41 @@ namespace Pooper
         public static Color COLOR_YELLOW = Color.FromArgb(255, 235, 195, 20);
         public static Color COLOR_GRAY = Color.FromArgb(255, 160, 160, 160);
 
+        public static Dictionary<Color, String> ColorNameDictionary = new Dictionary<Color, String>()
+        {
+            {COLOR_VERY_LIGHT_BROWN, "Very light brown"},
+            {COLOR_LIGHT_BROWN, "Medium brown"},
+            {COLOR_BLACK, "Black"},
+            {COLOR_MORRON, "Maroon"},
+            {COLOR_BRIGHT_RED, "Bright red"},
+            {COLOR_ORANGE, "Orange"},
+            {COLOR_DARK_GREEN, "Dark green"},
+            {COLOR_YELLOW, "Yellow"},
+            {COLOR_GRAY, "Gray"},
+        };
+
+        /// <summary>
+        /// Check the color is melena or not.
+        /// </summary>
+        /// <param name="color">The Color.</param>
+        /// <returns>The boolean of melena.</returns>
+        public async Task<Boolean> IsMelena(Color color)
+        {
+            if (color == null) {
+                return false;
+            }
+            return (color.Equals(COLOR_BLACK) || color.Equals(COLOR_MORRON) || color.Equals(COLOR_BRIGHT_RED));
+        }
+
         /// <summary>
         /// Gets the dominant color type name.
         /// </summary>
         /// <param name="bitmap">The WriteableBitmap.</param>
         /// <returns>The dominant color type name.</returns>
-        public async Task<string> GetDominantColorTypeName(WriteableBitmap bitmap)
+        public async Task<String> GetDominantColorTypeName(WriteableBitmap bitmap)
         {
             // Get color type name
-            Color color = GetDominantColorType(bitmap);
-
-            Dictionary<Color, String> ColorNameDictionary = new Dictionary<Color, String>()
-            {
-                {COLOR_VERY_LIGHT_BROWN, "Very light brown"},
-                {COLOR_LIGHT_BROWN, "Medium brown"},
-                {COLOR_BLACK, "Black"},
-                {COLOR_MORRON, "Maroon"},
-                {COLOR_BRIGHT_RED, "Bright red"},
-                {COLOR_ORANGE, "Orange"},
-                {COLOR_DARK_GREEN, "Dark green"},
-                {COLOR_YELLOW, "Yellow"},
-                {COLOR_GRAY, "Gray"},
-            };
+            Color color = await GetDominantColorType(bitmap);
 
             return ColorNameDictionary[color];
         }
@@ -51,7 +64,7 @@ namespace Pooper
         /// </summary>
         /// <param name="bitmap">The WriteableBitmap.</param>
         /// <returns>The dominant color type as a Color struct.</returns>
-        public Color GetDominantColorType(WriteableBitmap bitmap)
+        public async Task<Color> GetDominantColorType(WriteableBitmap bitmap)
         {
             // Get dominant color of image
             Color color = GetDominantColor(bitmap);
