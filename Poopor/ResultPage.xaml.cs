@@ -21,8 +21,8 @@ namespace Poopor
         public ResultPage()
         {
             InitializeComponent();
-            userLastestResultAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
-            AdjustResultArea();
+            //userLastestResultAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
+            //AdjustResultArea();
             //AdjustRecommendationArea();
             //AdjustMeaningArea();
         }

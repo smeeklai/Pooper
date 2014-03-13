@@ -28,6 +28,7 @@ namespace Poopor
         private PhotoCamera cam;
         private MediaLibrary library = new MediaLibrary();
         private WriteableBitmap poopImage;
+        private Boolean havingMedicineValidation = false;
 
         public Picture_page()
         {
@@ -152,7 +153,6 @@ namespace Poopor
 
         private void StoreImage(Stream stImg)
         {
-            String pathName;
             String imgName = SessionManagement.GetEmail() + "Poop" + SessionManagement.GetImageSavedCounter() + ".jpg";
             BitmapImage img = new BitmapImage();
             img.SetSource(stImg);
@@ -205,21 +205,28 @@ namespace Poopor
 
                     //----------------- call PP Method here----------------------
                     SystemTray.ProgressIndicator.Text = "Analyzing poop color...";
-                    string poopColor = await PPMethod1(poopImage);
+                    string poopColor = await new Pooper.PoopImageProcessing().GetDominantColorTypeName(poopImage);
                     //Boolean isMelena = await PPMethod2(poopColor);
                     SystemFunctions.SetProgressIndicatorProperties(false);
                     //NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml?poopColor=" + poopColor + "?melenaResult=" + isMelena, UriKind.Relative));
                 }
                 else
                 {
-                    SystemTray.ProgressIndicator.Text = "Saving image...";
                     StoreImage(e.ImageStream);
                     //----------------- call PP Method here----------------------
                     SystemTray.ProgressIndicator.Text = "Analyzing poop color...";
-                    //string poopColor = await PPMethod1(poopImage);
+                    string poopColor = await new Pooper.PoopImageProcessing().GetDominantColorTypeName(poopImage);
                     //Boolean isMelena = await PPMethod2(poopColor);
+                    Boolean havingMedicines = false;
+                    //if (isMelena)
+                    //{
+                    //    while (!havingMedicineValidation)
+                    //    {
+                    //        havingMedicines = await IsUserHavingMedicine();
+                    //    }
+                    //}
                     SystemFunctions.SetProgressIndicatorProperties(false);
-                    //NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml?poopColor=" + poopColor + "?melenaResult=" + isMelena, UriKind.Relative));
+                    //NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml?poopColor=" + poopColor + "?melenaResult=" + isMelena + "&havingMedicines=" + havingMedicines, UriKind.Relative));
                 }
             });
             /*this.Dispatcher.BeginInvoke(delegate()
@@ -262,6 +269,36 @@ namespace Poopor
             {
                 cam.CancelFocus();
             }
+        }
+
+        private async Task<Boolean> IsUserHavingMedicine()
+        {
+
+            CustomMessageBox messageBox = new CustomMessageBox()
+            {
+                Caption = "Additional Question!",
+                Message = "Are you having some medicines that have an effect to your poop color?",
+                LeftButtonContent = "Yes",
+                RightButtonContent = "No"
+            };
+            Boolean answer = false;
+            var result = await messageBox.ShowAsync();
+            switch (result)
+            {
+                case CustomMessageBoxResult.LeftButton:
+                    answer = true;
+                    havingMedicineValidation = true;
+                    break;
+                case CustomMessageBoxResult.RightButton:
+                    answer = false;
+                    havingMedicineValidation = true;
+                    break;
+                case CustomMessageBoxResult.None:
+                    break;
+                default:
+                    break;
+            }
+            return answer;
         }
     }
 }
