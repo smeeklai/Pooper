@@ -109,10 +109,10 @@ namespace Pooper
             int xCenter = bitmap.PixelWidth / 2;
             int yCenter = bitmap.PixelHeight / 2;
 
-            int xTopLeft = (xCenter - 100) < 0 ? 0 : xCenter - 100;
-            int yTopLeft = (yCenter - 100) < 0 ? 0 : yCenter - 100;
-            int xBottomRight = (xTopLeft + 200) > bitmap.PixelWidth ? bitmap.PixelWidth : xTopLeft + 200;
-            int yBottomRight = (yTopLeft + 200) > bitmap.PixelHeight ? bitmap.PixelHeight : yTopLeft + 200;
+            int xTopLeft = (xCenter - 50) < 0 ? 0 : xCenter - 50;
+            int yTopLeft = (yCenter - 50) < 0 ? 0 : yCenter - 50;
+            int xBottomRight = (xTopLeft + 100) > bitmap.PixelWidth ? bitmap.PixelWidth : xTopLeft + 100;
+            int yBottomRight = (yTopLeft + 100) > bitmap.PixelHeight ? bitmap.PixelHeight : yTopLeft + 100;
 
             return GetDominantColor(bitmap, xTopLeft, yTopLeft, xBottomRight, yBottomRight);
         }

@@ -20,12 +20,12 @@ namespace Poopor.Data
         private static Dictionary<string, SolidColorBrush> ColorNameToBrush = new Dictionary<string, SolidColorBrush>()
         {
             { "Maroon", 0xFF4B0000.ToSolidColorBrush() },
-            { "Medium Brown",  0xFF6C4B1B.ToSolidColorBrush() },
+            { "Medium brown",  0xFF6C4B1B.ToSolidColorBrush() },
             { "Very light brown",    0xFFD8BE70.ToSolidColorBrush() },
             { "Orange",    0xFF9E3D02.ToSolidColorBrush() },
             { "Yellow",   0xFFEBC314.ToSolidColorBrush() },
             { "Bright red",    0xFFAA0000.ToSolidColorBrush() },
-            { "Dark Green",  0xFF0B2604.ToSolidColorBrush() },
+            { "Dark green",  0xFF0B2604.ToSolidColorBrush() },
             { "Gray",    0xFFA0A0A0.ToSolidColorBrush() },
             { "Black",     0xFF141414.ToSolidColorBrush() },
         };
