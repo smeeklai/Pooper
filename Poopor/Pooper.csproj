@@ -92,6 +92,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AdditionalHealthInfomation2.xaml.cs">
+      <DependentUpon>AdditionalHealthInfomation2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdditionalHealthInfomation.xaml.cs">
       <DependentUpon>AdditionalHealthInfomation.xaml</DependentUpon>
     </Compile>
@@ -99,13 +102,18 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AzureFunctions.cs" />
-    <Compile Include="Color_Meaning_Table_SQLite.cs" />
+    <Compile Include="ColonCancerMsgPage.xaml.cs">
+      <DependentUpon>ColonCancerMsgPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseFunctions.cs" />
     <Compile Include="Data\AccentColorNameToBrush.cs" />
     <Compile Include="Data\ColorExtensions.cs" />
+    <Compile Include="Data\IsSelectedToBrushConverter.cs" />
+    <Compile Include="Data\PoopImageData.cs" />
+    <Compile Include="Data\SamplePoopImageData.cs" />
     <Compile Include="Data\ShapeData.cs" />
     <Compile Include="Data\ShapeTypeToImg.cs" />
-	<Compile Include="PoopImageProcessing.cs" />
+    <Compile Include="PoopImageProcessing.cs" />
     <Compile Include="FecesAnalyzer.cs" />
     <Compile Include="Long_Rec_SQLite.cs" />
     <Compile Include="PoopAnalyzer.cs" />
@@ -114,6 +122,9 @@
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Poop_Table_Azure.cs" />
+    <Compile Include="SamplePoopPictures.xaml.cs">
+      <DependentUpon>SamplePoopPictures.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SessionManagement.cs" />
     <Compile Include="Shape_Meaning_Table_SQLite.cs" />
     <Compile Include="Short_Rec_SQLite.cs" />
@@ -154,7 +165,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="AdditionalHealthInfomation2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="AdditionalHealthInfomation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ColonCancerMsgPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -182,6 +201,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SamplePoopPictures.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -199,6 +222,7 @@
     </Content>
     <Content Include="Assets\img\contact.png" />
     <Content Include="Assets\img\dashboard.png" />
+    <Content Include="Assets\img\iconImages\check.png" />
     <Content Include="Assets\img\logo.png" />
     <Content Include="Assets\img\bloodAmount\alotofblood.png" />
     <Content Include="Assets\img\bloodAmount\littleblood.png" />
@@ -221,6 +245,15 @@
     <Content Include="Assets\img\risk\anxiousrisk.png" />
     <Content Include="Assets\img\risk\genrisk.png" />
     <Content Include="Assets\img\risk\welldone_icon.png" />
+    <Content Include="Assets\img\samplePoopImage\poop1.jpg" />
+    <Content Include="Assets\img\samplePoopImage\poop2.jpg" />
+    <Content Include="Assets\img\samplePoopImage\poop3.JPG" />
+    <Content Include="Assets\img\samplePoopImage\poop4.jpg" />
+    <Content Include="Assets\img\samplePoopImage\poop5.jpg" />
+    <Content Include="Assets\img\samplePoopImage\poop6.jpg" />
+    <Content Include="Assets\img\samplePoopImage\poop7.jpg" />
+    <Content Include="Assets\img\samplePoopImage\poop8.jpg" />
+    <Content Include="Assets\img\samplePoopImage\poop9.jpg" />
     <Content Include="Assets\img\tips today ex.jpg" />
     <Content Include="Assets\img\painLevel\worst.png" />
     <Content Include="Assets\img\welldone_rec.png" />

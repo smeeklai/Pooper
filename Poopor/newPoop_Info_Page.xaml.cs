@@ -30,7 +30,7 @@ namespace Poopor
             base.OnNavigatedTo(e);
             NavigationContext.QueryString.TryGetValue("poopColor", out poopColor);
             isMelena = Convert.ToBoolean(NavigationContext.QueryString["melenaResult"]);
-            //havingMedicines = Convert.ToBoolean(NavigationContext.QueryString["havingMedicines"]);
+            havingMedicines = Convert.ToBoolean(NavigationContext.QueryString["havingMedicines"]);
             colorPicker.SelectedItem = poopColor;
             painLevel_slider.ValueChanged += painLevel_slider_ValueChanged;
             blood_amount_slider.ValueChanged += blood_amount_slider_ValueChanged;
@@ -58,7 +58,7 @@ namespace Poopor
                 int userAge = Convert.ToInt32(timeSpan.TotalDays / 360);
                 SystemFunctions.SetProgressIndicatorProperties(true);
                 SystemTray.ProgressIndicator.Text = "Analysing data...";
-                var result = analyzeData(poopColor, shape, painLevel, bloodAmount, userInfo.Height, userInfo.Weight, userInfo.Gender, userAge, userInfo.HealthInfo1, userInfo.HealthInfo2, userInfo.HealthInfo3, userInfo.HealthInfo4, userInfo.HealthInfo5, isMelena, havingMedicines);
+                //var result = analyzeData(poopColor, shape, painLevel, bloodAmount, userInfo.Height, userInfo.Weight, userInfo.Gender, userAge, userInfo.HealthInfo1, userInfo.HealthInfo2, userInfo.HealthInfo3, userInfo.HealthInfo4, userInfo.HealthInfo5, isMelena, havingMedicines);
                 
                 //---------------------------Call Bank & Fern Method here----------------------------------
 
@@ -150,14 +150,14 @@ namespace Poopor
         private AzureFunctions azureFunctions = new AzureFunctions();
         private SQLiteFunctions sqliteFunctions = new SQLiteFunctions();
         private Dictionary<double, string> painLevel_dictionary = new Dictionary<double, string>(){
-            {1, "no hurt"},
+            {1, "none"},
             {2, "mild"},
             {3, "moderate"},
             {4, "severe"},
             {5, "worst"}
         };
         private Dictionary<double, string> bloodAmount_dictionary = new Dictionary<double, string>(){
-            {1, "no blood"},
+            {1, "none"},
             {2, "little blood"},
             {3, "medium blood"},
             {4, "much blood"},

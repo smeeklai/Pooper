@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using Windows.Storage.Streams;
 using System.Threading.Tasks;
 using Poopor.Data;
+using Pooper;
 
 namespace Poopor
 {
@@ -29,10 +30,12 @@ namespace Poopor
         private MediaLibrary library = new MediaLibrary();
         private WriteableBitmap poopImage;
         private Boolean havingMedicineValidation = false;
+        private PoopImageProcessing pim = new PoopImageProcessing();
 
         public Picture_page()
         {
             InitializeComponent();
+            buildApplicationBar();
         }
 
         //Code for initialization, capture completed, image availability events; also setting the source for the viewfinder.
@@ -123,32 +126,31 @@ namespace Poopor
         {
             using (IsolatedStorageFile isStore = IsolatedStorageFile.GetUserStoreForApplication())
             {
-                String[] files = isStore.GetFileNames();
+                String[] files = isStore.GetDirectoryNames();
                 foreach (String s in files)
                 {
                     Debug.WriteLine(s);
                 }
-                /*using (var stream = isStore.OpenFile("poop3.jpg", FileMode.Open, FileAccess.Read))
-                {
-                    img.SetSource(stream);
-                    Debug.WriteLine("poop3 widgt: " + img.PixelWidth + " height: " + img.PixelHeight);
-                }*/
+                //files = isStore.GetDirectoryNames();
+                //foreach (String s in files)
+                //{
+                //    Debug.WriteLine(s);
+                //}
             }
-            NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml?poopColor=Maroon&melenaResult=true", UriKind.Relative));
-            /*cam.AutoFocusCompleted += cam_AutoFocusCompleted;
+            cam.AutoFocusCompleted += cam_AutoFocusCompleted;
             if (cam != null)
             {
                 try
                 {
-                    // Start image capture.
-                    cam.FlashMode = Microsoft.Devices.FlashMode.On;
+                    //Start image capture.
+                    cam.FlashMode = Microsoft.Devices.FlashMode.Off;
                     cam.Focus();
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine("Error: " + ex.Message);
                 }
-            }*/
+            }
         }
 
         private void StoreImage(Stream stImg)
@@ -158,36 +160,18 @@ namespace Poopor
             img.SetSource(stImg);
             poopImage = new WriteableBitmap(img);
             poopImage = poopImage.Resize(653, 490, WriteableBitmapExtensions.Interpolation.Bilinear);
-            //Debug.WriteLine(wb.PixelWidth + " " + wb.PixelHeight);
 
-            using (MemoryStream stream = new MemoryStream())
+            using (IsolatedStorageFile isStore = IsolatedStorageFile.GetUserStoreForApplication())
             {
-                poopImage.SaveJpeg(stream, poopImage.PixelWidth, poopImage.PixelHeight, 0, 100);
-                stream.Seek(0, SeekOrigin.Begin);
-
-                // Save picture as JPEG to isolated storage.
-                using (IsolatedStorageFile isStore = IsolatedStorageFile.GetUserStoreForApplication())
+                if (!isStore.DirectoryExists("PoopImage"))
                 {
-                    if (!isStore.DirectoryExists("PoopImage")){
-                        isStore.CreateDirectory("PoopImage");
-                    }
-                    //new Uri(isStore.)
-                    using (IsolatedStorageFileStream targetStream = isStore.OpenFile(Path.Combine("PoopImage", imgName), FileMode.Create, FileAccess.Write))
-                    {
-                        // Initialize the buffer for 4KB disk pages.
-                        byte[] readBuffer = new byte[4096];
-                        int bytesRead = -1;
-
-                        // Copy the image to isolated storage.
-                        Debug.WriteLine("Start storing image");
-                        while ((bytesRead = stream.Read(readBuffer, 0, readBuffer.Length)) > 0)
-                        {
-                            targetStream.Write(readBuffer, 0, bytesRead);
-                        }
-                    }
+                    isStore.CreateDirectory("PoopImage");
                 }
-                Debug.WriteLine("Save image successfully" + imgName);
+                IsolatedStorageFileStream fileStream = isStore.CreateFile(Path.Combine("PoopImage", imgName));
+                poopImage.SaveJpeg(fileStream, poopImage.PixelWidth, poopImage.PixelHeight, 0, 100);
+                fileStream.Close();
             }
+            Debug.WriteLine("Save image successfully: " + imgName);
         }
 
         // Informs when full resolution photo has been taken, saves to local media library and the local folder.
@@ -205,28 +189,42 @@ namespace Poopor
 
                     //----------------- call PP Method here----------------------
                     SystemTray.ProgressIndicator.Text = "Analyzing poop color...";
-                    string poopColor = await new Pooper.PoopImageProcessing().GetDominantColorTypeName(poopImage);
-                    //Boolean isMelena = await PPMethod2(poopColor);
+                    string poopColorStr = await pim.GetDominantColorTypeName(poopImage);
+                    Debug.WriteLine(poopColorStr);
+                    Color poopColor = await pim.GetDominantColorType(poopImage);
+                    Boolean isMelena = await pim.IsMelena(poopColor);
+                    Debug.WriteLine(isMelena);
                     SystemFunctions.SetProgressIndicatorProperties(false);
-                    //NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml?poopColor=" + poopColor + "?melenaResult=" + isMelena, UriKind.Relative));
+                    Boolean havingMedicines = false;
+                    if (isMelena)
+                    {
+                        while (!havingMedicineValidation)
+                        {
+                            havingMedicines = await IsUserHavingMedicine();
+                        }
+                    }
+                    NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml?poopColor=" + poopColorStr + "&melenaResult=" + isMelena +
+                    "&havingMedicines=" + havingMedicines, UriKind.Relative));
                 }
                 else
                 {
                     StoreImage(e.ImageStream);
                     //----------------- call PP Method here----------------------
                     SystemTray.ProgressIndicator.Text = "Analyzing poop color...";
-                    string poopColor = await new Pooper.PoopImageProcessing().GetDominantColorTypeName(poopImage);
-                    //Boolean isMelena = await PPMethod2(poopColor);
-                    Boolean havingMedicines = false;
-                    //if (isMelena)
-                    //{
-                    //    while (!havingMedicineValidation)
-                    //    {
-                    //        havingMedicines = await IsUserHavingMedicine();
-                    //    }
-                    //}
+                    string poopColorStr = await pim.GetDominantColorTypeName(poopImage);
+                    Color poopColor = await pim.GetDominantColorType(poopImage);
+                    Boolean isMelena = await pim.IsMelena(poopColor);
                     SystemFunctions.SetProgressIndicatorProperties(false);
-                    //NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml?poopColor=" + poopColor + "?melenaResult=" + isMelena + "&havingMedicines=" + havingMedicines, UriKind.Relative));
+                    Boolean havingMedicines = false;
+                    if (isMelena)
+                    {
+                        while (!havingMedicineValidation)
+                        {
+                            havingMedicines = await IsUserHavingMedicine();
+                        }
+                    }
+                    NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml?poopColor=" + poopColor + "&melenaResult=" + isMelena +
+                        "&havingMedicines=" + havingMedicines, UriKind.Relative));
                 }
             });
             /*this.Dispatcher.BeginInvoke(delegate()
@@ -234,7 +232,31 @@ namespace Poopor
                 NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml", UriKind.Relative));
             });*/
         }
-           
+
+        private void buildApplicationBar()
+        {
+            //Initialize ApplicationBar
+            ApplicationBar = new ApplicationBar();
+            ApplicationBar.Mode = ApplicationBarMode.Minimized;
+            ApplicationBar.Opacity = 0.8;
+            ApplicationBar.IsVisible = true;
+            ApplicationBar.IsMenuEnabled = true;
+            ApplicationBar.BackgroundColor = Colors.Red;
+
+            //Initialize ApplicationBarMenuItem
+            ApplicationBarMenuItem logoutAppBar = new ApplicationBarMenuItem();
+            logoutAppBar.Text = "Use poop sample data";
+            logoutAppBar.Click += new EventHandler(logoutAppBar_Click);
+
+            //Add menu item
+            ApplicationBar.MenuItems.Add(logoutAppBar);
+        }
+
+        private void logoutAppBar_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/SamplePoopPictures.xaml", UriKind.Relative));
+        }
+
         // Provide auto-focus with a half button press using the hardware shutter button.
         private void OnButtonHalfPress(object sender, EventArgs e)
         {
