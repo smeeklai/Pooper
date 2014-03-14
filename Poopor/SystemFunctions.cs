@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using Poopor.Resources;
+using Microsoft.Phone.Controls;
 
 namespace Poopor
 {

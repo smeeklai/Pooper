@@ -29,9 +29,6 @@ namespace Poopor
         {
             try
             {
-                SystemFunctions.SetProgressIndicatorProperties(true);
-                SystemTray.ProgressIndicator.Text = "Registering...";
-
                 //Check type of data
                 if (IsUserInfo_Data(data))
                 {
@@ -93,6 +90,33 @@ namespace Poopor
             return false;
         }
 
+        public async Task<MobileServiceCollection<Poop_Table_Azure, Poop_Table_Azure>> GetUserPoopDataInAzure(string userEmail)
+        {
+            try
+            {
+                var items = await azure_poop_table.Where(Poop_Table_Azure => Poop_Table_Azure.Email == userEmail).ToCollectionAsync();
+                return items;
+            }
+            catch (MobileServiceInvalidOperationException e)
+            {
+                Debug.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<MobileServiceCollection<Poop_Table_Azure, Poop_Table_Azure>> GetUserPoopDataAfterInputDate(string userEmail ,DateTime dateTime)
+        {
+            try
+            {
+                var items = await azure_poop_table.Where(Poop_Table_Azure => Poop_Table_Azure.Email == userEmail).Where(Poop_Table_Azure => Poop_Table_Azure.Date_Time > dateTime).ToCollectionAsync();
+                return items;
+            }
+            catch (MobileServiceInvalidOperationException e)
+            {
+                Debug.WriteLine(e.Message);
+                return null;
+            }
+        }
 
         private Boolean IsUserInfo_Data(object data)
         {

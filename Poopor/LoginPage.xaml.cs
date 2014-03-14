@@ -12,7 +12,7 @@ using Microsoft.WindowsAzure.MobileServices;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 using Poopor.Resources;
-
+using System.Windows.Controls.Primitives;
 namespace Poopor
 {
     public partial class LoginPage : PhoneApplicationPage

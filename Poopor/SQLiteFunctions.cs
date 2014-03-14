@@ -94,12 +94,30 @@ namespace Poopor
 
         public void UpdateData(object data)
         {
-
+            
         }
 
         public void DeleteData(string index)
         {
 
+        }
+
+        public void DeleteUserPoopData(string userEmail)
+        {
+            using (var db = new SQLiteConnection(dbPath))
+            {
+                var existing = db.Query<Poop_Table_SQLite>("select * from Poop_Table_SQLite where Email='" + userEmail + "'");
+                if (existing != null)
+                {
+                    foreach (var item in existing)
+                    {
+                        db.RunInTransaction(() =>
+                        {
+                            db.Delete(item);
+                        });
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -247,7 +265,7 @@ namespace Poopor
                     return null;
             }
         }
-
+            
         public List<string> GetColorMeaning(string color)
         {
             List<string> list = new List<string>();

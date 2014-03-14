@@ -17,15 +17,15 @@ namespace Poopor.Data
         /// <summary>
         /// An array of all the names of the accent colors.
         /// </summary>
-        private static string[] _accentColors = { "Maroon", 
+        private static string[] _accentColors = { "Very light brown", 
                                                   "Medium Brown",
-                                                  "Light Brown", 
+                                                  "Black", 
+                                                  "Maroon", 
+                                                  "Bright red", 
                                                   "Orange", 
-                                                  "Yellow", 
-                                                  "Red", 
                                                   "Dark Green",
-                                                  "Clay",
-                                                  "Black" };
+                                                  "Yellow",
+                                                  "Gray" };
 
 
         /// <summary>
