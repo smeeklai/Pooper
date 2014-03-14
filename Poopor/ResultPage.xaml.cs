@@ -29,5 +29,10 @@ namespace Poopor
         {
             //Navigate to risk signs explaination page
         }
+
+
+        // public static void StoreUserLastestResultsAndRecommendation(Dictionary<string, object> lastestResultAndRecommendation)
+        //public static Dictionary<string, object> GetUserLastestResultsAndRecommendation()
+        
     }
 }

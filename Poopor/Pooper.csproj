@@ -99,18 +99,26 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AzureFunctions.cs" />
+    <Compile Include="Color_Meaning_Table_SQLite.cs" />
     <Compile Include="DatabaseFunctions.cs" />
     <Compile Include="Data\AccentColorNameToBrush.cs" />
     <Compile Include="Data\ColorExtensions.cs" />
     <Compile Include="Data\ShapeData.cs" />
     <Compile Include="Data\ShapeTypeToImg.cs" />
+    <Compile Include="FecesAnalyzer.cs" />
+    <Compile Include="Long_Rec_SQLite.cs" />
+    <Compile Include="PoopAnalyzer.cs" />
     <Compile Include="Poop_Table_SQLite.cs" />
     <Compile Include="RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Poop_Table_Azure.cs" />
     <Compile Include="SessionManagement.cs" />
+    <Compile Include="Shape_Meaning_Table_SQLite.cs" />
+    <Compile Include="Short_Rec_SQLite.cs" />
+    <Compile Include="SqlCommand.cs" />
     <Compile Include="SQLiteFunctions.cs" />
+    <Compile Include="SqlParameter.cs" />
     <Compile Include="SystemFunctions.cs" />
     <Compile Include="UserInfo_Table_SQLite.cs" />
     <Compile Include="UserInfo_Table_Azure.cs" />
