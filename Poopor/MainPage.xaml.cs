@@ -26,10 +26,10 @@ namespace Poopor
     public partial class MainPage : PhoneApplicationPage
     {
         private string userHealth;
-        private BackgroundWorker backroungWorker;
         private Poop_Table_SQLite userLastestpoopRecordInSqlite;
         private MobileServiceCollection<Poop_Table_Azure, Poop_Table_Azure> userLastestPoopDataInAzure;
         private Poop_Table_Azure userLastestPoopRecordInAzure;
+        private Dictionary<string, object> userLastestResultsAndRecommendation;
         private int isUpdateNeeded;
         private AzureFunctions azureFunctions = new AzureFunctions();
         private SQLiteFunctions sqliteFunctions = new SQLiteFunctions();
@@ -42,25 +42,21 @@ namespace Poopor
         public MainPage()
         {
             InitializeComponent();
-            /*List<string> test = new List<string>();
-            test.Add("test1");
-            test.Add("test2");
-            test.Add("- Your first-relative relationship members have been diagnosed with FAP or HNPCC");
-            userLastestResultsAndRecommendation.Add("userCancerSignMsg", test);
-            var userLastestResultsAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
+            userLastestResultsAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
             if (userLastestResultsAndRecommendation != null)
             {
                 object userHealthObj = null;
                 if (userLastestResultsAndRecommendation.TryGetValue("UserCancerSign", out userHealthObj))
                 {
                     userHealth = userHealthObj as string;
-                    if (!userHealth.Contains("normal"))
-                        AdaptInterfaceToUserHealth(userHealth);
+                    if (!userHealth.Contains("none"))
+                        AdaptDashboardToUserCancerSign(userHealth);
                 }
                 else
-                    Debug.WriteLine("failed");
-            } else
-                Debug.WriteLine("no existed");*/
+                    Debug.WriteLine("No UserCancerSign key");
+            }
+            else
+                Debug.WriteLine("No user lastest result and recommendation");
             buildApplicationBar();
         }
 
@@ -90,6 +86,8 @@ namespace Poopor
                     }
                     else
                     {
+                        userLastestPoopDataInAzure = await azureFunctions.GetUserPoopDataInAzure(SessionManagement.GetEmail());
+                        userLastestPoopRecordInAzure = userLastestPoopDataInAzure.Last();
                         isUpdateNeeded = DateTime.Compare(userLastestpoopRecordInSqlite.Date_Time, userLastestPoopRecordInAzure.Date_Time);
                         Debug.WriteLine("Lastest time in Sqlite" + userLastestpoopRecordInSqlite.Date_Time);
                         Debug.WriteLine("Lastest time in azure" + userLastestPoopRecordInAzure.Date_Time);
@@ -112,8 +110,6 @@ namespace Poopor
                         }
                         else
                         {
-                            userLastestPoopDataInAzure = await azureFunctions.GetUserPoopDataInAzure(SessionManagement.GetEmail());
-                            userLastestPoopRecordInAzure = userLastestPoopDataInAzure.Last();
                             StartSyncUserLastestData();
                         }
                     }
@@ -123,7 +119,7 @@ namespace Poopor
 
         private void StartSyncUserLastestData()
         {
-            backroungWorker = new BackgroundWorker();
+            BackgroundWorker backroungWorker = new BackgroundWorker();
             backroungWorker.DoWork += new DoWorkEventHandler(backroungWorker_DoWork);
             backroungWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backroungWorker_RunWorkerCompleted);
             backroungWorker.RunWorkerAsync();
@@ -170,7 +166,7 @@ namespace Poopor
                 Boolean resultOfInsertation = false;
                 while (resultOfInsertation == false)
                 {
-                    resultOfInsertation = await sqliteFunctions.InsertData(new Poop_Table_SQLite()
+                    resultOfInsertation = sqliteFunctions.InsertData(new Poop_Table_SQLite()
                     {
                         Email = SessionManagement.GetEmail(),
                         Color = item.Color,
@@ -209,7 +205,7 @@ namespace Poopor
                 Boolean resultOfInsertation = false;
                 while (resultOfInsertation == false)
                 {
-                    resultOfInsertation = await azureFunctions.InsertData(new Poop_Table_Azure()
+                    resultOfInsertation = await azureFunctions.InsertDataAsync(new Poop_Table_Azure()
                     {
                         Email = SessionManagement.GetEmail(),
                         Color = item.Color,
@@ -229,11 +225,12 @@ namespace Poopor
             Debug.WriteLine("Insert Finish");
         }
 
-        /* private void AdaptInterfaceToUserHealth(string userHealth)
+        private void AdaptDashboardToUserCancerSign(string userHealth)
          {
-             if (userHealth.Contains("suspicious"))
+             if (userHealth.Contains("general"))
              {
-                 List<string> userCancerSignMsg = userLastestResultsAndRecommendation["userCancerSignMsg"] as List<string>;
+                 List<string> userCancerSignMsg = userLastestResultsAndRecommendation["UserCancerSignMsg"] as List<string>;
+                 userCancerSignMsg = SystemFunctions.SortByLength(userCancerSignMsg) as List<string>;
                  goodHealthInfo_grid.Visibility = System.Windows.Visibility.Collapsed;
                  more_axiousSigns_text.Visibility = System.Windows.Visibility.Collapsed;
                  suggestion_textBlock.Text = "Be careful with your health";
@@ -257,12 +254,12 @@ namespace Poopor
 
                  }
              }
-             else if (userHealth.Contains("dangerous"))
+             else if (userHealth.Contains("anxious"))
              {
                  goodHealthInfo_grid.Visibility = System.Windows.Visibility.Collapsed;
                  healthInfo_grid.Visibility = System.Windows.Visibility.Visible;
              }
-         }*/
+         }
 
         private void newPoop_button_Click(object sender, RoutedEventArgs e)
         {
@@ -335,7 +332,7 @@ namespace Poopor
                 // User flicked towards right
                 if (e.HorizontalVelocity > 0)
                 {
-                    NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
+                    NavigationService.Navigate(new Uri("/ColonCancerMsgPage.xaml", UriKind.Relative));
                 }
             }
         }

@@ -21,7 +21,7 @@ namespace Poopor
         //bloodAmt(string), weight(double), height(double), gender(string), age(int),
         //healthInfo1(boolean) >> FDR colon/ovarian/endo/breast, healthInfo2(boolean) >> USER inflemm/polyps, healthInfo3(boolean) >> smoking/drinking, 
         //healthInfo4(boolean) >> USR/FDR FAP HNPCC, healthInfo5(boolean) >> female, isMelena >> boolean, isHavingMedicine >> boolean
-        public Dictionary<string, object> analyzeData(string color, string shape, string painLv, string bloodAmt,
+        public async Task<Dictionary<string, object>> analyzeData(string color, string shape, string painLv, string bloodAmt,
             double weight, double height, string gender, int age, bool healthInfo1,
             bool healthInfo2, bool healthInfo3, bool healthInfo4, bool healthInfo5, bool isMelena, bool isHavingMedicine)
         {

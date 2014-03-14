@@ -11,33 +11,37 @@ using Poopor.Resources;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Diagnostics;
+using Poopor.Data;
 
 namespace Poopor
 {
     public partial class ResultPage : PhoneApplicationPage
     {
-        
+        private Poop_Table_SQLite userLastestPoopData;
+
         // Constructor
         public ResultPage()
         {
             InitializeComponent();
-            //userLastestResultAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
-            //AdjustResultArea();
-            //AdjustRecommendationArea();
-            //AdjustMeaningArea();
+            userLastestResultAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
+            if (userLastestResultAndRecommendation != null)
+            {
+                AdjustResultArea();
+                AdjustRecommendationArea();
+                AdjustMeaningArea();
+            }
         }
 
         private void AdjustResultArea()
         {
-            var userLastestPoopData = new SQLiteFunctions().GetUserPoopData("test").Last();
+            userLastestPoopData = new SQLiteFunctions().GetUserPoopData(SessionManagement.GetEmail()).Last();
             colorRecord_textBlock.Text = userLastestPoopData.Color;
             shapeRecord_textBlock.Text = userLastestPoopData.Shape;
             painLevelRecord_textBlock.Text = userLastestPoopData.Pain_Level;
             bloodAmountRecord_textBlock.Text = userLastestPoopData.Blood_Amount;
-            dateTimeRecord_textBlock.Text = userLastestPoopData.Date_Time.ToShortDateString();
-            
+            dateTimeRecord_textBlock.Text = userLastestPoopData.Date_Time.ToString();
 
-            /*if (GetUserCancerSign().Equals("general"))
+            if (GetUserCancerSign().Equals("general"))
             {
                 cancer_area.Tap += cancer_area_Tap;
                 newBgColor.Color = Color.FromArgb(255, 242, 175, 96);
@@ -58,12 +62,12 @@ namespace Poopor
                 resultHeader_textBlock.Text = "TAP HERE!";
                 resultImage.Source = new BitmapImage(new Uri("/Assets/img/risk/anxiousrisk.png", UriKind.RelativeOrAbsolute));
                 resultExplaination_textBlock.Text = "Anxious signs of colon-rectum cancer have been detected";
-            }*/
+            }
         }
 
         private void AdjustRecommendationArea()
         {
-            if (!GetRecommendationStatus())
+            if (!IsRecommendationExisted())
             {
                 TextBlock noRecommendation_textBlock = new TextBlock();
                 noRecommendation_textBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 60, 60, 60));
@@ -112,7 +116,7 @@ namespace Poopor
 
                 }
                 List<string> longRecommendation = userLastestResultAndRecommendation["UserLongRecommendation"] as List<string>;
-                foreach (string item in longRecommendation)
+                foreach (string item in SystemFunctions.SortByLength(longRecommendation))
                 {
                     TextBlock newLongRecommendation_textBlock = new TextBlock();
                     newLongRecommendation_textBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 60, 60, 60));
@@ -125,8 +129,14 @@ namespace Poopor
 
         private void AdjustMeaningArea()
         {
+            poopColorMeaning_arc.Fill = AccentColorNameToBrush.ConvertStringToSolidColorBrush(userLastestPoopData.Color);
+            colorResult_textBlock.Text = userLastestPoopData.Color;
+
+            shapeMeaning_image.Source = ShapeTypeToImg.ConvertShapeStringToImg(userLastestPoopData.Shape);
+            shapeResult_textBlock.Text = userLastestPoopData.Shape;
+
             List<string> poopColorMeaning = userLastestResultAndRecommendation["UserPoopColorMeaning"] as List<string>;
-            foreach (string item in poopColorMeaning)
+            foreach (string item in SystemFunctions.SortByLength(poopColorMeaning))
             {
                 TextBlock newColorMeaning_textBlock = new TextBlock();
                 newColorMeaning_textBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 60, 60, 60));
@@ -135,7 +145,7 @@ namespace Poopor
                 poopColorMeaning_lists.Children.Add(newColorMeaning_textBlock);
             }
             List<string> poopShapeMeaning = userLastestResultAndRecommendation["UserPoopShapeMeaning"] as List<string>;
-            foreach (string item in poopShapeMeaning)
+            foreach (string item in SystemFunctions.SortByLength(poopShapeMeaning))
             {
                 TextBlock newPoopMeaning_textBlock = new TextBlock();
                 newPoopMeaning_textBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 60, 60, 60));
@@ -145,11 +155,11 @@ namespace Poopor
             }
         }
 
-        private Boolean GetRecommendationStatus()
+        private Boolean IsRecommendationExisted()
         {
             object recommendationStatus = null;
-            if (userLastestResultAndRecommendation.TryGetValue("recommendationStatus", out recommendationStatus))
-                return (Boolean)recommendationStatus;
+            if (userLastestResultAndRecommendation.TryGetValue("IsRecommend", out recommendationStatus))
+                return Convert.ToBoolean(recommendationStatus);
             else
                 return false;
         }
@@ -165,7 +175,10 @@ namespace Poopor
 
         private void cancer_area_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-
+            if (GetUserCancerSign().Equals("anxious"))
+            {
+                NavigationService.Navigate(new Uri("/ColonCancerMsgPage.xaml", UriKind.Relative));
+            }
         }
 
         private Dictionary<string, object> userLastestResultAndRecommendation;
@@ -173,25 +186,23 @@ namespace Poopor
         private SolidColorBrush newBgColor2 = new SolidColorBrush();
         private Dictionary<string, BitmapImage> shortRecommendation_dictionary = new Dictionary<string, BitmapImage>()
         {
-            {"Fruits and vegetables", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"Fiber", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"Fat diet", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"Alcohol", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"Iron", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"Consult a doctor", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"Gastric irritation", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"Water or fluids", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"Supplements", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"Herbal teas", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"Cooked grains", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"Meat", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"Dairy", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"Wheat", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"Eggs", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"Refined Carbo", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"Refined sugar", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"De-stress", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))},
-            {"Food allergies", new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute))}
+            {"Alcohol", new BitmapImage(new Uri("/Assets/img/recIcons/Alcohol.png", UriKind.RelativeOrAbsolute))},
+            {"BRAT diet", new BitmapImage(new Uri("/Assets/img/recIcons/BRAT diet.png", UriKind.RelativeOrAbsolute))},
+            {"Consult a doctor", new BitmapImage(new Uri("/Assets/img/recIcons/Consult a doctor.png", UriKind.RelativeOrAbsolute))},
+            {"Cooked grains", new BitmapImage(new Uri("/Assets/img/recIcons/Cooked grains.png", UriKind.RelativeOrAbsolute))},
+            {"De-stress", new BitmapImage(new Uri("/Assets/img/recIcons/De-stress.png", UriKind.RelativeOrAbsolute))},
+            {"Fat diet", new BitmapImage(new Uri("/Assets/img/recIcons/Fat diet.png", UriKind.RelativeOrAbsolute))},
+            {"Fiber", new BitmapImage(new Uri("/Assets/img/recIcons/Fiber.png", UriKind.RelativeOrAbsolute))},
+            {"Food allergies", new BitmapImage(new Uri("/Assets/img/recIcons/Food allergies.png", UriKind.RelativeOrAbsolute))},
+            {"Fruits and vegetables", new BitmapImage(new Uri("/Assets/img/recIcons/Fruits and vegetables.png", UriKind.RelativeOrAbsolute))},
+            {"Gastric irritation", new BitmapImage(new Uri("/Assets/img/recIcons/Gastric irritation.png", UriKind.RelativeOrAbsolute))},
+            {"Herbal teas", new BitmapImage(new Uri("/Assets/img/recIcons/Herbal teas.png", UriKind.RelativeOrAbsolute))},
+            {"Iron", new BitmapImage(new Uri("/Assets/img/recIcons/Iron.png", UriKind.RelativeOrAbsolute))},
+            {"Meat", new BitmapImage(new Uri("/Assets/img/recIcons/Meat.png", UriKind.RelativeOrAbsolute))},
+            {"Refined Carbo", new BitmapImage(new Uri("/Assets/img/recIcons/Refined Carbo.png", UriKind.RelativeOrAbsolute))},
+            {"Refined sugar", new BitmapImage(new Uri("/Assets/img/recIcons/Refined sugar.png", UriKind.RelativeOrAbsolute))},
+            {"Supplements", new BitmapImage(new Uri("/Assets/img/recIcons/Supplements.png", UriKind.RelativeOrAbsolute))},
+            {"Water or fluids", new BitmapImage(new Uri("/Assets/img/recIcons/Water or fluids.png", UriKind.RelativeOrAbsolute))},
         };
     }
 }

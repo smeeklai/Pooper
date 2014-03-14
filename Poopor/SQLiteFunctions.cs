@@ -12,7 +12,7 @@ namespace Poopor
     class SQLiteFunctions : DatabaseFunctions
     {
 
-        public static string dbPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "db.sqlite");
+        public static string dbPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "pooperDB.sqlite");
         private static Poop_Table_SQLite poop_table = new Poop_Table_SQLite();
         private static UserInfo_Table_SQLite userInfo_table = new UserInfo_Table_SQLite();
         private static Color_Meaning_Table_SQLite color_meaning_table = new Color_Meaning_Table_SQLite();
@@ -20,7 +20,7 @@ namespace Poopor
         private static Short_Rec_SQLite short_rec_table = new Short_Rec_SQLite();
         private static Long_Rec_SQLite long_rec_table = new Long_Rec_SQLite();
 
-        public async Task<Boolean> InsertData(object data)
+        public Boolean InsertData(object data)
         {
             if (IsUserInfo_Data(data))
             {
@@ -88,13 +88,12 @@ namespace Poopor
                 }
                 return true;
             }
-            else
-                return false;
+            return false;
         }
 
         public void UpdateData(object data)
         {
-            
+
         }
 
         public void DeleteData(string index)
@@ -265,7 +264,7 @@ namespace Poopor
                     return null;
             }
         }
-            
+
         public List<string> GetColorMeaning(string color)
         {
             List<string> list = new List<string>();
@@ -445,6 +444,18 @@ namespace Poopor
             }
 
             return result;
+        }
+
+        public static Boolean IsResultCriteriaInitialized()
+        {
+            using (var db = new SQLiteConnection(SQLiteFunctions.dbPath))
+            {
+                var existing = db.Query<UserInfo_Table_SQLite>("select * from Color_Meaning_Table_SQLite");
+                if (existing.Count != 0)
+                    return true;
+                else
+                    return false;
+            }
         }
     }
 }

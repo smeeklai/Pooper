@@ -130,7 +130,7 @@ namespace Poopor
                 if (azureResult == false)
                     azureResult = await RegisterNewMemberToAzure();
                 if (azureResult == true && sqliteResult == false)
-                    sqliteResult = await RegisterNewMemberToSQLite();
+                    sqliteResult = RegisterNewMemberToSQLite();
                 if (azureResult && sqliteResult == true)
                 {
                     Debug.WriteLine("Register finished");
@@ -144,7 +144,7 @@ namespace Poopor
 
         private async Task<Boolean> RegisterNewMemberToAzure()
         {
-            Boolean result = await new AzureFunctions().InsertData(new UserInfo_Table_Azure()
+            Boolean result = await new AzureFunctions().InsertDataAsync(new UserInfo_Table_Azure()
                 {
                     Email = regisEmail_textBox.Text,
                     Password = regisPassword_textBox.Password,
@@ -168,9 +168,9 @@ namespace Poopor
             return result;
         }
 
-        private async Task<Boolean> RegisterNewMemberToSQLite()
+        private Boolean RegisterNewMemberToSQLite()
         {
-            Boolean result = await new SQLiteFunctions().InsertData(new UserInfo_Table_SQLite()
+            Boolean result = new SQLiteFunctions().InsertData(new UserInfo_Table_SQLite()
                 {
                     Email = regisEmail_textBox.Text,
                     Password = regisPassword_textBox.Password,

@@ -25,7 +25,7 @@ namespace Poopor
             
         }
 
-        public async Task<Boolean> InsertData(object data)
+        public async Task<Boolean> InsertDataAsync(object data)
         {
             try
             {
@@ -65,27 +65,33 @@ namespace Poopor
 
         public async Task<bool> CheckUserAuthentication(String userEmail, String userPassword)
         {
-            SystemFunctions.SetProgressIndicatorProperties(true);
-            SystemTray.ProgressIndicator.Text = "authenticating...";
-            try
+            var test = new SQLiteFunctions().GetUserInfoByQuery("select * from UserInfo_Table_SQLite");
+            foreach (var item in test)
             {
-                items = await azure_userInfo_table.ToCollectionAsync();
-                Debug.WriteLine("Retrieve data successfully");
-                foreach (var item in items)
+                if (item.Email.Contains(userEmail) && item.Password.Contains(userPassword))
                 {
-                    if (item.Email.Contains(userEmail) && item.Password.Contains(userPassword))
-                    {
-                        SystemFunctions.SetProgressIndicatorProperties(false);
-                        Debug.WriteLine("email and password are matched");
-                        return true;
-                    }
+                    Debug.WriteLine("email and password are matched");
+                    return true;
                 }
             }
-            catch (MobileServiceInvalidOperationException e)
-            {
-                Debug.WriteLine(e.Message);
-            }
-            SystemFunctions.SetProgressIndicatorProperties(false);
+            //try
+            //{
+            //    items = await azure_userInfo_table.ToCollectionAsync();
+            //    Debug.WriteLine("Retrieve data successfully");
+            //    foreach (var item in items)
+            //    {
+            //        if (item.Email.Contains(userEmail) && item.Password.Contains(userPassword))
+            //        {
+            //            SystemFunctions.SetProgressIndicatorProperties(false);
+            //            Debug.WriteLine("email and password are matched");
+            //            return true;
+            //        }
+            //    }
+            //}
+            //catch (MobileServiceInvalidOperationException e)
+            //{
+            //    Debug.WriteLine(e.Message);
+            //}
             Debug.WriteLine("email and password are mismatched");
             return false;
         }
@@ -130,6 +136,11 @@ namespace Poopor
             if (poop_table.GetType().Equals(data.GetType()))
                 return true;
             return false;
+        }
+
+        public bool InsertData(object data)
+        {
+            return true;
         }
     }
 }
