@@ -21,8 +21,8 @@ namespace Poopor
         public ResultPage()
         {
             InitializeComponent();
-            userLastestResultAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
-            AdjustResultArea();
+            //userLastestResultAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
+            //AdjustResultArea();
             //AdjustRecommendationArea();
             //AdjustMeaningArea();
         }
@@ -69,14 +69,7 @@ namespace Poopor
                 noRecommendation_textBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 60, 60, 60));
                 noRecommendation_textBlock.FontFamily = new FontFamily("Segoe WP SemiLight");
                 noRecommendation_textBlock.Text = "No recommendation! You are healthy";
-                /*recommendation_lists.Children.Add(noRecommendation_textBlock);   
-                recommendation_textBlock.Visibility = Visibility.Collapsed;
-                recommendationResult_area.Visibility = Visibility.Collapsed;
-                noRecommendationResult_area.Visibility = Visibility.Visible;
-                newBgColor.Color = Color.FromArgb(255, 130, 241, 196);
-                recommendations_header.Visibility = Visibility.Collapsed;
-                recommendation_lists.Visibility = Visibility.Collapsed;
-                recommendations_area.Background = newBgColor;*/
+                recommendation_lists.Children.Add(noRecommendation_textBlock);
             }
             else
             {

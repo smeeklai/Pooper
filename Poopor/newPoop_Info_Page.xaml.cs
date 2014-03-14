@@ -30,6 +30,7 @@ namespace Poopor
             base.OnNavigatedTo(e);
             NavigationContext.QueryString.TryGetValue("poopColor", out poopColor);
             isMelena = Convert.ToBoolean(NavigationContext.QueryString["melenaResult"]);
+            havingMedicines = Convert.ToBoolean(NavigationContext.QueryString["havingMedicines"]);
             colorPicker.SelectedItem = poopColor;
             painLevel_slider.ValueChanged += painLevel_slider_ValueChanged;
             blood_amount_slider.ValueChanged += blood_amount_slider_ValueChanged;
@@ -39,7 +40,7 @@ namespace Poopor
 
         private void newPoop_submit_button_Click(object sender, RoutedEventArgs e)
         {
-            string color = colorPicker.SelectedItem.ToString();
+            poopColor = colorPicker.SelectedItem.ToString();
             string shape = shapePicker.SelectedItem.ToString();
             string painLevel = painLevel_dictionary[painLevel_slider.Value];
             string bloodAmount = bloodAmount_dictionary[blood_amount_slider.Value];
@@ -47,18 +48,21 @@ namespace Poopor
             if (SessionManagement.IsLoggedIn() == false)
             {
                 MessageBox.Show("Please answer us several health questions first. This can be avoided by siging up an account", "Health Infomation Required", MessageBoxButton.OK);
-                NavigationService.Navigate(new Uri("/AdditionalHealthInfomation.xaml?color=" + color + "?shape=" + shape + "?painLevel=" + painLevel
-                    + "?bloodAmount=" + bloodAmount, UriKind.Relative));
+                NavigationService.Navigate(new Uri("/AdditionalHealthInfomation.xaml?poopColor=" + poopColor + "&shape=" + shape + "&painLevel=" + painLevel
+                    + "&bloodAmount=" + bloodAmount + "&melenaResult=" + isMelena + "&havingMedicines=" + havingMedicines, UriKind.Relative));
             }
+            else
             {
+                var userInfo = sqliteFunctions.GetUserInfo(SessionManagement.GetEmail());
+                TimeSpan timeSpan = DateTime.Now.Subtract(userInfo.DOB);
+                int userAge = Convert.ToInt32(timeSpan.TotalDays / 360);
+                SystemFunctions.SetProgressIndicatorProperties(true);
+                SystemTray.ProgressIndicator.Text = "Analysing data...";
+                //var result = analyzeData(poopColor, shape, painLevel, bloodAmount, userInfo.Height, userInfo.Weight, userInfo.Gender, userAge, userInfo.HealthInfo1, userInfo.HealthInfo2, userInfo.HealthInfo3, userInfo.HealthInfo4, userInfo.HealthInfo5, isMelena, havingMedicines);
+                
                 //---------------------------Call Bank & Fern Method here----------------------------------
 
-                Poop_Table_SQLite newPoopData = new Poop_Table_SQLite();
-                newPoopData.Email = SessionManagement.GetEmail();
-                newPoopData.Color = color;
-                newPoopData.Shape = shape;
-                newPoopData.Pain_Level = painLevel;
-                newPoopData.Blood_Amount = bloodAmount;
+                
 
                 NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
             }
@@ -142,15 +146,18 @@ namespace Poopor
 
         private string poopColor;
         private Boolean isMelena = false;
+        private Boolean havingMedicines = false;
+        private AzureFunctions azureFunctions = new AzureFunctions();
+        private SQLiteFunctions sqliteFunctions = new SQLiteFunctions();
         private Dictionary<double, string> painLevel_dictionary = new Dictionary<double, string>(){
-            {1, "no hurt"},
+            {1, "none"},
             {2, "mild"},
             {3, "moderate"},
             {4, "severe"},
             {5, "worst"}
         };
         private Dictionary<double, string> bloodAmount_dictionary = new Dictionary<double, string>(){
-            {1, "no blood"},
+            {1, "none"},
             {2, "little blood"},
             {3, "medium blood"},
             {4, "much blood"},
