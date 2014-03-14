@@ -105,6 +105,7 @@
     <Compile Include="ColonCancerMsgPage.xaml.cs">
       <DependentUpon>ColonCancerMsgPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Color_Meaning_Table_SQLite.cs" />
     <Compile Include="DatabaseFunctions.cs" />
     <Compile Include="Data\AccentColorNameToBrush.cs" />
     <Compile Include="Data\ColorExtensions.cs" />
@@ -128,9 +129,7 @@
     <Compile Include="SessionManagement.cs" />
     <Compile Include="Shape_Meaning_Table_SQLite.cs" />
     <Compile Include="Short_Rec_SQLite.cs" />
-    <Compile Include="SqlCommand.cs" />
     <Compile Include="SQLiteFunctions.cs" />
-    <Compile Include="SqlParameter.cs" />
     <Compile Include="SystemFunctions.cs" />
     <Compile Include="ToolkitExtensions.cs" />
     <Compile Include="UserInfo_Table_SQLite.cs" />
