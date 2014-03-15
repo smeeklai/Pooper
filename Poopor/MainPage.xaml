@@ -52,7 +52,7 @@
             </TextBlock>
             <TextBlock Text="Home" Margin="-4,-17,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="#FF787B7C" FontSize="78.667"/>
         </StackPanel>
-        <Grid x:Name="healthInfo_grid" Margin="0" Grid.Row="1" Background="#FFFF3939" Visibility="Collapsed">
+        <Grid x:Name="healthInfo_grid" Margin="0" Grid.Row="1" Background="#FFFF3939">
         	<Grid.RowDefinitions>
         		<RowDefinition Height="Auto"/>
         		<RowDefinition Height="Auto"/>
@@ -78,7 +78,7 @@
         		<TextBlock x:Name="more_axiousSigns_text" TextWrapping="Wrap" Text="Slide rightward to see more details" Margin="0,0,5,0" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Foreground="White" FontFamily="Segoe WP SemiLight" FontSize="16"/>
         	</Grid>
         </Grid>
-        <Grid x:Name="goodHealthInfo_grid" Margin="0" Grid.Row="1" Background="#FF61EB36">
+        <Grid x:Name="goodHealthInfo_grid" Margin="0" Grid.Row="1" Background="#FF61EB36" Visibility="Collapsed">
         	<Grid.RowDefinitions>
         		<RowDefinition Height="Auto"/>
         		<RowDefinition Height="Auto"/>
@@ -128,7 +128,7 @@
         	</Grid>
         	<Button x:Name="newPoop_button" BorderThickness="0" Background="#FF1BA1E2" FontFamily="Segoe WP" FontSize="24" Padding="10,5,10,6" Margin="0,20" Click="newPoop_button_Click" Grid.RowSpan="2">
         		<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        			<Image Source="newrec.png" Width="287" VerticalAlignment="Center"/>
+        			<Image Source="newrec.png" Width="248" VerticalAlignment="Center"/>
         			<TextBlock TextWrapping="Wrap" Text="NEW POOP" FontSize="40" Foreground="White" HorizontalAlignment="Center" Margin="0" TextAlignment="Center"/>
         		</StackPanel>
         	</Button>

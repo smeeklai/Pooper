@@ -11,15 +11,19 @@ namespace Poopor.Data
     {
         public SamplePoopImageData()
         {
-            this.Add(new PoopImageData("poop1"));
-            this.Add(new PoopImageData("poop2"));
-            this.Add(new PoopImageData("poop3"));
-            this.Add(new PoopImageData("poop4"));
-            this.Add(new PoopImageData("poop5"));
-            this.Add(new PoopImageData("poop6"));
-            this.Add(new PoopImageData("poop7"));
-            this.Add(new PoopImageData("poop8"));
-            this.Add(new PoopImageData("poop9"));
+            this.Add(new PoopImageData("Poop1"));
+            this.Add(new PoopImageData("Poop2"));
+            this.Add(new PoopImageData("Poop3"));
+            this.Add(new PoopImageData("Poop4"));
+            this.Add(new PoopImageData("Poop5"));
+            this.Add(new PoopImageData("Poop6"));
+            this.Add(new PoopImageData("Poop7"));
+            this.Add(new PoopImageData("Poop8"));
+            this.Add(new PoopImageData("Poop9"));
+            this.Add(new PoopImageData("Poop10"));
+            this.Add(new PoopImageData("Poop11"));
+            this.Add(new PoopImageData("Poop12"));
+            this.Add(new PoopImageData("Poop13"));
         }
     }
 }

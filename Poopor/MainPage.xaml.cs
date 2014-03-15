@@ -80,11 +80,15 @@ namespace Poopor
 
                         timer.Tick += (sender, args) =>
                         {
-                            if (SystemTray.ProgressIndicator.IsVisible != false)
+                            try
                             {
                                 SystemTray.ProgressIndicator.IsVisible = false;
+                                timer.Stop();
                             }
-                            timer.Stop();
+                            catch (NullReferenceException c)
+                            {
+
+                            }
                         };
 
                         timer.Start();
@@ -116,7 +120,7 @@ namespace Poopor
                             Debug.WriteLine("Lastest time in Sqlite: " + userLastestPoopRecordInSqlite.Date_Time);
                             Debug.WriteLine("Lastest time in azure: " + userLastestPoopRecordInAzure.Date_Time);
                         }
-                        
+
 
                         Debug.WriteLine(isUpdateNeeded);
                         if (isUpdateNeeded == 0)
@@ -129,10 +133,15 @@ namespace Poopor
 
                             timer.Tick += (sender, args) =>
                             {
-                                if (SystemTray.ProgressIndicator.IsVisible != false){
+                                try
+                                {
                                     SystemTray.ProgressIndicator.IsVisible = false;
+                                    timer.Stop();
                                 }
-                                timer.Stop();
+                                catch (NullReferenceException b)
+                                {
+
+                                }
                             };
 
                             timer.Start();
