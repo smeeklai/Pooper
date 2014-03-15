@@ -28,9 +28,9 @@ namespace Poopor
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             NavigationContext.QueryString.TryGetValue("poopColor", out poopColor);
-            NavigationContext.QueryString.TryGetValue("shape", out poopColor);
-            NavigationContext.QueryString.TryGetValue("painLevel", out poopColor);
-            NavigationContext.QueryString.TryGetValue("bloodAmount", out poopColor);
+            NavigationContext.QueryString.TryGetValue("shape", out poopShape);
+            NavigationContext.QueryString.TryGetValue("painLevel", out bloodAmount);
+            NavigationContext.QueryString.TryGetValue("bloodAmount", out painLevel);
             isMelena = Convert.ToBoolean(NavigationContext.QueryString["melenaResult"]);
             havingMedicines = Convert.ToBoolean(NavigationContext.QueryString["havingMedicines"]);
             temGender_picker.SelectionChanged += temGender_picker_SelectionChanged;

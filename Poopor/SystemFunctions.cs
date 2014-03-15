@@ -89,91 +89,91 @@ namespace Poopor
 
             // ----- Color_Meaning_Table_SQLite : Very light brown -----                   
             db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Very light brown", Meaning = "Lacks in fiber" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Very light brown", Meaning = "Too much fat in the diet" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Very light brown", Meaning = "Sign of liver problems or constipation" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Very light brown", Meaning = "Sign of diarrhea symptom" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Very light brown", Meaning = "Possibly take too much fat diet" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Very light brown", Meaning = "Possible sign of liver problems or constipation" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Very light brown", Meaning = "Possible sign of diarrhea" });
 
             // ----- Color_Meaning_Table_SQLite : Medium brown -----
             db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Medium brown", Meaning = "Normal stool" });
 
             // ----- Color_Meaning_Table_SQLite : Black -----
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Eating dark colored foods" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Increased iron intake" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Too much alcohol intake" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Gastric or duodenal ulcers" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Bleeding esophageal varices" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Other types of bleeding in GI tract" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Certain medications" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Sign of abdominal pain symptom" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Sign of vomiting symptom" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Sign of Diarrhea symptom" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Sign of weakness symptom" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Sign of dizziness symptom" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Possibly eat dark colored foods" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Possibly take too much iron" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Possibly drink too much alcohol" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Possible sign of gastric or duodenal ulcers" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Possible sign of bleeding esophageal varices" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Possible other types of bleeding in GI tract" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Possibly take certain medications" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Possible sign of abdominal pain" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Possible sign of vomiting" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Possible sign of diarrhea" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Possible sign of weakness" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Black", Meaning = "Possible sign of dizziness" });
 
             // ----- Color_Meaning_Table_SQLite : Maroon -----
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Intestinal parasites or infection" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Diverticulitis" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Irritable bowel syndrome(IBS)" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "GI tumors" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Polyps" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Ulcers" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Esophageal variances" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Eating red colored foods" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Too much alcohol" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Certain medications" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Sign of abdominal pain symptom" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Sign of vomiting symptom" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Sign of Diarrhea symptom" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Sign of weakness symptom" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Sign of dizziness symptom" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Possible sign of intestinal parasites or infection" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Possible sign of diverticulitis" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Possible sign of irritable bowel syndrome(IBS)" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Possible sign of GI tumors" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Possible sign of polyps" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Possible sign of ulcers" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Possible sign of esophageal variances" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Possibly eating red colored foods" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Possibly drink too much alcohol" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Possibly take certain medications" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Possible sign of abdominal pain" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Possible sign of vomiting" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Possible sign of diarrhea" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Possible sign of weakness" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Maroon", Meaning = "Possible sign of dizziness" });
 
             // ----- Color_Meaning_Table_SQLite : Bright red -----
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Bright red", Meaning = "Hemorrhoids" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Bright red", Meaning = "Polyps" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Bright red", Meaning = "Anal fissures" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Bright red", Meaning = "Colorectal cancer" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Bright red", Meaning = "Sign of Constipation symptom" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Bright red", Meaning = "Sign of pain during defecation symptom" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Bright red", Meaning = "Possible sign of hemorrhoids" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Bright red", Meaning = "Possible sign of polyps" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Bright red", Meaning = "Possible sign of anal fissures" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Bright red", Meaning = "Possible sign of colorectal cancer" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Bright red", Meaning = "Possible sign of constipation" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Bright red", Meaning = "Possible sign of pain during defecation" });
 
             // ----- Color_Meaning_Table_SQLite : Orange -----
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Orange", Meaning = "Bile salt production low" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Orange", Meaning = "Bile flow obstruction" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Orange", Meaning = "Lover or gall bladder disease" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Orange", Meaning = "Eating orange-colored foods" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Orange", Meaning = "Medicines" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Orange", Meaning = "Sign of bloating symptom" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Orange", Meaning = "Sign of diarrhea symptom" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Orange", Meaning = "Sign of abdominal discomfort symptom or pain possible " });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Orange", Meaning = "Possible sign of bile salt production low" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Orange", Meaning = "Possible sign of bile flow obstruction" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Orange", Meaning = "Possible sign of liver or gall bladder disease" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Orange", Meaning = "Possibly eat orange-colored foods" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Orange", Meaning = "Possibly take certain medications" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Orange", Meaning = "Possible sign of bloating" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Orange", Meaning = "Possible sign of diarrhea" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Orange", Meaning = "Possible sign of abdominal discomfort symptom or pain" });
 
             // ----- Color_Meaning_Table_SQLite : Dark green -----
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Bile salt production low" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Bile flow obstruction" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Liver or gall bladder disease" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Ulcerative colitis" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Irritable bowel syndrome(IBS)" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Eating green-colored foods" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Medicines" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Sign of bloating symptom" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Sign of diarrhea symptom" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Sign of abdominal discomfort symptom or pain possible" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Possible sign of bile salt production low" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Possible sign of bile flow obstruction" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Possible sign of liver or gall bladder disease" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Possible sign of ulcerative colitis" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Possible sign of irritable bowel syndrome(IBS)" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Possibly eat green-colored foods" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Possibly take certain medications" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Possible sign of bloating" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Possible sign of diarrhea" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Dark green", Meaning = "Possible sign of abdominal discomfort symptom or pain" });
 
             // ----- Color_Meaning_Table_SQLite : Yellow -----
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Yellow", Meaning = "Malabsorption of fat" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Yellow", Meaning = "Gilbert’s Syndrome" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Yellow", Meaning = "Eating too much yellow foods" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Yellow", Meaning = "Sign og Parasitic infection" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Yellow", Meaning = "Sign of Pancreatic cancer" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Yellow", Meaning = "Sign of bloating symptom" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Yellow", Meaning = "Sign of Diarrhea symptom" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Yellow", Meaning = "Sign of abdominal discomfort symptom or pain possible" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Yellow", Meaning = "Possible sign of malabsorption of fat" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Yellow", Meaning = "Possible sign of Gilbert’s Syndrome" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Yellow", Meaning = "Possibly eat too much yellow foods" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Yellow", Meaning = "Possible sign of parasitic infection" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Yellow", Meaning = "Possible sign of pancreatic cancer" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Yellow", Meaning = "Possible sign of bloating" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Yellow", Meaning = "Possible sign of diarrhea" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Yellow", Meaning = "Possible sign of abdominal discomfort or pain" });
 
             // ----- Color_Meaning_Table_SQLite : Gray -----
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Gray", Meaning = "Bile sat production low" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Gray", Meaning = "Bile flow obstruction" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Gray", Meaning = "Liver or gall bladder disease" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Gray", Meaning = "Sign of jaundice symptom (yellowing of skin and eyes)" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Gray", Meaning = "Sign of loss of appetite symptom" });
-            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Gray", Meaning = "Sign of weakness symptom" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Gray", Meaning = "Possible sign of bile sat production low" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Gray", Meaning = "Possible sign of bile flow obstruction" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Gray", Meaning = "Possible sign of liver or gall bladder disease" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Gray", Meaning = "Possible sign of jaundice (yellowing of skin and eyes)" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Gray", Meaning = "Possible sign of loss of appetite" });
+            db_function.InsertData(new Color_Meaning_Table_SQLite() { Name = "Gray", Meaning = "Possible sign of weakness" });
 
             // ----- Shape_Meaning_Table_SQLite : Separated hard lumps -----
             db_function.InsertData(new Shape_Meaning_Table_SQLite() { Name = "Separated hard lumps", Meaning = "Lack of fiber" });
@@ -190,7 +190,7 @@ namespace Poopor
             db_function.InsertData(new Shape_Meaning_Table_SQLite() { Name = "Cracked surface sausage", Meaning = "Crack on surface means stool may be a bit dry" });
             db_function.InsertData(new Shape_Meaning_Table_SQLite() { Name = "Cracked surface sausage", Meaning = "Latent constipation" });
             db_function.InsertData(new Shape_Meaning_Table_SQLite() { Name = "Cracked surface sausage", Meaning = "Transit time is faster than feces shape Lumpy sausage between 1 and 2 weeks" });
-            db_function.InsertData(new Shape_Meaning_Table_SQLite() { Name = "Cracked surface sausage", Meaning = "It still is ideal stool" });
+            db_function.InsertData(new Shape_Meaning_Table_SQLite() { Name = "Cracked surface sausage", Meaning = "Ideal stool" });
 
             // ----- Shape_Meaning_Table_SQLite : Smooth soft snake -----
             db_function.InsertData(new Shape_Meaning_Table_SQLite() { Name = "Smooth soft snake", Meaning = "Most desirable state of stools" });
@@ -200,7 +200,7 @@ namespace Poopor
             db_function.InsertData(new Shape_Meaning_Table_SQLite() { Name = "Soft blobs with clear cut", Meaning = "Feces move a bit fast" });
             db_function.InsertData(new Shape_Meaning_Table_SQLite() { Name = "Soft blobs with clear cut", Meaning = "Nutrient deficiency and dehydration can be effected from this" });
             db_function.InsertData(new Shape_Meaning_Table_SQLite() { Name = "Soft blobs with clear cut", Meaning = "Tending towards diarrhea" });
-            db_function.InsertData(new Shape_Meaning_Table_SQLite() { Name = "Soft blobs with clear cut", Meaning = "This feces shape means food poisoning, imbalance or overgrowth of bad bacteria in the gut, bowel and/or autoimmune disease, food sensitivities, sugar dietetic candies/sweets." });
+            db_function.InsertData(new Shape_Meaning_Table_SQLite() { Name = "Soft blobs with clear cut", Meaning = "Possible sign of food poisoning, imbalance or overgrowth of bad bacteria in the gut, bowel and/or autoimmune disease, food sensitivities, sugar dietetic candies/sweets" });
 
             // ----- Shape_Meaning_Table_SQLite : Mushy and fluffy pieces -----
             db_function.InsertData(new Shape_Meaning_Table_SQLite() { Name = "Mushy and fluffy pieces", Meaning = "A rapid transit time" });
@@ -226,7 +226,7 @@ namespace Poopor
 
             // ----- Long_Rec_SQLite : Maroon -----
             db_function.InsertData(new Long_Rec_SQLite() { Name = "Maroon", L_Rec = "Stop taking too much alcohol" });
-            db_function.InsertData(new Long_Rec_SQLite() { Name = "Maroon", L_Rec = "Avoid medications that can cause gastric irritation " });
+            db_function.InsertData(new Long_Rec_SQLite() { Name = "Maroon", L_Rec = "Avoid medications that can cause gastric irritation" });
             db_function.InsertData(new Long_Rec_SQLite() { Name = "Maroon", L_Rec = "Consult a doctor to rule out lower GI bleeding" });
 
             // ----- Long_Rec_SQLite : Bright red -----
@@ -382,6 +382,119 @@ namespace Poopor
             db_function.InsertData(new Short_Rec_SQLite() { Name = "Entirely liquid", S_Rec = "Water or fluids" });
             db_function.InsertData(new Short_Rec_SQLite() { Name = "Entirely liquid", S_Rec = "Herbal teas" });
             db_function.InsertData(new Short_Rec_SQLite() { Name = "Entirely liquid", S_Rec = "BRAT diet" });
+
+            // ----- PainLevel_Meaning_Table_SQLite    : none -----                   
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "none", Meaning = "Well done!" });
+
+            // ----- PainLevel_Meaning_Table_SQLite    : mild -----                   
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "mild", Meaning = "Possibly insufficient water intake" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "mild", Meaning = "Possibly lack of fiber" });
+
+            // ----- PainLevel_Meaning_Table_SQLite    : moderate -----                   
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "moderate", Meaning = "Possible sign of hemorrhoids" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "moderate", Meaning = "Possible sign of anal fissure" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "moderate", Meaning = "Possible sign of proctitis" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "moderate", Meaning = "Possible sign of Crohn’s disease" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "moderate", Meaning = "Possible sign of anal cancer" });
+
+            // ----- PainLevel_Meaning_Table_SQLite    : severe -----                   
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "severe", Meaning = "Possible sign of hemorrhoids" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "severe", Meaning = "Possible sign of anal fissure" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "severe", Meaning = "Possible sign of proctitis" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "severe", Meaning = "Possible sign of Crohn’s disease" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "severe", Meaning = "Possible sign of anal cancer" });
+
+            // ----- PainLevel_Meaning_Table_SQLite    : worst -----                   
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "worst", Meaning = "Possible sign of hemorrhoids" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "worst", Meaning = "Possible sign of anal fissure" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "worst", Meaning = "Possible sign of proctitis" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "worst", Meaning = "Possible sign of Crohn’s disease" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "worst", Meaning = "Possible sign of anal cancer" });
+
+            // ----- BloodAmount_Meaning_Table_SQLite     : none -----                   
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "none", Meaning = "Well done!" });
+
+            // ----- BloodAmount_Meaning_Table_SQLite    : little blood -----                   
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "little blood", Meaning = "Possible sign of hemorrhoids" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "little blood", Meaning = "Possible sign of anal fissure" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "little blood", Meaning = "Possible sign of proctitis" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "little blood", Meaning = "Possible sign of Crohn’s disease" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "little blood", Meaning = "Possible sign of anal cancer" });
+
+            // ----- BloodAmount_Meaning_Table_SQLite    : medium blood -----                   
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "medium blood", Meaning = "Possible sign of hemorrhoids" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "medium blood", Meaning = "Possible sign of anal fissure" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "medium blood", Meaning = "Possible sign of proctitis" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "medium blood", Meaning = "Possible sign of Crohn’s disease" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "medium blood", Meaning = "Possible sign of anal cancer" });
+
+            // ----- BloodAmount_Meaning_Table_SQLite    : much blood -----                   
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "much blood", Meaning = "Possible sign of hemorrhoids" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "much blood", Meaning = "Possible sign of anal fissure" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "much blood", Meaning = "Possible sign of proctitis" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "much blood", Meaning = "Possible sign of Crohn’s disease" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "much blood", Meaning = "Possible sign of anal cancer" });
+
+            // ----- BloodAmount_Meaning_Table_SQLite    : a lot of blood -----                   
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "a lot of blood", Meaning = "Possible sign of hemorrhoids" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "a lot of blood", Meaning = "Possible sign of anal fissure" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "a lot of blood", Meaning = "Possible sign of proctitis" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "a lot of blood", Meaning = "Possible sign of Crohn’s disease" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "a lot of blood", Meaning = "Possible sign of anal cancer" });
+
+            // ----- Long_Rec_SQLite : none (pain level, blood amount)----- no recommendation
+
+            // ----- Long_Rec_SQLite : mild (pain level)-----
+            db_function.InsertData(new Long_Rec_SQLite() { Name = "mild", L_Rec = "More water or fluids intake" });
+            db_function.InsertData(new Long_Rec_SQLite() { Name = "mild", L_Rec = "More fiber intake" });
+
+            // ----- Long_Rec_SQLite : little blood (pain level)-----
+            db_function.InsertData(new Long_Rec_SQLite() { Name = "little blood", L_Rec = "Consult a doctor about your blood in stool" });
+
+            // ----- Long_Rec_SQLite : medium blood (pain level)-----
+            db_function.InsertData(new Long_Rec_SQLite() { Name = "medium blood", L_Rec = "Consult a doctor about your blood in stool" });
+
+            // ----- Long_Rec_SQLite : much blood (pain level)-----
+            db_function.InsertData(new Long_Rec_SQLite() { Name = "much blood", L_Rec = "Consult a doctor about your blood in stool" });
+
+            // ----- Long_Rec_SQLite : a lot of blood (pain level)-----
+            db_function.InsertData(new Long_Rec_SQLite() { Name = "a lot of blood", L_Rec = "Consult a doctor about your blood in stool" });
+
+            // ----- Long_Rec_SQLite : moderate (blood amount)-----
+            db_function.InsertData(new Long_Rec_SQLite() { Name = "moderate", L_Rec = "Consult a doctor about your painful bowel movement" });
+
+            // ----- Long_Rec_SQLite : severe (blood amount)-----
+            db_function.InsertData(new Long_Rec_SQLite() { Name = "severe", L_Rec = "Consult a doctor about your painful bowel movement" });
+
+            // ----- Long_Rec_SQLite : worst (blood amount)-----
+            db_function.InsertData(new Long_Rec_SQLite() { Name = "worst", L_Rec = "Consult a doctor about your painful bowel movement" });
+
+            // ----- Short_Rec_SQLite : none (pain level, blood amount) ----- no recommendation
+
+            // ----- Short_Rec_SQLite : mild (pain level) -----
+            db_function.InsertData(new Short_Rec_SQLite() { Name = "mild", S_Rec = "Water or fluids" });
+            db_function.InsertData(new Short_Rec_SQLite() { Name = "mild", S_Rec = "Fiber" });
+
+            // ----- Short_Rec_SQLite : moderate (pain level) -----
+            db_function.InsertData(new Short_Rec_SQLite() { Name = "moderate", S_Rec = "Consult a doctor" });
+
+            // ----- Short_Rec_SQLite : severe (pain level) -----
+            db_function.InsertData(new Short_Rec_SQLite() { Name = "severe", S_Rec = "Consult a doctor" });
+
+            // ----- Short_Rec_SQLite : worst (pain level) -----
+            db_function.InsertData(new Short_Rec_SQLite() { Name = "worst", S_Rec = "Consult a doctor" });
+
+            // ----- Short_Rec_SQLite : little blood (blood amount) -----
+            db_function.InsertData(new Short_Rec_SQLite() { Name = "little blood", S_Rec = "Consult a doctor" });
+
+            // ----- Short_Rec_SQLite : medium blood (blood amount) -----
+            db_function.InsertData(new Short_Rec_SQLite() { Name = "medium blood", S_Rec = "Consult a doctor" });
+
+            // ----- Short_Rec_SQLite : much blood (blood amount) -----
+            db_function.InsertData(new Short_Rec_SQLite() { Name = "much blood", S_Rec = "Consult a doctor" });
+
+            // ----- Short_Rec_SQLite : a lot of blood (blood amount) -----
+            db_function.InsertData(new Short_Rec_SQLite() { Name = "a lot of blood", S_Rec = "Consult a doctor" });
             return true;
         }
     }

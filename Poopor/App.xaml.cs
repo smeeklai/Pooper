@@ -174,9 +174,10 @@ namespace Poopor
                 {
                     db.CreateTable<UserInfo_Table_SQLite>();
                     db.CreateTable<Poop_Table_SQLite>();
-
                     db.CreateTable<Color_Meaning_Table_SQLite>();
                     db.CreateTable<Shape_Meaning_Table_SQLite>();
+                    db.CreateTable<PainLevel_Meaning_Table_SQLite>();
+                    db.CreateTable<BloodAmount_Meaning_Table_SQLite>();
                     db.CreateTable<Short_Rec_SQLite>();
                     db.CreateTable<Long_Rec_SQLite>();
                 }
