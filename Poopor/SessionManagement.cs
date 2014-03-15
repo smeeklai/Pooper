@@ -71,19 +71,19 @@ namespace Poopor
             settings.Save();
         }
 
-        public static void StoreUserLastestResultsAndRecommendation(Dictionary<string, object> lastestResultAndRecommendation)
+        public static void StoreUserLastestResultsAndRecommendation(List<ResultAndRecommendationDictionary> serializedLastestResultAndRecommendation)
         {
             if (settings.Contains(USER_LASTEST_RESULT_AND_RECOMMENDATION))
-                settings[USER_LASTEST_RESULT_AND_RECOMMENDATION] = lastestResultAndRecommendation;
+                settings[USER_LASTEST_RESULT_AND_RECOMMENDATION] = serializedLastestResultAndRecommendation;
             else
-                settings.Add(USER_LASTEST_RESULT_AND_RECOMMENDATION, lastestResultAndRecommendation);
+                settings.Add(USER_LASTEST_RESULT_AND_RECOMMENDATION, serializedLastestResultAndRecommendation);
             settings.Save();
         }
 
-        public static Dictionary<string, object> GetUserLastestResultsAndRecommendation()
+        public static Dictionary<string, List<string>> GetUserLastestResultsAndRecommendation()
         {
             if (settings.Contains(USER_LASTEST_RESULT_AND_RECOMMENDATION))
-                return settings[USER_LASTEST_RESULT_AND_RECOMMENDATION] as Dictionary<string, object>;
+                return SystemFunctions.DeserializeUserResultAndRecommendationData(settings[USER_LASTEST_RESULT_AND_RECOMMENDATION] as List<ResultAndRecommendationDictionary>);
             else
                 return null;
         }

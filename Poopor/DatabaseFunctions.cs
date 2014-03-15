@@ -8,7 +8,7 @@ namespace Poopor
 {
     interface DatabaseFunctions
     {
-        Task<Boolean> InsertData(object data);
+        Boolean InsertData(object data);
         void UpdateData(object data);
         void DeleteData(string index);
     }

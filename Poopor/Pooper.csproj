@@ -108,6 +108,8 @@
     </Compile>
     <Compile Include="Color_Meaning_Table_SQLite.cs" />
     <Compile Include="DatabaseFunctions.cs" />
+    <Compile Include="DataContact.cs" />
+    <Compile Include="datamember.cs" />
     <Compile Include="Data\AccentColorNameToBrush.cs" />
     <Compile Include="Data\ColorExtensions.cs" />
     <Compile Include="Data\IsSelectedToBrushConverter.cs" />
@@ -125,6 +127,7 @@
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Poop_Table_Azure.cs" />
+    <Compile Include="ResultAndRecommendationDictionary.cs" />
     <Compile Include="SamplePoopPictures.xaml.cs">
       <DependentUpon>SamplePoopPictures.xaml</DependentUpon>
     </Compile>
@@ -241,6 +244,23 @@
     <Content Include="Assets\img\poopShape\stype5.png" />
     <Content Include="Assets\img\poopShape\stype6.png" />
     <Content Include="Assets\img\poopShape\stype7.png" />
+    <Content Include="Assets\img\recIcons\Alcohol.png" />
+    <Content Include="Assets\img\recIcons\BRAT diet.png" />
+    <Content Include="Assets\img\recIcons\Consult a doctor.png" />
+    <Content Include="Assets\img\recIcons\Cooked grains.png" />
+    <Content Include="Assets\img\recIcons\De-stress.png" />
+    <Content Include="Assets\img\recIcons\Fat diet.png" />
+    <Content Include="Assets\img\recIcons\Fiber.png" />
+    <Content Include="Assets\img\recIcons\Food allergies.png" />
+    <Content Include="Assets\img\recIcons\Fruits and vegetables.png" />
+    <Content Include="Assets\img\recIcons\Gastric irritation.png" />
+    <Content Include="Assets\img\recIcons\Herbal teas.png" />
+    <Content Include="Assets\img\recIcons\Iron.png" />
+    <Content Include="Assets\img\recIcons\Meat.png" />
+    <Content Include="Assets\img\recIcons\Refined Carbo.png" />
+    <Content Include="Assets\img\recIcons\Refined sugar.png" />
+    <Content Include="Assets\img\recIcons\Supplements.png" />
+    <Content Include="Assets\img\recIcons\Water or fluids.png" />
     <Content Include="Assets\img\report.png" />
     <Content Include="Assets\img\painLevel\Severe.png" />
     <Content Include="Assets\img\risk\anxiousrisk.png" />

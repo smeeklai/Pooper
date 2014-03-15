@@ -49,39 +49,65 @@ namespace Poopor
 
         private void signIn_button_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/RegisterPage.xaml", UriKind.Relative));
-        }
-
-        private async void logIn_button_Click(object sender, RoutedEventArgs e)
-        {
             if (!NetworkInterface.GetIsNetworkAvailable())
             {
                 MessageBox.Show(AppResources.NetworkUnavailable, AppResources.NoInternetConnection, MessageBoxButton.OK);
             }
-            else if (NetworkInterface.GetIsNetworkAvailable())
+            else
             {
-                if (String.IsNullOrWhiteSpace(email_textBox.Text) || String.IsNullOrWhiteSpace(password_Box.Password) == true)
+                NavigationService.Navigate(new Uri("/RegisterPage.xaml", UriKind.Relative));
+            }
+        }
+
+        private async void logIn_button_Click(object sender, RoutedEventArgs e)
+        {
+            new SQLiteFunctions().InsertData(new UserInfo_Table_SQLite()
                 {
-                    MessageBox.Show("Email or Password cannot be empty", AppResources.Warning, MessageBoxButton.OK);
-                }
-                else
-                {
-                    var succeeded = await new AzureFunctions().CheckUserAuthentication(email_textBox.Text, password_Box.Password);
-                    if (succeeded)
-                    {
-                        SessionManagement.CreateLoginSession(email_textBox.Text);
-                        NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
-                    }
-                    else
-                    {
-                        MessageBox.Show(AppResources.IncorrectEmailOrPasswordMsg, AppResources.IncorrectEmailOrPasswordTitle, MessageBoxButton.OK);
-                    }
-                }
+                    Email = "boss",
+                    Password = "pass",
+                    FirstName = "Boss",
+                    LastName = "Kung",
+                    DOB = new DateTime(1992, 04, 10),
+                    Gender = "Male",
+                    Weight = 81,
+                    Height = 173,
+                    HealthInfo1 = false,
+                    HealthInfo2 = false,
+                    HealthInfo3 = false,
+                    HealthInfo4 = false,
+                    HealthInfo5 = false
+                });
+            //if (!NetworkInterface.GetIsNetworkAvailable())
+            //{
+            //    MessageBox.Show(AppResources.NetworkUnavailable, AppResources.NoInternetConnection, MessageBoxButton.OK);
+            //}
+            //else if (NetworkInterface.GetIsNetworkAvailable())
+            //{
+            if (String.IsNullOrWhiteSpace(email_textBox.Text) || String.IsNullOrWhiteSpace(password_Box.Password) == true)
+            {
+                MessageBox.Show("Email or Password cannot be empty", AppResources.Warning, MessageBoxButton.OK);
             }
             else
             {
-                SystemFunctions.ShowUnknownErrorMsgBox();
+                SystemFunctions.SetProgressIndicatorProperties(true);
+                SystemTray.ProgressIndicator.Text = "authenticating...";
+                var succeeded = await new AzureFunctions().CheckUserAuthentication(email_textBox.Text, password_Box.Password);
+                if (succeeded)
+                {
+                    SessionManagement.CreateLoginSession(email_textBox.Text);
+                    NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                }
+                else
+                {
+                    MessageBox.Show(AppResources.IncorrectEmailOrPasswordMsg, AppResources.IncorrectEmailOrPasswordTitle, MessageBoxButton.OK);
+                }
+                SystemFunctions.SetProgressIndicatorProperties(false);
             }
+            //}
+            //else
+            //{
+            //    SystemFunctions.ShowUnknownErrorMsgBox();
+            //}
         }
     }
 }

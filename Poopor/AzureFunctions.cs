@@ -25,7 +25,7 @@ namespace Poopor
             
         }
 
-        public async Task<Boolean> InsertData(object data)
+        public async Task<Boolean> InsertDataAsync(object data)
         {
             try
             {
@@ -65,8 +65,6 @@ namespace Poopor
 
         public async Task<bool> CheckUserAuthentication(String userEmail, String userPassword)
         {
-            SystemFunctions.SetProgressIndicatorProperties(true);
-            SystemTray.ProgressIndicator.Text = "authenticating...";
             try
             {
                 items = await azure_userInfo_table.ToCollectionAsync();
@@ -85,7 +83,6 @@ namespace Poopor
             {
                 Debug.WriteLine(e.Message);
             }
-            SystemFunctions.SetProgressIndicatorProperties(false);
             Debug.WriteLine("email and password are mismatched");
             return false;
         }
@@ -130,6 +127,11 @@ namespace Poopor
             if (poop_table.GetType().Equals(data.GetType()))
                 return true;
             return false;
+        }
+
+        public bool InsertData(object data)
+        {
+            return true;
         }
     }
 }

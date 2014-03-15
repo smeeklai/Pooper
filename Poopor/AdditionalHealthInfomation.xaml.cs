@@ -13,6 +13,13 @@ namespace Poopor
 {
     public partial class AdditionalHealthInfomation : PhoneApplicationPage
     {
+        private string poopColor;
+        private string poopShape;
+        private string bloodAmount;
+        private string painLevel;
+        private Boolean isMelena = false;
+        private Boolean havingMedicines = false;
+
         public AdditionalHealthInfomation()
         {
             InitializeComponent();
@@ -20,6 +27,12 @@ namespace Poopor
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            NavigationContext.QueryString.TryGetValue("poopColor", out poopColor);
+            NavigationContext.QueryString.TryGetValue("shape", out poopColor);
+            NavigationContext.QueryString.TryGetValue("painLevel", out poopColor);
+            NavigationContext.QueryString.TryGetValue("bloodAmount", out poopColor);
+            isMelena = Convert.ToBoolean(NavigationContext.QueryString["melenaResult"]);
+            havingMedicines = Convert.ToBoolean(NavigationContext.QueryString["havingMedicines"]);
             temGender_picker.SelectionChanged += temGender_picker_SelectionChanged;
         }
 
@@ -37,7 +50,7 @@ namespace Poopor
             }
         }
 
-        private void submit_button_Click(object sender, RoutedEventArgs e)
+        private async void submit_button_Click(object sender, RoutedEventArgs e)
         {
             if (String.IsNullOrWhiteSpace(temWeight_textBox.Text) || String.IsNullOrWhiteSpace(temHeight_textBox.Text) ||
                 String.IsNullOrWhiteSpace(temAge_textBox.Text))
@@ -46,13 +59,31 @@ namespace Poopor
             }
             else
             {
-                MessageBox.Show("test");
-                /*double guestWeight = Convert.ToDouble(temWeight_textBox.Text);
-                double guestHeight = Convert.ToDouble(temHeight_textBox.Text);
-                int guestAge = Convert.ToInt32(temAge_textBox.Text);
-                string guestGender = temGender_picker.SelectedItem.ToString();
-                NavigationService.Navigate(new Uri("/ResultPage.xaml?weight=" + guestWeight + "?height=" + guestHeight + "?age=" + guestAge
-                    + "?gender=" + guestGender, UriKind.Relative));*/
+                SystemFunctions.SetProgressIndicatorProperties(true);
+                SystemTray.ProgressIndicator.Text = "Analyzing...";
+                double userWeight = Convert.ToDouble(temWeight_textBox.Text);
+                double userHeight = Convert.ToDouble(temHeight_textBox.Text);
+                int userAge = Convert.ToInt32(temAge_textBox.Text);
+                string userGender = temGender_picker.SelectedItem.ToString();
+                Boolean userHealthInfo1 = (Boolean)temHealthInfo_checkBox1.IsChecked;
+                Boolean userHealthInfo2 = (Boolean)temHealthInfo_checkBox2.IsChecked;
+                Boolean userHealthInfo3 = (Boolean)temHealthInfo_checkBox3.IsChecked;
+                Boolean userHealthInfo4 = (Boolean)temHealthInfo_checkBox4.IsChecked;
+                Boolean userHealthInfo5 = userGender == "Female" ? (Boolean)temHealthInfo_checkBox5.IsChecked : false;
+                if (!SQLiteFunctions.IsResultCriteriaInitialized())
+                {
+                    await SystemFunctions.InitializeResultCriterias();
+                }
+                var result = await new FecesAnalyzer().analyzeData(poopColor, poopShape, painLevel, bloodAmount, userWeight, userHeight, userGender, userAge,
+                    userHealthInfo1, userHealthInfo2, userHealthInfo3, userHealthInfo4, userHealthInfo5, isMelena, havingMedicines);
+                //SessionManagement.StoreUserLastestResultsAndRecommendation(result);
+                SystemFunctions.SetProgressIndicatorProperties(false);
+
+                Boolean isAdditionalAskingNeeded = result.ContainsKey("IsGoAsk") ? Convert.ToBoolean(result["IsGoAsk"]) : false;
+                if (isAdditionalAskingNeeded == false)
+                    NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
+                else
+                    NavigationService.Navigate(new Uri("/AdditionalHealthInfomation2.xaml", UriKind.Relative));
             }
         }
 
