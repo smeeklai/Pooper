@@ -13,6 +13,7 @@ using System.Windows;
 using Poopor.Resources;
 using Microsoft.Phone.Controls;
 using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace Poopor
 {
@@ -56,6 +57,29 @@ namespace Poopor
                          orderby s.Length ascending
                          select s;
             return sorted;
+        }
+
+        public static List<ResultAndRecommendationDictionary> SerializeUserResultAndRecommendationData(Dictionary<string, List<string>> userResultAndRecommendationData)
+        {
+            List<ResultAndRecommendationDictionary> tempDataItems = new List<ResultAndRecommendationDictionary>(userResultAndRecommendationData.Count);
+            foreach (var item in userResultAndRecommendationData)
+            {
+                tempDataItems.Add(new ResultAndRecommendationDictionary(item.Key, item.Value));
+            }
+
+            Debug.WriteLine("Serialized data finished");
+            return tempDataItems;
+        }
+
+        public static Dictionary<string, List<string>> DeserializeUserResultAndRecommendationData(List<ResultAndRecommendationDictionary> serializedUserResultAndRecommendationData)
+        {
+            Dictionary<string, List<string>> resultDic = new Dictionary<string, List<string>>();
+
+            foreach (ResultAndRecommendationDictionary item in serializedUserResultAndRecommendationData)
+            {
+                resultDic.Add(item.Key, item.Value);
+            }
+            return resultDic;
         }
 
         public static async Task<Boolean> InitializeResultCriterias()

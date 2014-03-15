@@ -69,6 +69,9 @@ namespace Poopor
         {
             if (!IsRecommendationExisted())
             {
+                recommendation_textBlock.Visibility = System.Windows.Visibility.Collapsed;
+                recommendationResult_area.Visibility = System.Windows.Visibility.Collapsed;
+                noRecommendationResult_area.Visibility = System.Windows.Visibility.Visible;
                 TextBlock noRecommendation_textBlock = new TextBlock();
                 noRecommendation_textBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 60, 60, 60));
                 noRecommendation_textBlock.FontFamily = new FontFamily("Segoe WP SemiLight");
@@ -157,18 +160,18 @@ namespace Poopor
 
         private Boolean IsRecommendationExisted()
         {
-            object recommendationStatus = null;
-            if (userLastestResultAndRecommendation.TryGetValue("IsRecommend", out recommendationStatus))
-                return Convert.ToBoolean(recommendationStatus);
+            List<string> recommendationStatus = null;
+            if (userLastestResultAndRecommendation.TryGetValue("NecessaryInfo", out recommendationStatus))
+                return Convert.ToBoolean(recommendationStatus[2]);
             else
                 return false;
         }
 
         private string GetUserCancerSign()
         {
-            object userCancerSign = null;
-            if (userLastestResultAndRecommendation.TryGetValue("UserCancerSign", out userCancerSign))
-                return userCancerSign as string;
+            List<string> userCancerSign = null;
+            if (userLastestResultAndRecommendation.TryGetValue("NecessaryInfo", out userCancerSign))
+                return userCancerSign[1];
             else
                 return null;
         }
@@ -181,7 +184,7 @@ namespace Poopor
             }
         }
 
-        private Dictionary<string, object> userLastestResultAndRecommendation;
+        private Dictionary<string, List<string>> userLastestResultAndRecommendation;
         private SolidColorBrush newBgColor = new SolidColorBrush();
         private SolidColorBrush newBgColor2 = new SolidColorBrush();
         private Dictionary<string, BitmapImage> shortRecommendation_dictionary = new Dictionary<string, BitmapImage>()

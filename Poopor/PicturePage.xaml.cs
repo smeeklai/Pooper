@@ -224,8 +224,8 @@ namespace Poopor
                             havingMedicines = await IsUserHavingMedicine();
                         }
                     }
-                    NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml?poopColor=" + poopColor + "&melenaResult=" + isMelena +
-                        "&havingMedicines=" + havingMedicines + "&poopImgName=" + poopImgName, UriKind.Relative));
+                    NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml?poopColor=" + poopColorStr + "&melenaResult=" + isMelena +
+                    "&havingMedicines=" + havingMedicines + "&poopImgName=" + poopImgName, UriKind.Relative));
                 }
             });
             /*this.Dispatcher.BeginInvoke(delegate()

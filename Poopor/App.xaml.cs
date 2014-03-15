@@ -13,6 +13,7 @@ using Microsoft.WindowsAzure.MobileServices;
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel;
+using System.IO.IsolatedStorage;
 
 namespace Poopor
 {
@@ -164,12 +165,8 @@ namespace Poopor
             //Debug.WriteLine("---Test END---");
             //Debug.WriteLine("---End---");
 
-
-
-
             //////// ----------------- My Experiment - End
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
             //  check if database exists and create it if needed
             if (!SQLiteFunctions.FileExists("pooperDB.sqlite").Result)
             {

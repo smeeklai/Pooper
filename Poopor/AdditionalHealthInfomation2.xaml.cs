@@ -47,7 +47,7 @@ namespace Poopor
                 if ((Boolean)feelingNotEmptying_checkBox.IsChecked)
                     userCancerSignMsg.Add(feelingNotEmptying_textBlock.Text);
                 userLastestResultAndRecommendation["UserCancerSignMsg"] = userCancerSignMsg;
-                SessionManagement.StoreUserLastestResultsAndRecommendation(userLastestResultAndRecommendation);
+                //SessionManagement.StoreUserLastestResultsAndRecommendation(userLastestResultAndRecommendation);
             }
             NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
         }

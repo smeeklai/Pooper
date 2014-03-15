@@ -29,7 +29,7 @@ namespace Poopor
         private Poop_Table_SQLite userLastestpoopRecordInSqlite;
         private MobileServiceCollection<Poop_Table_Azure, Poop_Table_Azure> userLastestPoopDataInAzure;
         private Poop_Table_Azure userLastestPoopRecordInAzure;
-        private Dictionary<string, object> userLastestResultsAndRecommendation;
+        private Dictionary<string, List<string>> userLastestResultsAndRecommendation;
         private int isUpdateNeeded;
         private AzureFunctions azureFunctions = new AzureFunctions();
         private SQLiteFunctions sqliteFunctions = new SQLiteFunctions();
@@ -45,10 +45,10 @@ namespace Poopor
             userLastestResultsAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
             if (userLastestResultsAndRecommendation != null)
             {
-                object userHealthObj = null;
-                if (userLastestResultsAndRecommendation.TryGetValue("UserCancerSign", out userHealthObj))
+                List<string> necessaryInfo = null;
+                if (userLastestResultsAndRecommendation.TryGetValue("NecessaryInfo", out necessaryInfo))
                 {
-                    userHealth = userHealthObj as string;
+                    userHealth = necessaryInfo[1];
                     if (!userHealth.Contains("none"))
                         AdaptDashboardToUserCancerSign(userHealth);
                 }
@@ -87,30 +87,33 @@ namespace Poopor
                     else
                     {
                         userLastestPoopDataInAzure = await azureFunctions.GetUserPoopDataInAzure(SessionManagement.GetEmail());
-                        userLastestPoopRecordInAzure = userLastestPoopDataInAzure.Last();
-                        isUpdateNeeded = DateTime.Compare(userLastestpoopRecordInSqlite.Date_Time, userLastestPoopRecordInAzure.Date_Time);
-                        Debug.WriteLine("Lastest time in Sqlite" + userLastestpoopRecordInSqlite.Date_Time);
-                        Debug.WriteLine("Lastest time in azure" + userLastestPoopRecordInAzure.Date_Time);
-                        Debug.WriteLine(isUpdateNeeded);
-                        if (isUpdateNeeded == 0)
+                        if (userLastestPoopDataInAzure.Count != 0)
                         {
-                            SystemTray.ProgressIndicator = new ProgressIndicator();
-                            SystemTray.ProgressIndicator.Text = "Data is up-to-date";
-                            SystemTray.ProgressIndicator.IsVisible = true;
-
-                            timer.Interval = TimeSpan.FromMilliseconds(3000);
-
-                            timer.Tick += (sender, args) =>
+                            userLastestPoopRecordInAzure = userLastestPoopDataInAzure.Last();
+                            isUpdateNeeded = DateTime.Compare(userLastestpoopRecordInSqlite.Date_Time, userLastestPoopRecordInAzure.Date_Time);
+                            Debug.WriteLine("Lastest time in Sqlite" + userLastestpoopRecordInSqlite.Date_Time);
+                            Debug.WriteLine("Lastest time in azure" + userLastestPoopRecordInAzure.Date_Time);
+                            Debug.WriteLine(isUpdateNeeded);
+                            if (isUpdateNeeded == 0)
                             {
-                                SystemTray.ProgressIndicator.IsVisible = false;
-                                timer.Stop();
-                            };
+                                SystemTray.ProgressIndicator = new ProgressIndicator();
+                                SystemTray.ProgressIndicator.Text = "Data is up-to-date";
+                                SystemTray.ProgressIndicator.IsVisible = true;
 
-                            timer.Start();
-                        }
-                        else
-                        {
-                            StartSyncUserLastestData();
+                                timer.Interval = TimeSpan.FromMilliseconds(3000);
+
+                                timer.Tick += (sender, args) =>
+                                {
+                                    SystemTray.ProgressIndicator.IsVisible = false;
+                                    timer.Stop();
+                                };
+
+                                timer.Start();
+                            }
+                            else
+                            {
+                                StartSyncUserLastestData();
+                            }
                         }
                     }
                 }
@@ -226,40 +229,43 @@ namespace Poopor
         }
 
         private void AdaptDashboardToUserCancerSign(string userHealth)
-         {
-             if (userHealth.Contains("general"))
-             {
-                 List<string> userCancerSignMsg = userLastestResultsAndRecommendation["UserCancerSignMsg"] as List<string>;
-                 userCancerSignMsg = SystemFunctions.SortByLength(userCancerSignMsg) as List<string>;
-                 goodHealthInfo_grid.Visibility = System.Windows.Visibility.Collapsed;
-                 more_axiousSigns_text.Visibility = System.Windows.Visibility.Collapsed;
-                 suggestion_textBlock.Text = "Be careful with your health";
-                 representation_image.Source = new BitmapImage(new Uri("/Assets/img/risk/genrisk.png", UriKind.RelativeOrAbsolute));
-                 healthInfo_grid.Visibility = System.Windows.Visibility.Visible;
-                 SolidColorBrush newBgColor = new SolidColorBrush();
-                 newBgColor.Color = Color.FromArgb(255, 241, 145, 32);
-                 healthInfo_grid.Background = newBgColor;
-                 header_textBlock.Text = "Detected! general signs of colon-rectum cancer";
-                 try
-                 {
-                     if (userCancerSignMsg[0] != null)
-                         moreInfo_textBlock1.Text = userCancerSignMsg[0];
-                     if (userCancerSignMsg[1] != null)
-                         moreInfo_textBlock2.Text = userCancerSignMsg[1];
-                     if (userCancerSignMsg[2] != null)
-                         moreInfo_textBlock3.Text = userCancerSignMsg[2];
-                 }
-                 catch (ArgumentOutOfRangeException error)
-                 {
+        {
+            if (userHealth.Contains("general"))
+            {
+                List<string> userCancerSignMsg = userLastestResultsAndRecommendation["UserCancerSignMsg"];
+                userCancerSignMsg = SystemFunctions.SortByLength(userCancerSignMsg) as List<string>;
+                goodHealthInfo_grid.Visibility = System.Windows.Visibility.Collapsed;
+                more_axiousSigns_text.Visibility = System.Windows.Visibility.Collapsed;
+                suggestion_textBlock.Text = "Be careful with your health";
+                representation_image.Source = new BitmapImage(new Uri("/Assets/img/risk/genrisk.png", UriKind.RelativeOrAbsolute));
+                healthInfo_grid.Visibility = System.Windows.Visibility.Visible;
+                SolidColorBrush newBgColor = new SolidColorBrush();
+                newBgColor.Color = Color.FromArgb(255, 241, 145, 32);
+                healthInfo_grid.Background = newBgColor;
+                header_textBlock.Text = "Detected! general signs of colon-rectum cancer";
+                try
+                {
+                    if (userCancerSignMsg != null)
+                    {
+                        if (userCancerSignMsg[0] != null)
+                            moreInfo_textBlock1.Text = userCancerSignMsg[0];
+                        if (userCancerSignMsg[1] != null)
+                            moreInfo_textBlock2.Text = userCancerSignMsg[1];
+                        if (userCancerSignMsg[2] != null)
+                            moreInfo_textBlock3.Text = userCancerSignMsg[2];
+                    }
+                }
+                catch (ArgumentOutOfRangeException error)
+                {
 
-                 }
-             }
-             else if (userHealth.Contains("anxious"))
-             {
-                 goodHealthInfo_grid.Visibility = System.Windows.Visibility.Collapsed;
-                 healthInfo_grid.Visibility = System.Windows.Visibility.Visible;
-             }
-         }
+                }
+            }
+            else if (userHealth.Contains("anxious"))
+            {
+                goodHealthInfo_grid.Visibility = System.Windows.Visibility.Collapsed;
+                healthInfo_grid.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
 
         private void newPoop_button_Click(object sender, RoutedEventArgs e)
         {

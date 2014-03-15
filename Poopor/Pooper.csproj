@@ -107,6 +107,8 @@
     </Compile>
     <Compile Include="Color_Meaning_Table_SQLite.cs" />
     <Compile Include="DatabaseFunctions.cs" />
+    <Compile Include="DataContact.cs" />
+    <Compile Include="datamember.cs" />
     <Compile Include="Data\AccentColorNameToBrush.cs" />
     <Compile Include="Data\ColorExtensions.cs" />
     <Compile Include="Data\IsSelectedToBrushConverter.cs" />
@@ -123,6 +125,7 @@
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Poop_Table_Azure.cs" />
+    <Compile Include="ResultAndRecommendationDictionary.cs" />
     <Compile Include="SamplePoopPictures.xaml.cs">
       <DependentUpon>SamplePoopPictures.xaml</DependentUpon>
     </Compile>

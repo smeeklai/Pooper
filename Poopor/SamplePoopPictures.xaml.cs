@@ -92,7 +92,7 @@ namespace Poopor
                     }
                 }
                 NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml?poopColor=" + poopColorStr + "&melenaResult=" + isMelena +
-                    "&havingMedicines=" + havingMedicines, UriKind.Relative));
+                    "&havingMedicines=" + havingMedicines + "&poopImgName=" + poopImgName, UriKind.Relative));
             }
         }
 

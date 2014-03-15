@@ -76,7 +76,7 @@ namespace Poopor
                 }
                 var result = await new FecesAnalyzer().analyzeData(poopColor, poopShape, painLevel, bloodAmount, userWeight, userHeight, userGender, userAge,
                     userHealthInfo1, userHealthInfo2, userHealthInfo3, userHealthInfo4, userHealthInfo5, isMelena, havingMedicines);
-                SessionManagement.StoreUserLastestResultsAndRecommendation(result);
+                //SessionManagement.StoreUserLastestResultsAndRecommendation(result);
                 SystemFunctions.SetProgressIndicatorProperties(false);
 
                 Boolean isAdditionalAskingNeeded = result.ContainsKey("IsGoAsk") ? Convert.ToBoolean(result["IsGoAsk"]) : false;

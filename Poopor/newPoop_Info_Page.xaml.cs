@@ -68,17 +68,20 @@ namespace Poopor
                 int userAge = Convert.ToInt32(DateTime.Now.Subtract(userInfo.DOB).TotalDays / 360);
                 var result = await new FecesAnalyzer().analyzeData(poopColor, shape, painLevel, bloodAmount, userInfo.Height, userInfo.Weight, userInfo.Gender, userAge, 
                     userInfo.HealthInfo1, userInfo.HealthInfo2, userInfo.HealthInfo3, userInfo.HealthInfo4, userInfo.HealthInfo5, isMelena, havingMedicines);
-                SessionManagement.StoreUserLastestResultsAndRecommendation(result);
                 
+                List<ResultAndRecommendationDictionary> serializedResult = SystemFunctions.SerializeUserResultAndRecommendationData(result);
+                SessionManagement.StoreUserLastestResultsAndRecommendation(serializedResult);
+
                 SystemTray.ProgressIndicator.Text = "Storing data...";
-                Boolean constipation = result.ContainsKey("IsConstipation") ? Convert.ToBoolean(result["IsConstipation"]) : false;
-                Boolean diarrhea = result.ContainsKey("IsDiarrhea") ? Convert.ToBoolean(result["IsDiarrhea"]) : false;
+                List<string> necessaryInfo = result["NecessaryInfo"];
+                Boolean constipation = Convert.ToBoolean(necessaryInfo[3]);
+                Boolean diarrhea = Convert.ToBoolean(necessaryInfo[4]);
                 string poopImgName = NavigationContext.QueryString["poopImgName"];
                 DateTime userPoopStoredDateTime = DateTime.Now;
                 Boolean insertationResult = await InsertNewPoopData(poopColor, shape, painLevel, bloodAmount, havingMedicines, poopImgName, userPoopStoredDateTime,
                     diarrhea, constipation, isMelena);
                 SystemFunctions.SetProgressIndicatorProperties(false);
-                Boolean isAdditionalAskingNeeded = result.ContainsKey("IsGoAsk") ? Convert.ToBoolean(result["IsGoAsk"]) : false;
+                Boolean isAdditionalAskingNeeded = Convert.ToBoolean(necessaryInfo[0]);
                 if (isAdditionalAskingNeeded == false)
                     NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
                 else
