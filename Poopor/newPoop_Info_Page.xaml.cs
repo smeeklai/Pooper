@@ -27,13 +27,19 @@ namespace Poopor
 
         }
 
+        private bool IsInit;
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             NavigationContext.QueryString.TryGetValue("poopColor", out poopColor);
             isMelena = Convert.ToBoolean(NavigationContext.QueryString["melenaResult"]);
             havingMedicines = Convert.ToBoolean(NavigationContext.QueryString["havingMedicines"]);
-            colorPicker.SelectedItem = poopColor;
+            if (!IsInit)
+            {
+                colorPicker.SelectedItem = poopColor;
+                IsInit = true;
+            }
 
             painLevel_slider.ValueChanged += painLevel_slider_ValueChanged;
             blood_amount_slider.ValueChanged += blood_amount_slider_ValueChanged;

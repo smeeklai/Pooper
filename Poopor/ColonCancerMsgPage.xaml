@@ -60,7 +60,7 @@
         			<TextBlock TextWrapping="Wrap" Text="Suggestion: Consult with doctor" HorizontalAlignment="Center" Foreground="#FFF72236" FontSize="21.333" Margin="0,5" FontFamily="Segoe WP Semibold"/>
         		</StackPanel>
         		<TextBlock TextWrapping="Wrap" Text="Your anxious signs of colon-rectum cancer" FontSize="22.667" FontFamily="Segoe WP Semibold" HorizontalAlignment="Center"/>
-                <StackPanel x:Name="cancerSignMsg_area" />
+                <StackPanel x:Name="cancerSignMsg_area" HorizontalAlignment="Left" />
             </StackPanel>
         	<Button Content="Okay" Grid.Row="1" Background="#FF1BA1E2" FontSize="26.667" Click="Button_Click"/>
 

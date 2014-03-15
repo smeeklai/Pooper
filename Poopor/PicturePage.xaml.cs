@@ -112,6 +112,7 @@ namespace Poopor
             CameraButtons.ShutterKeyReleased += OnButtonRelease;
 
             ShutterButton.Click += ShutterButton_Click;
+            logoutAppBar.Click += new EventHandler(logoutAppBar_Click);
 
             if (e.Succeeded)
             {
@@ -234,6 +235,7 @@ namespace Poopor
             });*/
         }
 
+        private ApplicationBarMenuItem logoutAppBar = new ApplicationBarMenuItem();
         private void buildApplicationBar()
         {
             //Initialize ApplicationBar
@@ -245,9 +247,8 @@ namespace Poopor
             ApplicationBar.BackgroundColor = Colors.Red;
 
             //Initialize ApplicationBarMenuItem
-            ApplicationBarMenuItem logoutAppBar = new ApplicationBarMenuItem();
+            
             logoutAppBar.Text = "Use poop sample data";
-            logoutAppBar.Click += new EventHandler(logoutAppBar_Click);
 
             //Add menu item
             ApplicationBar.MenuItems.Add(logoutAppBar);

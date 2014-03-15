@@ -199,7 +199,7 @@
 										<TextBlock TextWrapping="Wrap" Text="Color :" FontFamily="Segoe WP SemiLight" Foreground="Black" FontSize="26.667"/>
 										<TextBlock x:Name="colorResult_textBlock" TextWrapping="Wrap" Text="Light Brown" Margin="8,0,0,0" FontFamily="Segoe WP SemiLight" Foreground="#FFAC720C" FontSize="26.667"/>
 									</StackPanel>
-									<StackPanel x:Name="poopColorMeaning_lists" Margin="10,0,0,0"/>
+									<StackPanel x:Name="poopColorMeaning_lists" Margin="10,0,0,0" HorizontalAlignment="Left" Width="340"/>
 								</StackPanel>
 							</Grid>
 							<Grid x:Name="poopShapeMeaning_area" Margin="20,10,0,5">
@@ -212,14 +212,14 @@
 										<TextBlock TextWrapping="Wrap" Text="Shape :" FontFamily="Segoe WP SemiLight" Foreground="Black" FontSize="26.667"/>
 										<TextBlock x:Name="shapeResult_textBlock" TextWrapping="Wrap" Text="Seperate Hard Lumps" Margin="8,0,0,0" FontFamily="Segoe WP SemiLight" Foreground="#FFAC720C" FontSize="26.667"/>
 									</StackPanel>
-									<StackPanel x:Name="poopShapeMeaning_lists" Margin="10,0,0,0"/>
+									<StackPanel x:Name="poopShapeMeaning_lists" Margin="10,0,0,0" HorizontalAlignment="Left" Width="340"/>
 								</StackPanel>
 								<Image x:Name="shapeMeaning_image" HorizontalAlignment="Center" Height="100" VerticalAlignment="Center" Source="/Assets/img/poopShape/stype1.png"/>
 							</Grid>
 						</StackPanel>
 						<StackPanel x:Name="recommendations_area" Grid.Row="1" Background="#FFF5FF90">
 							<TextBlock x:Name="recommendations_header" TextWrapping="Wrap" Text="Recommendations:" FontSize="34.667" Margin="5,0,0,0" Foreground="#FF007FAA"/>
-							<StackPanel x:Name="recommendation_lists" Margin="20,0,0,0"/>
+							<StackPanel x:Name="recommendation_lists" Margin="20,0,0,0" HorizontalAlignment="Left"/>
 						</StackPanel>
 					</Grid>
 				</ScrollViewer>

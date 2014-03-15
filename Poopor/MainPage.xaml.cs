@@ -36,10 +36,6 @@ namespace Poopor
         private AzureFunctions azureFunctions = new AzureFunctions();
         private SQLiteFunctions sqliteFunctions = new SQLiteFunctions();
         private DispatcherTimer timer = new DispatcherTimer();
-        /*private Dictionary<string, object> userLastestResultsAndRecommendation = new Dictionary<string, object>()
-        {
-            {"usercancersign", "normal"},
-        };*/
 
         public MainPage()
         {
@@ -84,7 +80,10 @@ namespace Poopor
 
                         timer.Tick += (sender, args) =>
                         {
-                            SystemTray.ProgressIndicator.IsVisible = false;
+                            if (SystemTray.ProgressIndicator.IsVisible != false)
+                            {
+                                SystemTray.ProgressIndicator.IsVisible = false;
+                            }
                             timer.Stop();
                         };
 
@@ -130,7 +129,9 @@ namespace Poopor
 
                             timer.Tick += (sender, args) =>
                             {
-                                SystemTray.ProgressIndicator.IsVisible = false;
+                                if (SystemTray.ProgressIndicator.IsVisible != false){
+                                    SystemTray.ProgressIndicator.IsVisible = false;
+                                }
                                 timer.Stop();
                             };
 
@@ -191,28 +192,6 @@ namespace Poopor
             if (userLastestPoopRecordInSqlite == null)
             {
                 result = userLastestPoopDataInAzure;
-                var data = await azureFunctions.GetUserInfoDataAsync(SessionManagement.GetEmail());
-                Boolean resultOfInsertation = false;
-                while (resultOfInsertation == false)
-                {
-                    resultOfInsertation = sqliteFunctions.InsertData(new UserInfo_Table_SQLite()
-                    {
-                        Email = data.Email,
-                        Password = data.Password,
-                        FirstName = data.FirstName,
-                        LastName = data.LastName,
-                        DOB = data.DOB,
-                        Gender = data.Gender,
-                        Weight = data.Weight,
-                        Height = data.Height,
-                        HealthInfo1 = data.HealthInfo1,
-                        HealthInfo2 = data.HealthInfo2,
-                        HealthInfo3 = data.HealthInfo3,
-                        HealthInfo4 = data.HealthInfo4,
-                        HealthInfo5 = data.HealthInfo5,
-                    });
-                    Debug.WriteLine("Store old member into SQLite: " + resultOfInsertation);
-                }
             }
             else
             {

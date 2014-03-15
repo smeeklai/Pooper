@@ -110,6 +110,7 @@
     <Compile Include="DatabaseFunctions.cs" />
     <Compile Include="DataContact.cs" />
     <Compile Include="datamember.cs" />
+    <Compile Include="DataType\ColorHSL.cs" />
     <Compile Include="Data\AccentColorNameToBrush.cs" />
     <Compile Include="Data\ColorExtensions.cs" />
     <Compile Include="Data\IsSelectedToBrushConverter.cs" />

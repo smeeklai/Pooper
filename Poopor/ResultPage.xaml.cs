@@ -107,7 +107,7 @@ namespace Poopor
             }
             else
             {
-                List<string> userShortRecommendation = userLastestResultAndRecommendation["UserShortRecommendation"] as List<string>;
+                List<string> userShortRecommendation = userLastestResultAndRecommendation["UserShortRecommendation"];
                 try
                 {
                     if (userShortRecommendation[0] != null)
@@ -151,13 +151,14 @@ namespace Poopor
                 {
 
                 }
-                List<string> longRecommendation = userLastestResultAndRecommendation["UserLongRecommendation"] as List<string>;
+                List<string> longRecommendation = userLastestResultAndRecommendation["UserLongRecommendation"];
                 foreach (string item in SystemFunctions.SortByLength(longRecommendation))
                 {
                     TextBlock newLongRecommendation_textBlock = new TextBlock();
                     newLongRecommendation_textBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 60, 60, 60));
                     newLongRecommendation_textBlock.FontFamily = new FontFamily("Segoe WP SemiLight");
                     newLongRecommendation_textBlock.Text = "- " + item;
+                    newLongRecommendation_textBlock.TextWrapping = TextWrapping.Wrap;
                     recommendation_lists.Children.Add(newLongRecommendation_textBlock);
                 }
             }
@@ -177,6 +178,7 @@ namespace Poopor
                 TextBlock newColorMeaning_textBlock = new TextBlock();
                 newColorMeaning_textBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 60, 60, 60));
                 newColorMeaning_textBlock.FontFamily = new FontFamily("Segoe WP SemiLight");
+                newColorMeaning_textBlock.TextWrapping = TextWrapping.Wrap;
                 newColorMeaning_textBlock.Text = "- " + item;
                 poopColorMeaning_lists.Children.Add(newColorMeaning_textBlock);
             }
@@ -187,6 +189,7 @@ namespace Poopor
                 newPoopMeaning_textBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 60, 60, 60));
                 newPoopMeaning_textBlock.FontFamily = new FontFamily("Segoe WP SemiLight");
                 newPoopMeaning_textBlock.Text = "- " + item;
+                newPoopMeaning_textBlock.TextWrapping = TextWrapping.Wrap;
                 poopShapeMeaning_lists.Children.Add(newPoopMeaning_textBlock);
             }
         }

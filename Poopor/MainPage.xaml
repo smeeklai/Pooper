@@ -71,9 +71,9 @@
         			<TextBlock x:Name="suggestion_textBlock" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" FontSize="16" TextAlignment="Center" Foreground="White" Text="Consult with doctor" Margin="0" HorizontalAlignment="Center"/>
         		</StackPanel>
         		<StackPanel Margin="0" Grid.Column="1">
-        			<TextBlock x:Name="moreInfo_textBlock1" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
-        			<TextBlock x:Name="moreInfo_textBlock2" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
-        			<TextBlock x:Name="moreInfo_textBlock3" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
+        			<TextBlock x:Name="moreInfo_textBlock1" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333" HorizontalAlignment="Left"/>
+        			<TextBlock x:Name="moreInfo_textBlock2" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333" HorizontalAlignment="Left"/>
+        			<TextBlock x:Name="moreInfo_textBlock3" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333" HorizontalAlignment="Left"/>
         		</StackPanel>
         		<TextBlock x:Name="more_axiousSigns_text" TextWrapping="Wrap" Text="Slide rightward to see more details" Margin="0,0,5,0" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Foreground="White" FontFamily="Segoe WP SemiLight" FontSize="16"/>
         	</Grid>
@@ -98,7 +98,7 @@
         		<RowDefinition Height="Auto"/>
         		<RowDefinition/>
         	</Grid.RowDefinitions>
-        	<Grid Grid.Row="1">
+        	<Grid Grid.Row="1" Visibility="Collapsed">
         		<Grid.ColumnDefinitions>
         			<ColumnDefinition/>
         			<ColumnDefinition/>
@@ -107,12 +107,6 @@
         			<RowDefinition/>
         			<RowDefinition/>
         		</Grid.RowDefinitions>
-        		<Button x:Name="newPoop_button" BorderThickness="0" Background="#FF1BA1E2" FontFamily="Segoe WP" FontSize="24" Padding="10,5,10,6" Margin="0,0,-7,-7" Click="newPoop_button_Click">
-        			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        				<Image Source="newrec.png" Height="133" Width="149"/>
-        				<TextBlock TextWrapping="Wrap" Text="NEW POOP" FontSize="24" Foreground="White" HorizontalAlignment="Center" Margin="0,-13,0,0" TextAlignment="Center"/>
-        			</StackPanel>
-        		</Button>
         		<Button x:Name="dashboard_button" BorderThickness="0" Background="#FF1BA1E2" FontFamily="Segoe WP" FontSize="24" Grid.Column="1" Margin="-7,0,0,-7">
         			<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
         				<Image Source="dashboard.png" Margin="0,-15,0,0"/>
@@ -132,6 +126,12 @@
         			</StackPanel>
         		</Button>
         	</Grid>
+        	<Button x:Name="newPoop_button" BorderThickness="0" Background="#FF1BA1E2" FontFamily="Segoe WP" FontSize="24" Padding="10,5,10,6" Margin="0,20" Click="newPoop_button_Click" Grid.RowSpan="2">
+        		<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        			<Image Source="newrec.png" Width="287" VerticalAlignment="Center"/>
+        			<TextBlock TextWrapping="Wrap" Text="NEW POOP" FontSize="40" Foreground="White" HorizontalAlignment="Center" Margin="0" TextAlignment="Center"/>
+        		</StackPanel>
+        	</Button>
         </Grid>
     </Grid>
 

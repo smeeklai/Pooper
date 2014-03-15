@@ -72,6 +72,35 @@ namespace Poopor
                     var succeeded = await new AzureFunctions().CheckUserAuthentication(email_textBox.Text, password_Box.Password);
                     if (succeeded)
                     {
+                        var data = await new AzureFunctions().GetUserInfoDataAsync(email_textBox.Text);
+                        try
+                        {
+                            string test = new SQLiteFunctions().GetUserInfo(email_textBox.Text).Email;
+                        }
+                        catch (NullReferenceException b)
+                        {
+                            Boolean resultOfInsertation = false;
+                            while (resultOfInsertation == false)
+                            {
+                                resultOfInsertation = new SQLiteFunctions().InsertData(new UserInfo_Table_SQLite()
+                                {
+                                    Email = data.Email,
+                                    Password = data.Password,
+                                    FirstName = data.FirstName,
+                                    LastName = data.LastName,
+                                    DOB = data.DOB,
+                                    Gender = data.Gender,
+                                    Weight = data.Weight,
+                                    Height = data.Height,
+                                    HealthInfo1 = data.HealthInfo1,
+                                    HealthInfo2 = data.HealthInfo2,
+                                    HealthInfo3 = data.HealthInfo3,
+                                    HealthInfo4 = data.HealthInfo4,
+                                    HealthInfo5 = data.HealthInfo5,
+                                });
+                                Debug.WriteLine("Store old member into SQLite: " + resultOfInsertation);
+                            }
+                        }
                         SessionManagement.CreateLoginSession(email_textBox.Text);
                         NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
                     }
