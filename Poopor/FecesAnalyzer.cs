@@ -21,7 +21,7 @@ namespace Poopor
         //bloodAmt(string), weight(double), height(double), gender(string), age(int),
         //healthInfo1(boolean) >> FDR colon/ovarian/endo/breast, healthInfo2(boolean) >> USER inflemm/polyps, healthInfo3(boolean) >> smoking/drinking, 
         //healthInfo4(boolean) >> USR/FDR FAP HNPCC, healthInfo5(boolean) >> female, isMelena >> boolean, isHavingMedicine >> boolean
-        public Dictionary<string, object> analyzeData(string color, string shape, string painLv, string bloodAmt,
+        public async Task<Dictionary<string, List<string>>> analyzeData(string color, string shape, string painLv, string bloodAmt,
             double weight, double height, string gender, int age, bool healthInfo1,
             bool healthInfo2, bool healthInfo3, bool healthInfo4, bool healthInfo5, bool isMelena, bool isHavingMedicine)
         {
@@ -114,17 +114,20 @@ namespace Poopor
             }
 
             //Return these value to be shown in Result Page
-            return generateResultDictionary((anxious_sign_counter>1)?true:false, generateUserCancerSign(general_sign_counter, anxious_sign_counter), userCancerSignMsg,
-                db_function.GetColorMeaning(color), db_function.GetShapeMeaning(shape), isRecommend(color, shape), db_function.GetShortRec(color, shape),
-                db_function.GetLongRec(color, shape), isConstipation(shape), isDiarrhea(shape));
+            return generateResultDictionary((anxious_sign_counter > 1) ? true : false, generateUserCancerSign(general_sign_counter, anxious_sign_counter), userCancerSignMsg,
+                db_function.GetColorMeaning(color), db_function.GetShapeMeaning(shape), db_function.GetPainLvMeaning(painLv), db_function.GetBloodAmtMeaning(bloodAmt),
+                IsRecommendationExisted(color, shape, painLv, bloodAmt), db_function.GetShortRec(color, shape, painLv, bloodAmt),
+                db_function.GetLongRec(color, shape, painLv, bloodAmt), isConstipation(shape), isDiarrhea(shape));
         }
 
         //Check is recomm or not method
-        private bool isRecommend(string color, string shape)
+        private bool IsRecommendationExisted(string color, string shape, string painLv, string bloodAmt)
         {
             bool isPerfectColor = color.Equals("Medium brown", StringComparison.Ordinal);
             bool isPerfectShape = shape.Equals("Smooth soft snake", StringComparison.Ordinal);
-            return (isPerfectColor == true && isPerfectShape == true) ? true : false;
+            bool isPerfectPainLv = painLv.Equals("none", StringComparison.Ordinal);
+            bool isPerfectBloodAmt = bloodAmt.Equals("none", StringComparison.Ordinal);
+            return (isPerfectColor == true && isPerfectShape == true && isPerfectPainLv == true && isPerfectBloodAmt == true) ? false : true; // false -> no recommendation -> greatest
         }
 
 
@@ -159,24 +162,39 @@ namespace Poopor
         //Ask more info in case of Anxious sign occur
         //...Boss help to do this pattern
 
-
         //Prepare dictionary as a result to send to show the result of calculation
-        private Dictionary<string, object> generateResultDictionary(bool isGoAsk,string userCancerSign, List<string> userCancerSignMsg, List<string> userPoopColorMeaning,
-            List<string> userPoopShapeMeaning, bool isRecommend, List<string> userShortRecommendation, List<string> userLongRecommendation, bool isConstipation,
+        private Dictionary<string, List<string>> generateResultDictionary(bool isGoAsk, string userCancerSign, List<string> userCancerSignMsg, List<string> userPoopColorMeaning,
+            List<string> userPoopShapeMeaning, List<string> userPainLvMeaning, List<string> userBloodAmtMeaning, bool isRecommend, List<string> userShortRecommendation, List<string> userLongRecommendation, bool isConstipation,
             bool isDiarrhea)
         {
-            Dictionary<string, object> resultDictionary = new Dictionary<string, object>();
-            resultDictionary.Add("IsGoAsk", isGoAsk);
-            resultDictionary.Add("UserCancerSign", userCancerSign);
-            resultDictionary.Add("UserCancerSignMsg", userCancerSignMsg);
-            resultDictionary.Add("UserPoopColorMeaning", userPoopColorMeaning);
-            resultDictionary.Add("UserPoopShapeMeaning", userPoopShapeMeaning);
-            resultDictionary.Add("IsRecommend", isRecommend);
-            resultDictionary.Add("UserShortRecommendation", userShortRecommendation);
-            resultDictionary.Add("UserLongRecommendation", userLongRecommendation);
-            resultDictionary.Add("IsConstipation", isConstipation);
-            resultDictionary.Add("IsDiarrhea", isDiarrhea);
+            try
+            {
+                Dictionary<string, List<string>> resultDictionary = new Dictionary<string, List<string>>();
+                List<string> necessaryInfo = new List<string>();
+                necessaryInfo.Add(isGoAsk.ToString());
+                necessaryInfo.Add(userCancerSign);
+                necessaryInfo.Add(isRecommend.ToString());
+                necessaryInfo.Add(isConstipation.ToString());
+                necessaryInfo.Add(isDiarrhea.ToString());
+                resultDictionary.Add("NecessaryInfo", necessaryInfo);
+                resultDictionary.Add("UserCancerSignMsg", userCancerSignMsg);
+                resultDictionary.Add("UserPoopColorMeaning", userPoopColorMeaning);
+                resultDictionary.Add("UserPoopShapeMeaning", userPoopShapeMeaning);
+                resultDictionary.Add("UserPainLvMeaning", userPainLvMeaning);
+                resultDictionary.Add("UserBloodAmtMeaning", userBloodAmtMeaning);
+                resultDictionary.Add("UserShortRecommendation", userShortRecommendation);
+                resultDictionary.Add("UserLongRecommendation", userLongRecommendation);
             return resultDictionary;
+        }
+            catch (System.Runtime.Serialization.SerializationException e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            catch (System.Reflection.TargetInvocationException c)
+            {
+                Debug.WriteLine(c.Message);
+            }
+            return null;
         }
     }
 }

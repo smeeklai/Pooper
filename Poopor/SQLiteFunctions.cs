@@ -12,15 +12,17 @@ namespace Poopor
     class SQLiteFunctions : DatabaseFunctions
     {
 
-        public static string dbPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "db.sqlite");
+        public static string dbPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "pooperDB.sqlite");
         private static Poop_Table_SQLite poop_table = new Poop_Table_SQLite();
         private static UserInfo_Table_SQLite userInfo_table = new UserInfo_Table_SQLite();
         private static Color_Meaning_Table_SQLite color_meaning_table = new Color_Meaning_Table_SQLite();
         private static Shape_Meaning_Table_SQLite shape_meaning_table = new Shape_Meaning_Table_SQLite();
         private static Short_Rec_SQLite short_rec_table = new Short_Rec_SQLite();
         private static Long_Rec_SQLite long_rec_table = new Long_Rec_SQLite();
+        private static PainLevel_Meaning_Table_SQLite painLv_meaning_table = new PainLevel_Meaning_Table_SQLite();
+        private static BloodAmount_Meaning_Table_SQLite bloodAmt_meaning_table = new BloodAmount_Meaning_Table_SQLite();
 
-        public async Task<Boolean> InsertData(object data)
+        public Boolean InsertData(object data)
         {
             if (IsUserInfo_Data(data))
             {
@@ -84,6 +86,28 @@ namespace Poopor
                     db.RunInTransaction(() =>
                     {
                         db.Insert((Long_Rec_SQLite)data);
+                    });
+                }
+                return true;
+            }
+            else if (IsPainLv_Meaning(data))
+            {
+                using (var db = new SQLiteConnection(dbPath))
+                {
+                    db.RunInTransaction(() =>
+                    {
+                        db.Insert((PainLevel_Meaning_Table_SQLite)data);
+                    });
+                }
+                return true;
+            }
+            else if (IsBloodAmt_Meaning(data))
+            {
+                using (var db = new SQLiteConnection(dbPath))
+                {
+                    db.RunInTransaction(() =>
+                    {
+                        db.Insert((BloodAmount_Meaning_Table_SQLite)data);
                     });
                 }
                 return true;
@@ -304,12 +328,51 @@ namespace Poopor
             }
         }
 
-        public List<String> GetShortRec(string color, string shape)
+        public List<String> GetPainLvMeaning(string painLv)
         {
             List<string> list = new List<string>();
             using (var db = new SQLiteConnection(dbPath))
             {
-                var existing = db.Query<Short_Rec_SQLite>("select distinct S_Rec from Short_Rec_SQLite where Name='" + color + "' or Name ='" + shape + "' limit 6");
+                var existing = db.Query<Shape_Meaning_Table_SQLite>("select * from PainLevel_Meaning_Table_SQLite    where Name='" + painLv + "'");
+                if (existing != null)
+                {
+                    foreach (var data in existing)
+                    {
+                        list.Add(data.Meaning);
+                    }
+                    return list;
+                }
+                else
+                    return null;
+            }
+        }
+
+        public List<String> GetBloodAmtMeaning(string bloodAmt)
+        {
+            List<string> list = new List<string>();
+            using (var db = new SQLiteConnection(dbPath))
+            {
+                var existing = db.Query<Shape_Meaning_Table_SQLite>("select * from BloodAmount_Meaning_Table_SQLite  where Name='" + bloodAmt + "'");
+                if (existing != null)
+                {
+                    foreach (var data in existing)
+                    {
+                        list.Add(data.Meaning);
+                    }
+                    return list;
+                }
+                else
+                    return null;
+            }
+        }
+
+        public List<String> GetShortRec(string color, string shape, string painLv, string bloodAmt)
+        {
+            List<string> list = new List<string>();
+            using (var db = new SQLiteConnection(dbPath))
+            {
+                var existing = db.Query<Short_Rec_SQLite>("select distinct S_Rec from Short_Rec_SQLite where Name='" + color + "' or Name ='" + shape +
+                    "' or Name ='" + painLv + "' or Name ='"+ bloodAmt + "' limit 6");
                 if (existing != null)
                 {
                     foreach (var data in existing)
@@ -323,12 +386,13 @@ namespace Poopor
             }
         }
 
-        public List<String> GetLongRec(string color, string shape)
+        public List<String> GetLongRec(string color, string shape, string painLv, string bloodAmt)
         {
             List<string> list = new List<string>();
             using (var db = new SQLiteConnection(dbPath))
             {
-                var existing = db.Query<Long_Rec_SQLite>("select distinct L_Rec from Long_Rec_SQLite where Name='" + color + "' or Name ='" + shape + "'");
+                var existing = db.Query<Long_Rec_SQLite>("select distinct L_Rec from Long_Rec_SQLite where Name='" + color + "' or Name ='" + shape +
+                    "' or Name ='" + painLv + "' or Name ='" + bloodAmt + "'");
                 if (existing != null)
                 {
                     foreach (var data in existing)
@@ -418,6 +482,22 @@ namespace Poopor
             return false;
         }
 
+
+        private Boolean IsPainLv_Meaning(object data)
+        {
+            if (painLv_meaning_table.GetType().Equals(data.GetType()))
+                return true;
+            return false;
+        }
+
+
+        private Boolean IsBloodAmt_Meaning(object data)
+        {
+            if (bloodAmt_meaning_table.GetType().Equals(data.GetType()))
+                return true;
+            return false;
+        }
+
         private Boolean IsShort_Rec(object data)
         {
             if (short_rec_table.GetType().Equals(data.GetType()))
@@ -445,6 +525,18 @@ namespace Poopor
             }
 
             return result;
+        }
+
+        public static Boolean IsResultCriteriaInitialized()
+        {
+            using (var db = new SQLiteConnection(SQLiteFunctions.dbPath))
+            {
+                var existing = db.Query<UserInfo_Table_SQLite>("select * from Color_Meaning_Table_SQLite");
+                if (existing.Count != 0)
+                    return true;
+                else
+                    return false;
+            }
         }
     }
 }

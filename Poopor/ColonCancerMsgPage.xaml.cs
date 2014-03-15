@@ -17,8 +17,7 @@ namespace Poopor
         public ColonCancerMsgPage()
         {
             InitializeComponent();
-            List<string> test = new List<string>();
-            //ListUserCancerSignMsg(SessionManagement.GetUserLastestResultsAndRecommendation()["UserCancerSignsMsg"] as List<string>);
+            ListUserCancerSignMsg(SessionManagement.GetUserLastestResultsAndRecommendation()["UserCancerSignMsg"] as List<string>);
         }
 
         private void ListUserCancerSignMsg(List<string> listMsg){

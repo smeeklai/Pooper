@@ -142,8 +142,8 @@ namespace Poopor
             {
                 try
                 {
-                    //Start image capture.
-                    cam.FlashMode = Microsoft.Devices.FlashMode.Off;
+                    //Start image capture
+                    cam.FlashMode = Microsoft.Devices.FlashMode.On;
                     cam.Focus();
                 }
                 catch (Exception ex)
@@ -153,7 +153,7 @@ namespace Poopor
             }
         }
 
-        private void StoreImage(Stream stImg)
+        private String StoreImage(Stream stImg)
         {
             String imgName = SessionManagement.GetEmail() + "Poop" + SessionManagement.GetImageSavedCounter() + ".jpg";
             BitmapImage img = new BitmapImage();
@@ -172,6 +172,7 @@ namespace Poopor
                 fileStream.Close();
             }
             Debug.WriteLine("Save image successfully: " + imgName);
+            return imgName;
         }
 
         // Informs when full resolution photo has been taken, saves to local media library and the local folder.
@@ -208,7 +209,7 @@ namespace Poopor
                 }
                 else
                 {
-                    StoreImage(e.ImageStream);
+                    string poopImgName = StoreImage(e.ImageStream);
                     //----------------- call PP Method here----------------------
                     SystemTray.ProgressIndicator.Text = "Analyzing poop color...";
                     string poopColorStr = await pim.GetDominantColorTypeName(poopImage);
@@ -223,8 +224,8 @@ namespace Poopor
                             havingMedicines = await IsUserHavingMedicine();
                         }
                     }
-                    NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml?poopColor=" + poopColor + "&melenaResult=" + isMelena +
-                        "&havingMedicines=" + havingMedicines, UriKind.Relative));
+                    NavigationService.Navigate(new Uri("/newPoop_Info_Page.xaml?poopColor=" + poopColorStr + "&melenaResult=" + isMelena +
+                    "&havingMedicines=" + havingMedicines + "&poopImgName=" + poopImgName, UriKind.Relative));
                 }
             });
             /*this.Dispatcher.BeginInvoke(delegate()

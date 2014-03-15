@@ -91,26 +91,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
-    <NoStdLib>true</NoStdLib>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
-    <Optimize>true</Optimize>
-    <NoStdLib>true</NoStdLib>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <ItemGroup>
     <Compile Include="AdditionalHealthInfomation2.xaml.cs">
       <DependentUpon>AdditionalHealthInfomation2.xaml</DependentUpon>
@@ -122,12 +102,14 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AzureFunctions.cs" />
+    <Compile Include="BloodAmount_Meaning_Table_SQLite.cs" />
     <Compile Include="ColonCancerMsgPage.xaml.cs">
       <DependentUpon>ColonCancerMsgPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Color_Meaning_Table_SQLite.cs" />
     <Compile Include="DatabaseFunctions.cs" />
-    <Compile Include="DataType\ColorHSL.cs" />
+    <Compile Include="DataContact.cs" />
+    <Compile Include="datamember.cs" />
     <Compile Include="Data\AccentColorNameToBrush.cs" />
     <Compile Include="Data\ColorExtensions.cs" />
     <Compile Include="Data\IsSelectedToBrushConverter.cs" />
@@ -135,6 +117,7 @@
     <Compile Include="Data\SamplePoopImageData.cs" />
     <Compile Include="Data\ShapeData.cs" />
     <Compile Include="Data\ShapeTypeToImg.cs" />
+    <Compile Include="PainLevel_Meaning_Table_SQLite.cs" />
     <Compile Include="PoopImageProcessing.cs" />
     <Compile Include="FecesAnalyzer.cs" />
     <Compile Include="Long_Rec_SQLite.cs" />
@@ -144,14 +127,13 @@
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Poop_Table_Azure.cs" />
+    <Compile Include="ResultAndRecommendationDictionary.cs" />
     <Compile Include="SamplePoopPictures.xaml.cs">
       <DependentUpon>SamplePoopPictures.xaml</DependentUpon>
     </Compile>
     <Compile Include="SessionManagement.cs" />
     <Compile Include="Shape_Meaning_Table_SQLite.cs" />
     <Compile Include="Short_Rec_SQLite.cs" />
-    <Compile Include="SQLite.cs" />
-    <Compile Include="SQLiteAsync.cs" />
     <Compile Include="SQLiteFunctions.cs" />
     <Compile Include="SystemFunctions.cs" />
     <Compile Include="ToolkitExtensions.cs" />
@@ -179,6 +161,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SQLite.cs" />
+    <Compile Include="SQLiteAsync.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -260,17 +244,29 @@
     <Content Include="Assets\img\poopShape\stype5.png" />
     <Content Include="Assets\img\poopShape\stype6.png" />
     <Content Include="Assets\img\poopShape\stype7.png" />
+    <Content Include="Assets\img\recIcons\Alcohol.png" />
+    <Content Include="Assets\img\recIcons\BRAT diet.png" />
+    <Content Include="Assets\img\recIcons\Consult a doctor.png" />
+    <Content Include="Assets\img\recIcons\Cooked grains.png" />
+    <Content Include="Assets\img\recIcons\De-stress.png" />
+    <Content Include="Assets\img\recIcons\Fat diet.png" />
+    <Content Include="Assets\img\recIcons\Fiber.png" />
+    <Content Include="Assets\img\recIcons\Food allergies.png" />
+    <Content Include="Assets\img\recIcons\Fruits and vegetables.png" />
+    <Content Include="Assets\img\recIcons\Gastric irritation.png" />
+    <Content Include="Assets\img\recIcons\Herbal teas.png" />
+    <Content Include="Assets\img\recIcons\Iron.png" />
+    <Content Include="Assets\img\recIcons\Meat.png" />
+    <Content Include="Assets\img\recIcons\Refined Carbo.png" />
+    <Content Include="Assets\img\recIcons\Refined sugar.png" />
+    <Content Include="Assets\img\recIcons\Supplements.png" />
+    <Content Include="Assets\img\recIcons\Water or fluids.png" />
     <Content Include="Assets\img\report.png" />
     <Content Include="Assets\img\painLevel\Severe.png" />
     <Content Include="Assets\img\risk\anxiousrisk.png" />
     <Content Include="Assets\img\risk\genrisk.png" />
     <Content Include="Assets\img\risk\welldone_icon.png" />
     <Content Include="Assets\img\samplePoopImage\poop1.jpg" />
-    <Content Include="Assets\img\samplePoopImage\poop10.jpg" />
-    <Content Include="Assets\img\samplePoopImage\poop11.jpg" />
-    <Content Include="Assets\img\samplePoopImage\poop12.jpeg" />
-    <Content Include="Assets\img\samplePoopImage\Poop13.jpg" />
-    <Content Include="Assets\img\samplePoopImage\Poop14.jpg" />
     <Content Include="Assets\img\samplePoopImage\poop2.jpg" />
     <Content Include="Assets\img\samplePoopImage\poop3.JPG" />
     <Content Include="Assets\img\samplePoopImage\poop4.jpg" />
@@ -339,9 +335,8 @@
     <Reference Include="Microsoft.WindowsAzure.Storage">
       <HintPath>..\packages\WindowsAzure.Storage-Preview.3.0.3.0-preview\lib\wp8\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\portable-net45+wp80+win8\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\portable-net45+wp80+win8\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.18\lib\sl4-windowsphone71\System.Net.Http.dll</HintPath>
@@ -366,12 +361,9 @@
     <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="SQLite.WP80, Version=3.8.4.1">
+    <SDKReference Include="SQLite.WP80, Version=3.8.3.1">
       <Name>SQLite for Windows Phone</Name>
     </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

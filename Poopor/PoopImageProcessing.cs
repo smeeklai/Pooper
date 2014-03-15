@@ -1,7 +1,5 @@
-﻿using Poopor.DataType;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +16,8 @@ namespace Pooper
         public static Color COLOR_MORRON = Color.FromArgb(255, 75, 0, 0);
         public static Color COLOR_BRIGHT_RED = Color.FromArgb(255, 170, 0, 0);
         public static Color COLOR_ORANGE = Color.FromArgb(255, 158, 61, 2);
-        public static Color COLOR_DARK_GREEN = Color.FromArgb(255, 20, 38, 4);
-        public static Color COLOR_YELLOW = Color.FromArgb(255, 235, 213, 20);
+        public static Color COLOR_DARK_GREEN = Color.FromArgb(255, 11, 38, 4);
+        public static Color COLOR_YELLOW = Color.FromArgb(255, 235, 195, 20);
         public static Color COLOR_GRAY = Color.FromArgb(255, 160, 160, 160);
 
         public static Dictionary<Color, String> ColorNameDictionary = new Dictionary<Color, String>()
@@ -57,12 +55,8 @@ namespace Pooper
         {
             // Get color type name
             Color color = await GetDominantColorType(bitmap);
-            
-            String name = ColorNameDictionary[color];
 
-            Debug.WriteLine("GetDominantColorTypeName => " + name);
-
-            return name;
+            return ColorNameDictionary[color];
         }
 
         /// <summary>
@@ -79,15 +73,15 @@ namespace Pooper
             Dictionary<Color, float> differences = new Dictionary<Color, float>();
 
             // add differences key and value to table
-            differences.Add(COLOR_VERY_LIGHT_BROWN, GetColorHSLDifferences(color, COLOR_VERY_LIGHT_BROWN));
-            differences.Add(COLOR_LIGHT_BROWN, GetColorHSLDifferences(color, COLOR_LIGHT_BROWN));
-            differences.Add(COLOR_BLACK, GetColorHSLDifferences(color, COLOR_BLACK));
-            differences.Add(COLOR_MORRON, GetColorHSLDifferences(color, COLOR_MORRON));
-            differences.Add(COLOR_BRIGHT_RED, GetColorHSLDifferences(color, COLOR_BRIGHT_RED));
-            differences.Add(COLOR_ORANGE, GetColorHSLDifferences(color, COLOR_ORANGE));
-            differences.Add(COLOR_DARK_GREEN, GetColorHSLDifferences(color, COLOR_DARK_GREEN));
-            differences.Add(COLOR_YELLOW, GetColorHSLDifferences(color, COLOR_YELLOW));
-            differences.Add(COLOR_GRAY, GetColorHSLDifferences(color, COLOR_GRAY));
+            differences.Add(COLOR_VERY_LIGHT_BROWN, GetColorDifferences(color, COLOR_VERY_LIGHT_BROWN));
+            differences.Add(COLOR_LIGHT_BROWN, GetColorDifferences(color, COLOR_LIGHT_BROWN));
+            differences.Add(COLOR_BLACK, GetColorDifferences(color, COLOR_BLACK));
+            differences.Add(COLOR_MORRON, GetColorDifferences(color, COLOR_MORRON));
+            differences.Add(COLOR_BRIGHT_RED, GetColorDifferences(color, COLOR_BRIGHT_RED));
+            differences.Add(COLOR_ORANGE, GetColorDifferences(color, COLOR_ORANGE));
+            differences.Add(COLOR_DARK_GREEN, GetColorDifferences(color, COLOR_DARK_GREEN));
+            differences.Add(COLOR_YELLOW, GetColorDifferences(color, COLOR_YELLOW));
+            differences.Add(COLOR_GRAY, GetColorDifferences(color, COLOR_GRAY));
 
             // Order the dictionary of differences table by value ascending
             List<KeyValuePair<Color, float>> list = new List<KeyValuePair<Color, float>>(differences);
@@ -100,8 +94,6 @@ namespace Pooper
 
             // Get the first differences value
             KeyValuePair<Color, float> type = list.First();
-
-            Debug.WriteLine("GetDominantColorType => " + type.Key);
 
             // Get color
             return type.Key;
@@ -143,11 +135,11 @@ namespace Pooper
             {
                 for (int x = xTopLeft; x < xBottomRight; x++)
                 {
-                    Color c = GetPixel(bitmap, x, y);
+                    Color color = GetPixel(bitmap, x, y);
 
-                    r += c.R;
-                    g += c.G;
-                    b += c.B;
+                    r += color.R;
+                    g += color.G;
+                    b += color.B;
 
                     total++;
                 }
@@ -158,14 +150,7 @@ namespace Pooper
             g /= total;
             b /= total;
 
-            Color color = Color.FromArgb((byte)255, (byte)r, (byte)g, (byte)b);
-
-            Debug.WriteLine("Image Size => " + bitmap.PixelWidth + ", " + bitmap.PixelHeight);
-            Debug.WriteLine("TopLeft => " + xTopLeft + ", " + yTopLeft);
-            Debug.WriteLine("BottomRight => " + xBottomRight + ", " + yBottomRight);
-            Debug.WriteLine("GetDominantColor => " + color);
-
-            return color;
+            return Color.FromArgb((byte)255, (byte)r, (byte)g, (byte)b);
         }
 
         /// <summary>
@@ -299,156 +284,8 @@ namespace Pooper
             float pdg = (float)dg / 255;
             float pdb = (float)db / 255;
 
-            float difference = ((pdr + pdg + pdb) / 3) * 100;
-
-            Debug.WriteLine("GetColorDifferences " + a + " and " + b + " => " + difference);
-
-            return difference;
+            return ((pdr + pdg + pdb) / 3) * 100;
         }
 
-        public static float GetColorHSLDifferences(Color a, Color b)
-        {
-            ColorHSL ColorA = RGB2HSL(a);
-            ColorHSL ColorB = RGB2HSL(b);
-
-            Debug.WriteLine("Color H => " + ColorA.Hue + " compare to " + ColorB.Hue);
-            Debug.WriteLine("Color S => " + ColorA.Saturation + " compare to " + ColorB.Saturation);
-            Debug.WriteLine("Color L => " + ColorA.Lightness + " compare to " + ColorB.Lightness);
-
-            //float difference = (float)Math.Abs(ColorA.Hue - ((ColorA.Hue + ColorB.Hue) / 2));
-            float difference = (float)Math.Abs(ColorA.Hue - ColorB.Hue);
-
-            Debug.WriteLine("GetColorHSLDifferences " + a + " and " + b + " => " + difference);
-            Debug.WriteLine("----------");
-
-            return difference;
-        }
-
-        /*public static float GetColorDifferencesNew(Color a, Color b)
-        {
-            System.Drawing.Color color = System.Drawing.Color.FromArgb(red, green, blue);
-            float hue = color.GetHue();
-            float saturation = color.GetSaturation();
-            float lightness = color.GetBrightness();
-        }
-
-        public static float GetColorDifferencesNew2(Color a, Color b)
-        {
-            Color original = Color.FromArgb(255, 50, 120, 200);
-            // original = {Name=ff3278c8, ARGB=(255, 50, 120, 200)}
-
-            double hue;
-            double saturation;
-            double value;
-            ColorToHSV(original, out hue, out saturation, out value);
-            // hue        = 212.0
-            // saturation = 0.75
-            // value      = 0.78431372549019607
-
-            Color copy = ColorFromHSV(hue, saturation, value);
-            // copy = {Name=ff3278c8, ARGB=(255, 50, 120, 200)}
-
-            // Compare that to the HSL values that the .NET framework provides: 
-            original.GetHue();        // 212.0
-            original.GetSaturation(); // 0.6
-            original.GetBrightness(); // 0.490196079
-        }
-
-
-        public static void ColorToHSV(Color color, out double hue, out double saturation, out double value)
-        {
-            int max = Math.Max(color.R, Math.Max(color.G, color.B));
-            int min = Math.Min(color.R, Math.Min(color.G, color.B));
-
-            hue = color.GetHue();
-            saturation = (max == 0) ? 0 : 1d - (1d * min / max);
-            value = max / 255d;
-        }
-
-        public static Color ColorFromHSV(double hue, double saturation, double value)
-        {
-            int hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6;
-            double f = hue / 60 - Math.Floor(hue / 60);
-
-            value = value * 255;
-
-            byte v = Convert.ToByte(value);
-            byte p = Convert.ToByte(value * (1 - saturation));
-            byte q = Convert.ToByte(value * (1 - f * saturation));
-            byte t = Convert.ToByte(value * (1 - (1 - f) * saturation)); 
-
-            if (hi == 0)
-                return Color.FromArgb(255, v, t, p);
-            else if (hi == 1)
-                return Color.FromArgb(255, q, v, p);
-            else if (hi == 2)
-                return Color.FromArgb(255, p, v, t);
-            else if (hi == 3)
-                return Color.FromArgb(255, p, q, v);
-            else if (hi == 4)
-                return Color.FromArgb(255, t, p, v);
-            else
-                return Color.FromArgb(255, v, p, q);
-        }*/
-
-        public static ColorHSL RGB2HSL(Color rgb)
-        {
-            double r = rgb.R / 255.0;
-            double g = rgb.G / 255.0;
-            double b = rgb.B / 255.0;
-
-            double v;
-            double m;
-            double vm;
-
-            double r2, g2, b2;
-
-            ColorHSL hsl = new ColorHSL(0, 0, 0); // default to black
-
-            v = Math.Max(r, g);
-            v = Math.Max(v, b);
-            m = Math.Min(r, g);
-            m = Math.Min(m, b);
-
-            hsl.Lightness = (m + v) / 2.0;
-
-            if (hsl.Lightness <= 0.0)
-            {
-                return hsl;
-            }
-
-            vm = v - m;
-            hsl.Saturation = vm;
-
-            if (hsl.Saturation > 0.0)
-            {
-                hsl.Saturation /= (hsl.Lightness <= 0.5) ? (v + m) : (2.0 - v - m);
-            }
-            else
-            {
-                return hsl;
-            }
-
-            r2 = (v - r) / vm;
-            g2 = (v - g) / vm;
-            b2 = (v - b) / vm;
-
-            if (r == v)
-            {
-                hsl.Hue = (g == m ? 5.0 + b2 : 1.0 - g2);
-            }
-            else if (g == v)
-            {
-                hsl.Hue = (b == m ? 1.0 + r2 : 3.0 - b2);
-            }
-            else
-            {
-                hsl.Hue = (r == m ? 3.0 + g2 : 5.0 - r2);
-            }
-
-            hsl.Hue /= 6.0;
-
-            return hsl;
-        }
     }
 }

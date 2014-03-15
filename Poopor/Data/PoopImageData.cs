@@ -26,7 +26,7 @@ namespace Poopor.Data
         public PoopImageData(string poopImgName)
         {
             this.PoopImgName = poopImgName;
-            this.ImgUrl = "/Assets/img/samplePoopImage/" + poopImgName;
+            this.ImgUrl = "/Assets/img/samplePoopImage/" + poopImgName + ".jpg";
             this.IsSelected = false;
         }
 
