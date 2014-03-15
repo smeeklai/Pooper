@@ -56,8 +56,12 @@ namespace Pooper
         {
             // Get color type name
             Color color = await GetDominantColorType(bitmap);
+            
+            String name = ColorNameDictionary[color];
 
-            return ColorNameDictionary[color];
+            Debug.WriteLine("GetDominantColorTypeName => " + name);
+
+            return name;
         }
 
         /// <summary>
@@ -96,6 +100,8 @@ namespace Pooper
             // Get the first differences value
             KeyValuePair<Color, float> type = list.First();
 
+            Debug.WriteLine("GetDominantColorType => " + type.Key);
+
             // Get color
             return type.Key;
         }
@@ -110,10 +116,10 @@ namespace Pooper
             int xCenter = bitmap.PixelWidth / 2;
             int yCenter = bitmap.PixelHeight / 2;
 
-            int xTopLeft = (xCenter - 50) < 0 ? 0 : xCenter - 50;
-            int yTopLeft = (yCenter - 50) < 0 ? 0 : yCenter - 50;
-            int xBottomRight = (xTopLeft + 100) > bitmap.PixelWidth ? bitmap.PixelWidth : xTopLeft + 100;
-            int yBottomRight = (yTopLeft + 100) > bitmap.PixelHeight ? bitmap.PixelHeight : yTopLeft + 100;
+            int xTopLeft = (xCenter - 40) < 0 ? 0 : xCenter - 40;
+            int yTopLeft = (yCenter - 40) < 0 ? 0 : yCenter - 40;
+            int xBottomRight = (xTopLeft + 80) > bitmap.PixelWidth ? bitmap.PixelWidth : xTopLeft + 80;
+            int yBottomRight = (yTopLeft + 80) > bitmap.PixelHeight ? bitmap.PixelHeight : yTopLeft + 80;
 
             return GetDominantColor(bitmap, xTopLeft, yTopLeft, xBottomRight, yBottomRight);
         }
@@ -136,11 +142,11 @@ namespace Pooper
             {
                 for (int x = xTopLeft; x < xBottomRight; x++)
                 {
-                    Color color = GetPixel(bitmap, x, y);
+                    Color c = GetPixel(bitmap, x, y);
 
-                    r += color.R;
-                    g += color.G;
-                    b += color.B;
+                    r += c.R;
+                    g += c.G;
+                    b += c.B;
 
                     total++;
                 }
@@ -151,7 +157,14 @@ namespace Pooper
             g /= total;
             b /= total;
 
-            return Color.FromArgb((byte)255, (byte)r, (byte)g, (byte)b);
+            Color color = Color.FromArgb((byte)255, (byte)r, (byte)g, (byte)b);
+
+            Debug.WriteLine("Image Size => " + bitmap.PixelWidth + ", " + bitmap.PixelHeight);
+            Debug.WriteLine("TopLeft => " + xTopLeft + ", " + yTopLeft);
+            Debug.WriteLine("BottomRight => " + xBottomRight + ", " + yBottomRight);
+            Debug.WriteLine("GetDominantColor => " + color);
+
+            return color;
         }
 
         /// <summary>
@@ -285,7 +298,137 @@ namespace Pooper
             float pdg = (float)dg / 255;
             float pdb = (float)db / 255;
 
-            return ((pdr + pdg + pdb) / 3) * 100;
+            float difference = ((pdr + pdg + pdb) / 3) * 100;
+
+            Debug.WriteLine("GetColorDifferences " + a + " and " + b + " => " + difference);
+
+            return difference;
+        }
+
+        public static float GetColorDifferencesNew(Color a, Color b)
+        {
+            System.Drawing.Color color = System.Drawing.Color.FromArgb(red, green, blue);
+            float hue = color.GetHue();
+            float saturation = color.GetSaturation();
+            float lightness = color.GetBrightness();
+        }
+
+        public static float GetColorDifferencesNew(Color a, Color b)
+        {
+            Color original = Color.FromArgb(255, 50, 120, 200);
+            // original = {Name=ff3278c8, ARGB=(255, 50, 120, 200)}
+
+            double hue;
+            double saturation;
+            double value;
+            ColorToHSV(original, out hue, out saturation, out value);
+            // hue        = 212.0
+            // saturation = 0.75
+            // value      = 0.78431372549019607
+
+            Color copy = ColorFromHSV(hue, saturation, value);
+            // copy = {Name=ff3278c8, ARGB=(255, 50, 120, 200)}
+
+            // Compare that to the HSL values that the .NET framework provides: 
+            original.GetHue();        // 212.0
+            original.GetSaturation(); // 0.6
+            original.GetBrightness(); // 0.490196079
+        }
+
+
+        public static void ColorToHSV(Color color, out double hue, out double saturation, out double value)
+        {
+            int max = Math.Max(color.R, Math.Max(color.G, color.B));
+            int min = Math.Min(color.R, Math.Min(color.G, color.B));
+
+            hue = color.GetHue();
+            saturation = (max == 0) ? 0 : 1d - (1d * min / max);
+            value = max / 255d;
+        }
+
+        public static void RGB2HSL(Color rgb, out double h, out double s, out double l)
+        {
+            double r = rgb.R / 255.0;
+            double g = rgb.G / 255.0;
+            double b = rgb.B / 255.0;
+
+            double v;
+            double m;
+            double vm;
+
+            double r2, g2, b2;
+
+            h = 0; // default to black
+            s = 0;
+            l = 0;
+
+            v = Math.Max(r, g);
+            v = Math.Max(v, b);
+            m = Math.Min(r, g);
+            m = Math.Min(m, b);
+
+            l = (m + v) / 2.0;
+
+            if (l <= 0.0)
+            {
+                return;
+            }
+
+            vm = v - m;
+            s = vm;
+
+            if (s > 0.0)
+            {
+                s /= (l <= 0.5) ? (v + m) : (2.0 - v - m);
+            }
+            else
+            {
+                return;
+            }
+
+            r2 = (v - r) / vm;
+            g2 = (v - g) / vm;
+            b2 = (v - b) / vm;
+
+            if (r == v)
+            {
+                h = (g == m ? 5.0 + b2 : 1.0 - g2);
+            }
+            else if (g == v)
+            {
+                h = (b == m ? 1.0 + r2 : 3.0 - b2);
+            }
+            else
+            {
+                h = (r == m ? 3.0 + g2 : 5.0 - r2);
+            }
+            h /= 6.0;
+        }
+
+        public static Color ColorFromHSV(double hue, double saturation, double value)
+        {
+            int hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6;
+            double f = hue / 60 - Math.Floor(hue / 60);
+
+            value = value * 255;
+
+            byte v = Convert.ToByte(value);
+            byte p = Convert.ToByte(value * (1 - saturation));
+            byte q = Convert.ToByte(value * (1 - f * saturation));
+            byte t = Convert.ToByte(value * (1 - (1 - f) * saturation)); 
+
+            if (hi == 0)
+                return Color.FromArgb(255, v, t, p);
+            else if (hi == 1)
+                return Color.FromArgb(255, q, v, p);
+            else if (hi == 2)
+                return Color.FromArgb(255, p, v, t);
+            else if (hi == 3)
+                return Color.FromArgb(255, p, q, v);
+            else if (hi == 4)
+                return Color.FromArgb(255, t, p, v);
+            else
+                return Color.FromArgb(255, v, p, q);
         }
 
     }
