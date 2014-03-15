@@ -102,6 +102,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AzureFunctions.cs" />
+    <Compile Include="BloodAmount_Meaning_Table_SQLite.cs" />
     <Compile Include="ColonCancerMsgPage.xaml.cs">
       <DependentUpon>ColonCancerMsgPage.xaml</DependentUpon>
     </Compile>
@@ -114,6 +115,7 @@
     <Compile Include="Data\SamplePoopImageData.cs" />
     <Compile Include="Data\ShapeData.cs" />
     <Compile Include="Data\ShapeTypeToImg.cs" />
+    <Compile Include="PainLevel_Meaning_Table_SQLite.cs" />
     <Compile Include="PoopImageProcessing.cs" />
     <Compile Include="FecesAnalyzer.cs" />
     <Compile Include="Long_Rec_SQLite.cs" />

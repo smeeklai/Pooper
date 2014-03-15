@@ -114,9 +114,10 @@ namespace Poopor
             }
 
             //Return these value to be shown in Result Page
-            return generateResultDictionary((anxious_sign_counter>1)?true:false, generateUserCancerSign(general_sign_counter, anxious_sign_counter), userCancerSignMsg,
-                db_function.GetColorMeaning(color), db_function.GetShapeMeaning(shape), isRecommend(color, shape), db_function.GetShortRec(color, shape),
-                db_function.GetLongRec(color, shape), isConstipation(shape), isDiarrhea(shape));
+            return generateResultDictionary((anxious_sign_counter > 1) ? true : false, generateUserCancerSign(general_sign_counter, anxious_sign_counter), userCancerSignMsg,
+                db_function.GetColorMeaning(color), db_function.GetShapeMeaning(shape), db_function.GetPainLvMeaning(painLv), db_function.GetBloodAmtMeaning(bloodAmt), 
+                isRecommend(color, shape), db_function.GetShortRec(color, shape, painLv, bloodAmt),
+                db_function.GetLongRec(color, shape, painLv, bloodAmt), isConstipation(shape), isDiarrhea(shape));
         }
 
         //Check is recomm or not method
@@ -159,10 +160,9 @@ namespace Poopor
         //Ask more info in case of Anxious sign occur
         //...Boss help to do this pattern
 
-
         //Prepare dictionary as a result to send to show the result of calculation
-        private Dictionary<string, object> generateResultDictionary(bool isGoAsk,string userCancerSign, List<string> userCancerSignMsg, List<string> userPoopColorMeaning,
-            List<string> userPoopShapeMeaning, bool isRecommend, List<string> userShortRecommendation, List<string> userLongRecommendation, bool isConstipation,
+        private Dictionary<string, object> generateResultDictionary(bool isGoAsk, string userCancerSign, List<string> userCancerSignMsg, List<string> userPoopColorMeaning,
+            List<string> userPoopShapeMeaning, List<string> userPainLvMeaning, List<string> userBloodAmtMeaning, bool isRecommend, List<string> userShortRecommendation, List<string> userLongRecommendation, bool isConstipation,
             bool isDiarrhea)
         {
             Dictionary<string, object> resultDictionary = new Dictionary<string, object>();
@@ -171,6 +171,8 @@ namespace Poopor
             resultDictionary.Add("UserCancerSignMsg", userCancerSignMsg);
             resultDictionary.Add("UserPoopColorMeaning", userPoopColorMeaning);
             resultDictionary.Add("UserPoopShapeMeaning", userPoopShapeMeaning);
+            resultDictionary.Add("UserPainLvMeaning", userPainLvMeaning);
+            resultDictionary.Add("UserBloodAmtMeaning", userBloodAmtMeaning);
             resultDictionary.Add("IsRecommend", isRecommend);
             resultDictionary.Add("UserShortRecommendation", userShortRecommendation);
             resultDictionary.Add("UserLongRecommendation", userLongRecommendation);
