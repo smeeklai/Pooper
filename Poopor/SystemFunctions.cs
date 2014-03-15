@@ -82,7 +82,7 @@ namespace Poopor
             return resultDic;
         }
 
-        public static async Task<Boolean> InitializeResultCriterias()
+        public static void InitializeResultCriterias()
         {
             // Instantiate SQLite Function
             SQLiteFunctions db_function = new SQLiteFunctions();
@@ -341,7 +341,7 @@ namespace Poopor
             db_function.InsertData(new Short_Rec_SQLite() { Name = "Separated hard lumps", S_Rec = "Fruits and vegetables" });
             db_function.InsertData(new Short_Rec_SQLite() { Name = "Separated hard lumps", S_Rec = "Meat" });
             db_function.InsertData(new Short_Rec_SQLite() { Name = "Separated hard lumps", S_Rec = "De-stress" });
-            db_function.InsertData(new Short_Rec_SQLite() { Name = "Separated hard lumps", S_Rec = "Refined Carbo." });
+            db_function.InsertData(new Short_Rec_SQLite() { Name = "Separated hard lumps", S_Rec = "Refined Carbo" });
             db_function.InsertData(new Short_Rec_SQLite() { Name = "Separated hard lumps", S_Rec = "Refined sugar" });
             db_function.InsertData(new Short_Rec_SQLite() { Name = "Separated hard lumps", S_Rec = "Water or fluids" });
             db_function.InsertData(new Short_Rec_SQLite() { Name = "Separated hard lumps", S_Rec = "Herbal teas" });
@@ -355,7 +355,7 @@ namespace Poopor
             db_function.InsertData(new Short_Rec_SQLite() { Name = "Lumpy sausage", S_Rec = "Fruits and vegetables" });
             db_function.InsertData(new Short_Rec_SQLite() { Name = "Lumpy sausage", S_Rec = "Meat" });
             db_function.InsertData(new Short_Rec_SQLite() { Name = "Lumpy sausage", S_Rec = "Fiber" });
-            db_function.InsertData(new Short_Rec_SQLite() { Name = "Lumpy sausage", S_Rec = "Refined Carbo." });
+            db_function.InsertData(new Short_Rec_SQLite() { Name = "Lumpy sausage", S_Rec = "Refined Carbo" });
             db_function.InsertData(new Short_Rec_SQLite() { Name = "Lumpy sausage", S_Rec = "Refined sugar" });
             db_function.InsertData(new Short_Rec_SQLite() { Name = "Lumpy sausage", S_Rec = "Cooked grains" });
             db_function.InsertData(new Short_Rec_SQLite() { Name = "Lumpy sausage", S_Rec = "Herbal teas" });
@@ -495,7 +495,7 @@ namespace Poopor
 
             // ----- Short_Rec_SQLite : a lot of blood (blood amount) -----
             db_function.InsertData(new Short_Rec_SQLite() { Name = "a lot of blood", S_Rec = "Consult a doctor" });
-            return true;
+            //return true;
         }
     }
 }

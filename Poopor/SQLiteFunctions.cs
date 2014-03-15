@@ -514,17 +514,16 @@ namespace Poopor
 
         public static async Task<bool> FileExists(string fileName)
         {
-            var result = false;
             try
             {
                 var store = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(fileName);
-                result = true;
+                return true;
             }
-            catch
+            catch (FileNotFoundException e)
             {
+                Debug.WriteLine("SQLite doesn't exist");
             }
-
-            return result;
+            return false;
         }
 
         public static Boolean IsResultCriteriaInitialized()

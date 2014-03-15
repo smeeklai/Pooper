@@ -24,6 +24,10 @@ namespace Poopor
 
             colorPicker.ItemsSource = ColorExtensions.AccentColors();
             shapePicker.ItemsSource = ShapeData.ShapeNames();
+            painLevel_slider.ValueChanged += painLevel_slider_ValueChanged;
+            blood_amount_slider.ValueChanged += blood_amount_slider_ValueChanged;
+            colorPicker.SelectionChanged += colorPicker_SelectionChanged;
+            shapePicker.SelectionChanged += shapePicker_SelectionChanged;
 
         }
 
@@ -34,10 +38,6 @@ namespace Poopor
             isMelena = Convert.ToBoolean(NavigationContext.QueryString["melenaResult"]);
             havingMedicines = Convert.ToBoolean(NavigationContext.QueryString["havingMedicines"]);
             colorPicker.SelectedItem = poopColor;
-            painLevel_slider.ValueChanged += painLevel_slider_ValueChanged;
-            blood_amount_slider.ValueChanged += blood_amount_slider_ValueChanged;
-            colorPicker.SelectionChanged += colorPicker_SelectionChanged;
-            shapePicker.SelectionChanged += shapePicker_SelectionChanged;
         }
 
         private async void newPoop_submit_button_Click(object sender, RoutedEventArgs e)
@@ -46,13 +46,15 @@ namespace Poopor
             string shape = shapePicker.SelectedItem.ToString();
             string painLevel = painLevel_dictionary[painLevel_slider.Value];
             string bloodAmount = bloodAmount_dictionary[blood_amount_slider.Value];
+            DateTime userPoopStoredDateTime = DateTime.Now;
 
             if (SessionManagement.IsLoggedIn() == false)
             {
                 MessageBox.Show("Please answer us several health questions first. This can be avoided by siging up an account", "Health Infomation Required", 
                     MessageBoxButton.OK);
                 NavigationService.Navigate(new Uri("/AdditionalHealthInfomation.xaml?poopColor=" + poopColor + "&shape=" + shape + "&painLevel=" + painLevel
-                    + "&bloodAmount=" + bloodAmount + "&melenaResult=" + isMelena + "&havingMedicines=" + havingMedicines, UriKind.Relative));
+                    + "&bloodAmount=" + bloodAmount + "&melenaResult=" + isMelena + "&havingMedicines=" + havingMedicines
+                    + "&userPoopStoredDateTime=" + userPoopStoredDateTime, UriKind.Relative));
             }
             else
             {
@@ -61,7 +63,7 @@ namespace Poopor
 
                 if (!SQLiteFunctions.IsResultCriteriaInitialized())
                 {
-                    await SystemFunctions.InitializeResultCriterias();
+                    SystemFunctions.InitializeResultCriterias();
                 }
 
                 var userInfo = sqliteFunctions.GetUserInfo(SessionManagement.GetEmail());
@@ -77,7 +79,6 @@ namespace Poopor
                 Boolean constipation = Convert.ToBoolean(necessaryInfo[3]);
                 Boolean diarrhea = Convert.ToBoolean(necessaryInfo[4]);
                 string poopImgName = NavigationContext.QueryString["poopImgName"];
-                DateTime userPoopStoredDateTime = DateTime.Now;
                 Boolean insertationResult = await InsertNewPoopData(poopColor, shape, painLevel, bloodAmount, havingMedicines, poopImgName, userPoopStoredDateTime,
                     diarrhea, constipation, isMelena);
                 SystemFunctions.SetProgressIndicatorProperties(false);

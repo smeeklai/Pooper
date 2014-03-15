@@ -45,7 +45,7 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,12,0">
-            <TextBlock Text="POOPOR" Foreground="#FF787B7C" FontSize="24" Margin="0,0,12,0">
+            <TextBlock Text="POOPER" Foreground="#FF787B7C" FontSize="24" Margin="0,0,12,0">
                 <TextBlock.Style>
                     <Style BasedOn="{StaticResource PhoneTextBlockBase}" TargetType="TextBlock"/>
                 </TextBlock.Style>
@@ -60,7 +60,7 @@
             <toolkit:GestureService.GestureListener>
                 <toolkit:GestureListener Flick="OnFlick"/>
             </toolkit:GestureService.GestureListener>
-            <TextBlock x:Name="header_textBlock" TextWrapping="Wrap" FontFamily="Segoe WP Semibold" Foreground="White" TextAlignment="Center" FontSize="21.333" Text="Detected! anxious signs of colon-rectum cancer"/>
+            <TextBlock x:Name="header_textBlock" TextWrapping="Wrap" FontFamily="Segoe WP Semibold" Foreground="White" TextAlignment="Center" FontSize="21.333" Text="Detected! critical risks of colon-rectum cancer"/>
         	<Grid Grid.Row="1">
         		<Grid.ColumnDefinitions>
         			<ColumnDefinition Width="Auto"/>
@@ -71,8 +71,8 @@
         			<TextBlock x:Name="suggestion_textBlock" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" FontSize="16" TextAlignment="Center" Foreground="White" Text="Consult with doctor" Margin="0" HorizontalAlignment="Center"/>
         		</StackPanel>
         		<StackPanel Margin="0" Grid.Column="1">
-        			<TextBlock x:Name="moreInfo_textBlock1" TextWrapping="Wrap" Text="- Your first-relative relationship members have been diagnosed with FAP or HNPCC" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
-        			<TextBlock x:Name="moreInfo_textBlock2" TextWrapping="Wrap" Text="- Recomendation 2" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
+        			<TextBlock x:Name="moreInfo_textBlock1" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
+        			<TextBlock x:Name="moreInfo_textBlock2" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
         			<TextBlock x:Name="moreInfo_textBlock3" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" Foreground="White" FontSize="17.333"/>
         		</StackPanel>
         		<TextBlock x:Name="more_axiousSigns_text" TextWrapping="Wrap" Text="Slide rightward to see more details" Margin="0,0,5,0" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Foreground="White" FontFamily="Segoe WP SemiLight" FontSize="16"/>
@@ -87,7 +87,7 @@
         	<toolkit:GestureService.GestureListener>
         		<toolkit:GestureListener Flick="OnFlick"/>
         	</toolkit:GestureService.GestureListener>
-        	<TextBlock TextWrapping="Wrap" FontFamily="Segoe WP Semibold" Foreground="White" TextAlignment="Center" FontSize="21.333" Text="No anxious signs of colon-rectum cancer"/>
+            <TextBlock TextWrapping="Wrap" FontFamily="Segoe WP Semibold" Foreground="White" TextAlignment="Center" FontSize="21.333" Text="No risk of colon-rectum cancer"/>
         	<TextBlock TextWrapping="Wrap" Text="Well done!" Grid.Row="2" HorizontalAlignment="Center" FontFamily="Segoe WP SemiLight" Foreground="White"/>
         	<Image HorizontalAlignment="Center" Width="152" Grid.Row="1" Source="/Assets/img/risk/genrisk.png"/>
         </Grid>

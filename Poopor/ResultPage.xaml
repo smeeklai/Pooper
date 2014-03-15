@@ -59,7 +59,7 @@
          -->
 
 		<!--Pivot Control-->
-		<phone:Pivot Title="POOPOR" Foreground="#FF787B7C" FontSize="24">
+		<phone:Pivot Title="POOPER" Foreground="#FF787B7C" FontSize="24">
 			<!--Pivot item one-->
 			<phone:PivotItem Header="Result" FontSize="32" Margin="0,10,0,0">
 				<Grid>
@@ -78,29 +78,29 @@
 							<TextBlock TextWrapping="Wrap" Text="YOUR LASTEST RECORD" FontFamily="Segoe WP Semibold" FontSize="24" Margin="0" Foreground="Black"/>
 							<StackPanel Orientation="Horizontal">
 								<TextBlock TextWrapping="Wrap" Text="COLOR:" FontSize="18.667" Margin="0" Foreground="#FF666666" FontFamily="Segoe WP Semibold"/>
-								<TextBlock x:Name="colorRecord_textBlock" TextWrapping="Wrap" Text="TextBlock" FontFamily="Segoe WP SemiLight" FontSize="18.667" Foreground="White" Margin="5,0,0,0"/>
+								<TextBlock x:Name="colorRecord_textBlock" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" FontSize="18.667" Foreground="White" Margin="5,0,0,0"/>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal">
 								<TextBlock TextWrapping="Wrap" Text="SHAPE:" FontSize="18.667" Margin="0" Foreground="#FF666666" FontFamily="Segoe WP Semibold"/>
-								<TextBlock x:Name="shapeRecord_textBlock" TextWrapping="Wrap" Text="TextBlock" FontFamily="Segoe WP SemiLight" FontSize="18.667" Foreground="White" Margin="5,0,0,0"/>
+								<TextBlock x:Name="shapeRecord_textBlock" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" FontSize="18.667" Foreground="White" Margin="5,0,0,0"/>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal">
 								<TextBlock TextWrapping="Wrap" Text="PAIN LEVEL:" FontSize="18.667" Margin="0" Foreground="#FF666666" FontFamily="Segoe WP Semibold"/>
-								<TextBlock x:Name="painLevelRecord_textBlock" TextWrapping="Wrap" Text="TextBlock" FontFamily="Segoe WP SemiLight" FontSize="18.667" Foreground="White" Margin="5,0,0,0"/>
+								<TextBlock x:Name="painLevelRecord_textBlock" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" FontSize="18.667" Foreground="White" Margin="5,0,0,0"/>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal">
 								<TextBlock TextWrapping="Wrap" Text="BLOOD AMOUNT:" FontSize="18.667" Margin="0" Foreground="#FF666666" FontFamily="Segoe WP Semibold"/>
-								<TextBlock x:Name="bloodAmountRecord_textBlock" TextWrapping="Wrap" Text="TextBlock" FontFamily="Segoe WP SemiLight" FontSize="18.667" Foreground="White" Margin="5,0,0,0"/>
+								<TextBlock x:Name="bloodAmountRecord_textBlock" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" FontSize="18.667" Foreground="White" Margin="5,0,0,0"/>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal">
-								<TextBlock TextWrapping="Wrap" Text="DATE:" FontFamily="Segoe WP Semibold" FontSize="18.667" Foreground="#FF666666"/>
-								<TextBlock x:Name="dateTimeRecord_textBlock" TextWrapping="Wrap" Text="TextBlock" FontFamily="Segoe WP SemiLight" FontSize="18.667" Foreground="White" Margin="5,0,0,0"/>
+								<TextBlock TextWrapping="Wrap" Text="DATE&amp;TIME:" FontFamily="Segoe WP Semibold" FontSize="18.667" Foreground="#FF666666"/>
+								<TextBlock x:Name="dateTimeRecord_textBlock" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" FontSize="18.667" Foreground="White" Margin="5,0,0,0"/>
 							</StackPanel>
 						</StackPanel>
 						<StackPanel x:Name="cancer_area" Grid.Column="1" Background="#FF30C336">
 							<TextBlock x:Name="resultHeader_textBlock" TextWrapping="Wrap" Text="WELL DONE!" FontFamily="Segoe WP Semibold" FontSize="21.333" Foreground="White" HorizontalAlignment="Center"/>
 							<Image x:Name="resultImage" Source="/Assets/img/risk/welldone_icon.png" HorizontalAlignment="Center" MaxWidth="152" MaxHeight="149" Width="130"/>
-							<TextBlock x:Name="resultExplaination_textBlock" TextWrapping="Wrap" Text="No signs of colon-rectum cancer" Foreground="White" FontFamily="Segoe WP SemiLight" FontSize="16" HorizontalAlignment="Center" TextAlignment="Center"/>
+							<TextBlock x:Name="resultExplaination_textBlock" TextWrapping="Wrap" Text="No risk of colon-rectum cancer" Foreground="White" FontFamily="Segoe WP SemiLight" FontSize="16" HorizontalAlignment="Center" TextAlignment="Center"/>
 						</StackPanel>
 					</Grid>
 					<TextBlock x:Name="recommendation_textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Recommendations:" VerticalAlignment="Top" Grid.Row="1" FontSize="24" TextDecorations="Underline" Foreground="#FF080808" Margin="15,10,0,0"/>
@@ -172,7 +172,7 @@
 						<Image Source="/Assets/img/welldone_rec.png" Margin="0" HorizontalAlignment="Center"/>
 					</Grid>
 					<StackPanel Grid.Row="3">
-						<Button x:Name="okayResult_button" Content="Okay" Background="#FF1BA1E2" FontSize="30.667" Margin="0,0,0,-10"/>
+						<Button x:Name="okayResult_button" Content="Okay" Background="#FF1BA1E2" FontSize="30.667" Margin="0,0,0,-10" Click="okayResult_button_Click"/>
 						<TextBlock TextWrapping="Wrap" Text="Slide rightward to see more details" FontSize="13.333" HorizontalAlignment="Right" Padding="0" Margin="0,-5,16,3"/>
 					</StackPanel>
 				</Grid>

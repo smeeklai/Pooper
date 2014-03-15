@@ -17,11 +17,11 @@ namespace Poopor
         public ColonCancerMsgPage()
         {
             InitializeComponent();
-            ListUserCancerSignMsg(SessionManagement.GetUserLastestResultsAndRecommendation()["UserCancerSignMsg"] as List<string>);
+            ListUserCancerSignMsg(SessionManagement.GetUserLastestResultsAndRecommendation()["UserCancerSignMsg"]);
         }
 
         private void ListUserCancerSignMsg(List<string> listMsg){
-            foreach (string item in listMsg)
+            foreach (string item in SystemFunctions.SortByLength(listMsg))
             {
                 StackPanel msgHolder = new StackPanel();
                 msgHolder.Margin = new System.Windows.Thickness { Left = 15 };

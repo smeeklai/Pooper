@@ -63,16 +63,17 @@
 						<SolidColorBrush Color="Black" Opacity="0.695"/>
 					</StackPanel.Background>
 					<StackPanel Margin="0" Background="White">
-						<TextBlock TextWrapping="Wrap" Text="POOPOR" FontSize="24" Margin="12,0,0,0" Foreground="#FF787B7C"/>
+						<TextBlock TextWrapping="Wrap" Text="POOPER" FontSize="24" Margin="12,0,0,0" Foreground="#FF787B7C"/>
 					</StackPanel>
 					<TextBlock TextWrapping="Wrap" Text="Hold your phone steady and carefully" FontFamily="Segoe WP Semibold" FontSize="32" TextAlignment="Center" Margin="0,30,0,0"/>
 				</StackPanel>
 				<Grid Grid.Row="1" Visibility="Collapsed"/>
-				<StackPanel Grid.Row="2" Grid.RowSpan="2">
+				<StackPanel Grid.Row="2" Grid.RowSpan="2" VerticalAlignment="Center">
 					<StackPanel.Background>
 						<SolidColorBrush Color="Black" Opacity="0.7"/>
 					</StackPanel.Background>
-					<TextBlock TextWrapping="Wrap" Text="Take the picture when your poop is in the circle" Margin="0,35,0,0" FontSize="21.333" Foreground="#FFC7C7C7" HorizontalAlignment="Center"/>
+					<TextBlock TextWrapping="Wrap" Text="Take the picture when your poop is in the circle" Margin="0" FontSize="21.333" Foreground="#FFC7C7C7" HorizontalAlignment="Center"/>
+					<TextBlock TextWrapping="Wrap" Text="Pooper can automatically detect the color " Foreground="#FFC7C7C7" HorizontalAlignment="Center" FontSize="21.333"/>
 				</StackPanel>
 			</Grid>
 		</Grid>

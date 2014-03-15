@@ -20,15 +20,17 @@ using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.MobileServices;
 using System.Windows.Threading;
+using System.IO.IsolatedStorage;
 
 namespace Poopor
 {
     public partial class MainPage : PhoneApplicationPage
     {
         private string userHealth;
-        private Poop_Table_SQLite userLastestpoopRecordInSqlite;
+        private List<Poop_Table_SQLite> userLastestPoopDataInSQLite = null;
         private MobileServiceCollection<Poop_Table_Azure, Poop_Table_Azure> userLastestPoopDataInAzure;
-        private Poop_Table_Azure userLastestPoopRecordInAzure;
+        private Poop_Table_SQLite userLastestPoopRecordInSqlite = null;
+        private Poop_Table_Azure userLastestPoopRecordInAzure = null;
         private Dictionary<string, List<string>> userLastestResultsAndRecommendation;
         private int isUpdateNeeded;
         private AzureFunctions azureFunctions = new AzureFunctions();
@@ -42,36 +44,40 @@ namespace Poopor
         public MainPage()
         {
             InitializeComponent();
-            userLastestResultsAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
-            if (userLastestResultsAndRecommendation != null)
+            if (SessionManagement.IsLoggedIn())
             {
-                List<string> necessaryInfo = null;
-                if (userLastestResultsAndRecommendation.TryGetValue("NecessaryInfo", out necessaryInfo))
+                userLastestResultsAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
+                if (userLastestResultsAndRecommendation != null)
                 {
-                    userHealth = necessaryInfo[1];
-                    if (!userHealth.Contains("none"))
-                        AdaptDashboardToUserCancerSign(userHealth);
+                    List<string> necessaryInfo = null;
+                    if (userLastestResultsAndRecommendation.TryGetValue("NecessaryInfo", out necessaryInfo))
+                    {
+                        userHealth = necessaryInfo[1];
+                        if (!userHealth.Equals("none"))
+                            AdaptDashboardToUserCancerSign(userHealth);
+                    }
+                    else
+                        Debug.WriteLine("No UserCancerSign key");
                 }
                 else
-                    Debug.WriteLine("No UserCancerSign key");
+                    Debug.WriteLine("No user lastest result and recommendation");
+
+                buildApplicationBar();
             }
-            else
-                Debug.WriteLine("No user lastest result and recommendation");
-            buildApplicationBar();
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (SessionManagement.IsLoggedIn())
             {
-                var userLastestPoopDataInSQLite = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail());
-                if (userLastestPoopDataInSQLite.Count != 0)
+                userLastestPoopDataInSQLite = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail());
+                if (!NetworkInterface.GetIsNetworkAvailable())
                 {
-                    userLastestpoopRecordInSqlite = userLastestPoopDataInSQLite.Last();
-                    if (!NetworkInterface.GetIsNetworkAvailable())
+                    if (userLastestPoopDataInSQLite.Count != 0)
                     {
+                        userLastestPoopRecordInSqlite = userLastestPoopDataInSQLite.Last();
                         SystemTray.ProgressIndicator = new ProgressIndicator();
-                        SystemTray.ProgressIndicator.Text = GetLastUpdatedTimeInText(userLastestpoopRecordInSqlite.Date_Time);
+                        SystemTray.ProgressIndicator.Text = GetLastUpdatedTimeInText(userLastestPoopRecordInSqlite.Date_Time);
                         SystemTray.ProgressIndicator.IsVisible = true;
 
                         timer.Interval = TimeSpan.FromMilliseconds(3000);
@@ -84,36 +90,55 @@ namespace Poopor
 
                         timer.Start();
                     }
-                    else
+                }
+                else
+                {
+                    userLastestPoopDataInAzure = await azureFunctions.GetUserPoopDataInAzure(SessionManagement.GetEmail());
+                    if (userLastestPoopDataInAzure.Count != 0 || userLastestPoopDataInSQLite.Count != 0)
                     {
-                        userLastestPoopDataInAzure = await azureFunctions.GetUserPoopDataInAzure(SessionManagement.GetEmail());
-                        if (userLastestPoopDataInAzure.Count != 0)
+                        if (userLastestPoopDataInAzure.Count == 0)
+                        {
+                            Debug.WriteLine("No data in Azure, sync data from SQLite to Azure");
+                            isUpdateNeeded = 1;
+                        }
+                        else if (userLastestPoopDataInSQLite.Count == 0)
+                        {
+                            Debug.WriteLine("No data in SQLite, sync data from Azure to SQLite");
+                            isUpdateNeeded = -1;
+                        }
+                        else
                         {
                             userLastestPoopRecordInAzure = userLastestPoopDataInAzure.Last();
-                            isUpdateNeeded = DateTime.Compare(userLastestpoopRecordInSqlite.Date_Time, userLastestPoopRecordInAzure.Date_Time);
-                            Debug.WriteLine("Lastest time in Sqlite" + userLastestpoopRecordInSqlite.Date_Time);
-                            Debug.WriteLine("Lastest time in azure" + userLastestPoopRecordInAzure.Date_Time);
-                            Debug.WriteLine(isUpdateNeeded);
-                            if (isUpdateNeeded == 0)
+                            userLastestPoopRecordInSqlite = userLastestPoopDataInSQLite.Last();
+                            DateTime dateTimeInSQLite = userLastestPoopRecordInSqlite.Date_Time;
+                            DateTime dateTimeInAzure = userLastestPoopRecordInAzure.Date_Time;
+                            isUpdateNeeded = DateTime.Compare(new DateTime(dateTimeInSQLite.Year, dateTimeInSQLite.Month, dateTimeInSQLite.Day, dateTimeInSQLite.Hour, dateTimeInSQLite.Minute, dateTimeInSQLite.Second),
+                                new DateTime(dateTimeInAzure.Year, dateTimeInAzure.Month, dateTimeInAzure.Day, dateTimeInAzure.Hour, dateTimeInAzure.Minute, dateTimeInAzure.Second));
+                            Debug.WriteLine("Lastest time in Sqlite: " + userLastestPoopRecordInSqlite.Date_Time);
+                            Debug.WriteLine("Lastest time in azure: " + userLastestPoopRecordInAzure.Date_Time);
+                        }
+                        
+
+                        Debug.WriteLine(isUpdateNeeded);
+                        if (isUpdateNeeded == 0)
+                        {
+                            SystemTray.ProgressIndicator = new ProgressIndicator();
+                            SystemTray.ProgressIndicator.Text = "Data is up-to-date";
+                            SystemTray.ProgressIndicator.IsVisible = true;
+
+                            timer.Interval = TimeSpan.FromMilliseconds(3000);
+
+                            timer.Tick += (sender, args) =>
                             {
-                                SystemTray.ProgressIndicator = new ProgressIndicator();
-                                SystemTray.ProgressIndicator.Text = "Data is up-to-date";
-                                SystemTray.ProgressIndicator.IsVisible = true;
+                                SystemTray.ProgressIndicator.IsVisible = false;
+                                timer.Stop();
+                            };
 
-                                timer.Interval = TimeSpan.FromMilliseconds(3000);
-
-                                timer.Tick += (sender, args) =>
-                                {
-                                    SystemTray.ProgressIndicator.IsVisible = false;
-                                    timer.Stop();
-                                };
-
-                                timer.Start();
-                            }
-                            else
-                            {
-                                StartSyncUserLastestData();
-                            }
+                            timer.Start();
+                        }
+                        else
+                        {
+                            StartSyncUserLastestData();
                         }
                     }
                 }
@@ -162,7 +187,37 @@ namespace Poopor
 
         private async void SyncDataToSQLite()
         {
-            var result = await azureFunctions.GetUserPoopDataAfterInputDate(SessionManagement.GetEmail(), userLastestpoopRecordInSqlite.Date_Time);
+            MobileServiceCollection<Poop_Table_Azure, Poop_Table_Azure> result;
+            if (userLastestPoopRecordInSqlite == null)
+            {
+                result = userLastestPoopDataInAzure;
+                var data = await azureFunctions.GetUserInfoDataAsync(SessionManagement.GetEmail());
+                Boolean resultOfInsertation = false;
+                while (resultOfInsertation == false)
+                {
+                    resultOfInsertation = sqliteFunctions.InsertData(new UserInfo_Table_SQLite()
+                    {
+                        Email = data.Email,
+                        Password = data.Password,
+                        FirstName = data.FirstName,
+                        LastName = data.LastName,
+                        DOB = data.DOB,
+                        Gender = data.Gender,
+                        Weight = data.Weight,
+                        Height = data.Height,
+                        HealthInfo1 = data.HealthInfo1,
+                        HealthInfo2 = data.HealthInfo2,
+                        HealthInfo3 = data.HealthInfo3,
+                        HealthInfo4 = data.HealthInfo4,
+                        HealthInfo5 = data.HealthInfo5,
+                    });
+                    Debug.WriteLine("Store old member into SQLite: " + resultOfInsertation);
+                }
+            }
+            else
+            {
+                result = await azureFunctions.GetUserPoopDataAfterInputDate(SessionManagement.GetEmail(), userLastestPoopRecordInSqlite.Date_Time);
+            }
             Debug.WriteLine("There are {0} new data in Azure", result.Count);
             foreach (var item in result)
             {
@@ -191,17 +246,23 @@ namespace Poopor
 
         private async void SyncDataToAzure()
         {
-            var tempResult = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail());
-            var poopDataToBeAdded = new List<Poop_Table_SQLite>();
-            tempResult.Reverse();
-            foreach (var item in tempResult)
+            List<Poop_Table_SQLite> poopDataToBeAdded = new List<Poop_Table_SQLite>();
+            if (userLastestPoopRecordInAzure == null)
             {
-                if (item.Date_Time > userLastestPoopRecordInAzure.Date_Time)
-                    poopDataToBeAdded.Add(item);
-                else
-                    break;
+                poopDataToBeAdded = userLastestPoopDataInSQLite;
             }
-            poopDataToBeAdded.Reverse();
+            else
+            {
+                userLastestPoopDataInSQLite.Reverse();
+                foreach (var item in userLastestPoopDataInSQLite)
+                {
+                    if (item.Date_Time > userLastestPoopRecordInAzure.Date_Time)
+                        poopDataToBeAdded.Add(item);
+                    else
+                        break;
+                }
+                poopDataToBeAdded.Reverse();
+            }
             Debug.WriteLine("Poop data to be added " + poopDataToBeAdded.Count());
             foreach (var item in poopDataToBeAdded)
             {
@@ -230,10 +291,10 @@ namespace Poopor
 
         private void AdaptDashboardToUserCancerSign(string userHealth)
         {
-            if (userHealth.Contains("general"))
+            List<string> userCancerSignMsg = userLastestResultsAndRecommendation["UserCancerSignMsg"];
+            userCancerSignMsg = SystemFunctions.SortByLength(userCancerSignMsg).ToList();
+            if (userHealth.Equals("general"))
             {
-                List<string> userCancerSignMsg = userLastestResultsAndRecommendation["UserCancerSignMsg"];
-                userCancerSignMsg = SystemFunctions.SortByLength(userCancerSignMsg) as List<string>;
                 goodHealthInfo_grid.Visibility = System.Windows.Visibility.Collapsed;
                 more_axiousSigns_text.Visibility = System.Windows.Visibility.Collapsed;
                 suggestion_textBlock.Text = "Be careful with your health";
@@ -242,17 +303,38 @@ namespace Poopor
                 SolidColorBrush newBgColor = new SolidColorBrush();
                 newBgColor.Color = Color.FromArgb(255, 241, 145, 32);
                 healthInfo_grid.Background = newBgColor;
-                header_textBlock.Text = "Detected! general signs of colon-rectum cancer";
+                header_textBlock.Text = "Detected! marginal risks of colon-rectum cancer";
                 try
                 {
                     if (userCancerSignMsg != null)
                     {
                         if (userCancerSignMsg[0] != null)
-                            moreInfo_textBlock1.Text = userCancerSignMsg[0];
+                            moreInfo_textBlock1.Text = "- " + userCancerSignMsg[0];
                         if (userCancerSignMsg[1] != null)
-                            moreInfo_textBlock2.Text = userCancerSignMsg[1];
+                            moreInfo_textBlock2.Text = "- " + userCancerSignMsg[1];
                         if (userCancerSignMsg[2] != null)
-                            moreInfo_textBlock3.Text = userCancerSignMsg[2];
+                            moreInfo_textBlock3.Text = "- " + userCancerSignMsg[2];
+                    }
+                }
+                catch (ArgumentOutOfRangeException error)
+                {
+                    Debug.WriteLine(error.Message);
+                }
+            }
+            else if (userHealth.Equals("anxious"))
+            {
+                goodHealthInfo_grid.Visibility = System.Windows.Visibility.Collapsed;
+                healthInfo_grid.Visibility = System.Windows.Visibility.Visible;
+                try
+                {
+                    if (userCancerSignMsg != null)
+                    {
+                        if (userCancerSignMsg[0] != null)
+                            moreInfo_textBlock1.Text = "- " + userCancerSignMsg[0];
+                        if (userCancerSignMsg[1] != null)
+                            moreInfo_textBlock2.Text = "- " + userCancerSignMsg[1];
+                        if (userCancerSignMsg[2] != null)
+                            moreInfo_textBlock3.Text = "- " + userCancerSignMsg[2];
                     }
                 }
                 catch (ArgumentOutOfRangeException error)
@@ -260,15 +342,11 @@ namespace Poopor
 
                 }
             }
-            else if (userHealth.Contains("anxious"))
-            {
-                goodHealthInfo_grid.Visibility = System.Windows.Visibility.Collapsed;
-                healthInfo_grid.Visibility = System.Windows.Visibility.Visible;
-            }
         }
 
         private void newPoop_button_Click(object sender, RoutedEventArgs e)
         {
+            timer.Stop();
             NavigationService.Navigate(new Uri("/PicturePage.xaml", UriKind.Relative));
         }
 
@@ -333,13 +411,22 @@ namespace Poopor
 
         private void OnFlick(object sender, FlickGestureEventArgs e)
         {
-            if (userHealth.Contains("anxious"))
+            if (userHealth.Equals("anxious"))
             {
                 // User flicked towards right
                 if (e.HorizontalVelocity > 0)
                 {
                     NavigationService.Navigate(new Uri("/ColonCancerMsgPage.xaml", UriKind.Relative));
                 }
+            }
+        }
+
+        protected override void OnBackKeyPress(CancelEventArgs e)
+        {
+            if (SessionManagement.IsLoggedIn())
+            {
+                IsolatedStorageSettings.ApplicationSettings.Save();
+                Application.Current.Terminate();
             }
         }
     }

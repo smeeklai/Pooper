@@ -19,6 +19,7 @@ namespace Poopor
         private string painLevel;
         private Boolean isMelena = false;
         private Boolean havingMedicines = false;
+        private DateTime userPoopDateTime;
 
         public AdditionalHealthInfomation()
         {
@@ -33,6 +34,8 @@ namespace Poopor
             NavigationContext.QueryString.TryGetValue("bloodAmount", out painLevel);
             isMelena = Convert.ToBoolean(NavigationContext.QueryString["melenaResult"]);
             havingMedicines = Convert.ToBoolean(NavigationContext.QueryString["havingMedicines"]);
+            userPoopDateTime = Convert.ToDateTime(NavigationContext.QueryString["userPoopStoredDateTime"]);
+
             temGender_picker.SelectionChanged += temGender_picker_SelectionChanged;
         }
 
@@ -72,18 +75,24 @@ namespace Poopor
                 Boolean userHealthInfo5 = userGender == "Female" ? (Boolean)temHealthInfo_checkBox5.IsChecked : false;
                 if (!SQLiteFunctions.IsResultCriteriaInitialized())
                 {
-                    await SystemFunctions.InitializeResultCriterias();
+                    //await SystemFunctions.InitializeResultCriterias();
                 }
                 var result = await new FecesAnalyzer().analyzeData(poopColor, poopShape, painLevel, bloodAmount, userWeight, userHeight, userGender, userAge,
                     userHealthInfo1, userHealthInfo2, userHealthInfo3, userHealthInfo4, userHealthInfo5, isMelena, havingMedicines);
-                //SessionManagement.StoreUserLastestResultsAndRecommendation(result);
+                List<ResultAndRecommendationDictionary> serializedResult = SystemFunctions.SerializeUserResultAndRecommendationData(result);
+                SessionManagement.StoreUserLastestResultsAndRecommendation(serializedResult);
                 SystemFunctions.SetProgressIndicatorProperties(false);
 
-                Boolean isAdditionalAskingNeeded = result.ContainsKey("IsGoAsk") ? Convert.ToBoolean(result["IsGoAsk"]) : false;
+                List<string> necessaryInfo = result["NecessaryInfo"];
+                Boolean isAdditionalAskingNeeded = Convert.ToBoolean(necessaryInfo[0]);
                 if (isAdditionalAskingNeeded == false)
-                    NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
+                    NavigationService.Navigate(new Uri("/ResultPage.xaml?poopColor=" + poopColor + "&shape=" + poopShape + "&painLevel=" + painLevel
+                    + "&bloodAmount=" + bloodAmount + "&melenaResult=" + isMelena + "&havingMedicines=" + havingMedicines
+                    + "&userPoopStoredDateTime=" + userPoopDateTime, UriKind.Relative));
                 else
-                    NavigationService.Navigate(new Uri("/AdditionalHealthInfomation2.xaml", UriKind.Relative));
+                    NavigationService.Navigate(new Uri("/AdditionalHealthInfomation2.xaml?poopColor=" + poopColor + "&shape=" + poopShape + "&painLevel=" + painLevel
+                    + "&bloodAmount=" + bloodAmount + "&melenaResult=" + isMelena + "&havingMedicines=" + havingMedicines
+                    + "&userPoopStoredDateTime=" + userPoopDateTime, UriKind.Relative));
             }
         }
 

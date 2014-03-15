@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Net.NetworkInformation;
 using Poopor.Resources;
 using System.Windows.Controls.Primitives;
+using System.IO.IsolatedStorage;
 namespace Poopor
 {
     public partial class LoginPage : PhoneApplicationPage
@@ -37,14 +38,7 @@ namespace Poopor
 
         private void useAsGuest_button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("You're using as a guest. The result will not be recorded and reliable because of insufficient personal information and historical data",
-                "Warning", MessageBoxButton.OK);
-
-            if (result == MessageBoxResult.OK)
-            {
-                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
-            }
-
+            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
         }
 
         private void signIn_button_Click(object sender, RoutedEventArgs e)
@@ -61,53 +55,43 @@ namespace Poopor
 
         private async void logIn_button_Click(object sender, RoutedEventArgs e)
         {
-            new SQLiteFunctions().InsertData(new UserInfo_Table_SQLite()
-                {
-                    Email = "boss",
-                    Password = "pass",
-                    FirstName = "Boss",
-                    LastName = "Kung",
-                    DOB = new DateTime(1992, 04, 10),
-                    Gender = "Male",
-                    Weight = 81,
-                    Height = 173,
-                    HealthInfo1 = false,
-                    HealthInfo2 = false,
-                    HealthInfo3 = false,
-                    HealthInfo4 = false,
-                    HealthInfo5 = false
-                });
-            //if (!NetworkInterface.GetIsNetworkAvailable())
-            //{
-            //    MessageBox.Show(AppResources.NetworkUnavailable, AppResources.NoInternetConnection, MessageBoxButton.OK);
-            //}
-            //else if (NetworkInterface.GetIsNetworkAvailable())
-            //{
-            if (String.IsNullOrWhiteSpace(email_textBox.Text) || String.IsNullOrWhiteSpace(password_Box.Password) == true)
+            if (!NetworkInterface.GetIsNetworkAvailable())
             {
-                MessageBox.Show("Email or Password cannot be empty", AppResources.Warning, MessageBoxButton.OK);
+                MessageBox.Show(AppResources.NetworkUnavailable, AppResources.NoInternetConnection, MessageBoxButton.OK);
             }
-            else
+            else if (NetworkInterface.GetIsNetworkAvailable())
             {
-                SystemFunctions.SetProgressIndicatorProperties(true);
-                SystemTray.ProgressIndicator.Text = "authenticating...";
-                var succeeded = await new AzureFunctions().CheckUserAuthentication(email_textBox.Text, password_Box.Password);
-                if (succeeded)
+                if (String.IsNullOrWhiteSpace(email_textBox.Text) || String.IsNullOrWhiteSpace(password_Box.Password) == true)
                 {
-                    SessionManagement.CreateLoginSession(email_textBox.Text);
-                    NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                    MessageBox.Show("Email or Password cannot be empty", AppResources.Warning, MessageBoxButton.OK);
                 }
                 else
                 {
-                    MessageBox.Show(AppResources.IncorrectEmailOrPasswordMsg, AppResources.IncorrectEmailOrPasswordTitle, MessageBoxButton.OK);
+                    SystemFunctions.SetProgressIndicatorProperties(true);
+                    SystemTray.ProgressIndicator.Text = "authenticating...";
+                    var succeeded = await new AzureFunctions().CheckUserAuthentication(email_textBox.Text, password_Box.Password);
+                    if (succeeded)
+                    {
+                        SessionManagement.CreateLoginSession(email_textBox.Text);
+                        NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                    }
+                    else
+                    {
+                        MessageBox.Show(AppResources.IncorrectEmailOrPasswordMsg, AppResources.IncorrectEmailOrPasswordTitle, MessageBoxButton.OK);
+                    }
+                    SystemFunctions.SetProgressIndicatorProperties(false);
                 }
-                SystemFunctions.SetProgressIndicatorProperties(false);
             }
-            //}
-            //else
-            //{
-            //    SystemFunctions.ShowUnknownErrorMsgBox();
-            //}
+            else
+            {
+                SystemFunctions.ShowUnknownErrorMsgBox();
+            }
+        }
+
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            IsolatedStorageSettings.ApplicationSettings.Save();
+            Application.Current.Terminate();
         }
     }
 }

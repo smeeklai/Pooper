@@ -71,7 +71,7 @@ namespace Poopor
                 Debug.WriteLine("Retrieve data successfully");
                 foreach (var item in items)
                 {
-                    if (item.Email.Contains(userEmail) && item.Password.Contains(userPassword))
+                    if (item.Email.Equals(userEmail) && item.Password.Equals(userPassword))
                     {
                         SystemFunctions.SetProgressIndicatorProperties(false);
                         Debug.WriteLine("email and password are matched");
@@ -132,6 +132,21 @@ namespace Poopor
         public bool InsertData(object data)
         {
             return true;
+        }
+
+        public async Task<UserInfo_Table_Azure> GetUserInfoDataAsync(string userEmail)
+        {
+            try
+            {
+                var items = await azure_userInfo_table.Where(UserInfo_Table_Azure => UserInfo_Table_Azure.Email == userEmail).ToCollectionAsync();
+                var result = items.FirstOrDefault();
+                return result;
+            }
+            catch (MobileServiceInvalidOperationException e)
+            {
+                Debug.WriteLine(e.Message);
+                return null;
+            }
         }
     }
 }

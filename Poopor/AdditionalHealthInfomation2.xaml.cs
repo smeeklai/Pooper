@@ -13,6 +13,14 @@ namespace Poopor
 {
     public partial class AdditionalHealthInfomation2 : PhoneApplicationPage
     {
+        private string poopColor;
+        private string poopShape;
+        private string bloodAmount;
+        private string painLevel;
+        private Boolean isMelena = false;
+        private Boolean havingMedicines = false;
+        private DateTime userPoopDateTime;
+
         public AdditionalHealthInfomation2()
         {
             InitializeComponent();
@@ -46,10 +54,28 @@ namespace Poopor
                     userCancerSignMsg.Add(gropingTumor_textBlock.Text);
                 if ((Boolean)feelingNotEmptying_checkBox.IsChecked)
                     userCancerSignMsg.Add(feelingNotEmptying_textBlock.Text);
+
                 userLastestResultAndRecommendation["UserCancerSignMsg"] = userCancerSignMsg;
-                //SessionManagement.StoreUserLastestResultsAndRecommendation(userLastestResultAndRecommendation);
+                List<ResultAndRecommendationDictionary> serializedResult = SystemFunctions.SerializeUserResultAndRecommendationData(userLastestResultAndRecommendation);
+                SessionManagement.StoreUserLastestResultsAndRecommendation(serializedResult);
             }
-            NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
+            if (!SessionManagement.IsLoggedIn())
+            {
+                NavigationContext.QueryString.TryGetValue("poopColor", out poopColor);
+                NavigationContext.QueryString.TryGetValue("shape", out poopShape);
+                NavigationContext.QueryString.TryGetValue("painLevel", out bloodAmount);
+                NavigationContext.QueryString.TryGetValue("bloodAmount", out painLevel);
+                isMelena = Convert.ToBoolean(NavigationContext.QueryString["melenaResult"]);
+                havingMedicines = Convert.ToBoolean(NavigationContext.QueryString["havingMedicines"]);
+                userPoopDateTime = Convert.ToDateTime(NavigationContext.QueryString["userPoopStoredDateTime"]);
+                NavigationService.Navigate(new Uri("/ResultPage.xaml?poopColor=" + poopColor + "&shape=" + poopShape + "&painLevel=" + painLevel
+                    + "&bloodAmount=" + bloodAmount + "&melenaResult=" + isMelena + "&havingMedicines=" + havingMedicines
+                    + "&userPoopStoredDateTime=" + userPoopDateTime, UriKind.Relative));
+            }
+            else
+            {
+                NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
+            }            
         }
     }
 }

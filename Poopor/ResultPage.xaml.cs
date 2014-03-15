@@ -12,17 +12,47 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Diagnostics;
 using Poopor.Data;
+using System.IO.IsolatedStorage;
 
 namespace Poopor
 {
     public partial class ResultPage : PhoneApplicationPage
     {
         private Poop_Table_SQLite userLastestPoopData;
+        private string poopColor;
+        private string poopShape;
+        private string bloodAmount;
+        private string painLevel;
+        private string userPoopDateTime;
 
         // Constructor
         public ResultPage()
         {
             InitializeComponent();
+            if (SessionManagement.IsLoggedIn())
+            {
+                userLastestPoopData = new SQLiteFunctions().GetUserPoopData(SessionManagement.GetEmail()).Last();
+                poopColor = userLastestPoopData.Color;
+                poopShape = userLastestPoopData.Shape;
+                painLevel = userLastestPoopData.Pain_Level;
+                bloodAmount = userLastestPoopData.Blood_Amount;
+                userPoopDateTime = userLastestPoopData.Date_Time.ToString();
+            }
+            else
+            {
+                NavigationContext.QueryString.TryGetValue("poopColor", out poopColor);
+                NavigationContext.QueryString.TryGetValue("shape", out poopShape);
+                NavigationContext.QueryString.TryGetValue("painLevel", out bloodAmount);
+                NavigationContext.QueryString.TryGetValue("bloodAmount", out painLevel);
+                NavigationContext.QueryString.TryGetValue("userPoopStoredDateTime", out userPoopDateTime);
+            }
+
+            colorRecord_textBlock.Text = poopColor;
+            shapeRecord_textBlock.Text = poopShape;
+            painLevelRecord_textBlock.Text = painLevel;
+            bloodAmountRecord_textBlock.Text = bloodAmount;
+            dateTimeRecord_textBlock.Text = userPoopDateTime;
+
             userLastestResultAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
             if (userLastestResultAndRecommendation != null)
             {
@@ -34,13 +64,6 @@ namespace Poopor
 
         private void AdjustResultArea()
         {
-            userLastestPoopData = new SQLiteFunctions().GetUserPoopData(SessionManagement.GetEmail()).Last();
-            colorRecord_textBlock.Text = userLastestPoopData.Color;
-            shapeRecord_textBlock.Text = userLastestPoopData.Shape;
-            painLevelRecord_textBlock.Text = userLastestPoopData.Pain_Level;
-            bloodAmountRecord_textBlock.Text = userLastestPoopData.Blood_Amount;
-            dateTimeRecord_textBlock.Text = userLastestPoopData.Date_Time.ToString();
-
             if (GetUserCancerSign().Equals("general"))
             {
                 cancer_area.Tap += cancer_area_Tap;
@@ -50,7 +73,7 @@ namespace Poopor
                 cancer_area.Background = newBgColor2;
                 resultHeader_textBlock.Text = "TAP HERE!";
                 resultImage.Source = new BitmapImage(new Uri("/Assets/img/risk/genrisk.png", UriKind.RelativeOrAbsolute));
-                resultExplaination_textBlock.Text = "General signs of colon-rectum cancer have been detected";
+                resultExplaination_textBlock.Text = "Marginal risks of colon-rectum cancer have been detected";
             }
             else if (GetUserCancerSign().Equals("anxious"))
             {
@@ -61,7 +84,7 @@ namespace Poopor
                 cancer_area.Background = newBgColor2;
                 resultHeader_textBlock.Text = "TAP HERE!";
                 resultImage.Source = new BitmapImage(new Uri("/Assets/img/risk/anxiousrisk.png", UriKind.RelativeOrAbsolute));
-                resultExplaination_textBlock.Text = "Anxious signs of colon-rectum cancer have been detected";
+                resultExplaination_textBlock.Text = "Critical risks of colon-rectum cancer have been detected";
             }
         }
 
@@ -85,31 +108,37 @@ namespace Poopor
                 {
                     if (userShortRecommendation[0] != null)
                     {
+                        Debug.WriteLine(userShortRecommendation[0]);
                         recommendation_image1.Source = shortRecommendation_dictionary[userShortRecommendation[0]];
                         recommendation_text1.Text = userShortRecommendation[0];
                     }
                     if (userShortRecommendation[1] != null)
                     {
+                        Debug.WriteLine(userShortRecommendation[1]);
                         recommendation_image2.Source = shortRecommendation_dictionary[userShortRecommendation[1]];
                         recommendation_text2.Text = userShortRecommendation[1];
                     }
                     if (userShortRecommendation[2] != null)
                     {
+                        Debug.WriteLine(userShortRecommendation[2]);
                         recommendation_image3.Source = shortRecommendation_dictionary[userShortRecommendation[2]];
                         recommendation_text3.Text = userShortRecommendation[2];
                     }
                     if (userShortRecommendation[3] != null)
                     {
+                        Debug.WriteLine(userShortRecommendation[3]);
                         recommendation_image4.Source = shortRecommendation_dictionary[userShortRecommendation[3]];
                         recommendation_text4.Text = userShortRecommendation[3];
                     }
                     if (userShortRecommendation[4] != null)
                     {
+                        Debug.WriteLine(userShortRecommendation[4]);
                         recommendation_image5.Source = shortRecommendation_dictionary[userShortRecommendation[4]];
                         recommendation_text5.Text = userShortRecommendation[4];
                     }
                     if (userShortRecommendation[5] != null)
                     {
+                        Debug.WriteLine(userShortRecommendation[5]);
                         recommendation_image6.Source = shortRecommendation_dictionary[userShortRecommendation[5]];
                         recommendation_text6.Text = userShortRecommendation[5];
                     }
@@ -132,11 +161,11 @@ namespace Poopor
 
         private void AdjustMeaningArea()
         {
-            poopColorMeaning_arc.Fill = AccentColorNameToBrush.ConvertStringToSolidColorBrush(userLastestPoopData.Color);
-            colorResult_textBlock.Text = userLastestPoopData.Color;
+            poopColorMeaning_arc.Fill = AccentColorNameToBrush.ConvertStringToSolidColorBrush(poopColor);
+            colorResult_textBlock.Text = poopColor;
 
-            shapeMeaning_image.Source = ShapeTypeToImg.ConvertShapeStringToImg(userLastestPoopData.Shape);
-            shapeResult_textBlock.Text = userLastestPoopData.Shape;
+            shapeMeaning_image.Source = ShapeTypeToImg.ConvertShapeStringToImg(poopShape);
+            shapeResult_textBlock.Text = poopShape;
 
             List<string> poopColorMeaning = userLastestResultAndRecommendation["UserPoopColorMeaning"] as List<string>;
             foreach (string item in SystemFunctions.SortByLength(poopColorMeaning))
@@ -207,5 +236,16 @@ namespace Poopor
             {"Supplements", new BitmapImage(new Uri("/Assets/img/recIcons/Supplements.png", UriKind.RelativeOrAbsolute))},
             {"Water or fluids", new BitmapImage(new Uri("/Assets/img/recIcons/Water or fluids.png", UriKind.RelativeOrAbsolute))},
         };
+
+        private void okayResult_button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+        }
+
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            IsolatedStorageSettings.ApplicationSettings.Save();
+            Application.Current.Terminate();
+        }
     }
 }
