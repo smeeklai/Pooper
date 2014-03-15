@@ -127,6 +127,7 @@
     </Compile>
     <Compile Include="Color_Meaning_Table_SQLite.cs" />
     <Compile Include="DatabaseFunctions.cs" />
+    <Compile Include="DataType\ColorHSL.cs" />
     <Compile Include="Data\AccentColorNameToBrush.cs" />
     <Compile Include="Data\ColorExtensions.cs" />
     <Compile Include="Data\IsSelectedToBrushConverter.cs" />
@@ -265,6 +266,11 @@
     <Content Include="Assets\img\risk\genrisk.png" />
     <Content Include="Assets\img\risk\welldone_icon.png" />
     <Content Include="Assets\img\samplePoopImage\poop1.jpg" />
+    <Content Include="Assets\img\samplePoopImage\poop10.jpg" />
+    <Content Include="Assets\img\samplePoopImage\poop11.jpg" />
+    <Content Include="Assets\img\samplePoopImage\poop12.jpeg" />
+    <Content Include="Assets\img\samplePoopImage\Poop13.jpg" />
+    <Content Include="Assets\img\samplePoopImage\Poop14.jpg" />
     <Content Include="Assets\img\samplePoopImage\poop2.jpg" />
     <Content Include="Assets\img\samplePoopImage\poop3.JPG" />
     <Content Include="Assets\img\samplePoopImage\poop4.jpg" />

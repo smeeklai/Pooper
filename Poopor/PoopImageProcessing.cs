@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Poopor.DataType;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -17,8 +18,8 @@ namespace Pooper
         public static Color COLOR_MORRON = Color.FromArgb(255, 75, 0, 0);
         public static Color COLOR_BRIGHT_RED = Color.FromArgb(255, 170, 0, 0);
         public static Color COLOR_ORANGE = Color.FromArgb(255, 158, 61, 2);
-        public static Color COLOR_DARK_GREEN = Color.FromArgb(255, 11, 38, 4);
-        public static Color COLOR_YELLOW = Color.FromArgb(255, 235, 195, 20);
+        public static Color COLOR_DARK_GREEN = Color.FromArgb(255, 20, 38, 4);
+        public static Color COLOR_YELLOW = Color.FromArgb(255, 235, 213, 20);
         public static Color COLOR_GRAY = Color.FromArgb(255, 160, 160, 160);
 
         public static Dictionary<Color, String> ColorNameDictionary = new Dictionary<Color, String>()
@@ -78,15 +79,15 @@ namespace Pooper
             Dictionary<Color, float> differences = new Dictionary<Color, float>();
 
             // add differences key and value to table
-            differences.Add(COLOR_VERY_LIGHT_BROWN, GetColorDifferences(color, COLOR_VERY_LIGHT_BROWN));
-            differences.Add(COLOR_LIGHT_BROWN, GetColorDifferences(color, COLOR_LIGHT_BROWN));
-            differences.Add(COLOR_BLACK, GetColorDifferences(color, COLOR_BLACK));
-            differences.Add(COLOR_MORRON, GetColorDifferences(color, COLOR_MORRON));
-            differences.Add(COLOR_BRIGHT_RED, GetColorDifferences(color, COLOR_BRIGHT_RED));
-            differences.Add(COLOR_ORANGE, GetColorDifferences(color, COLOR_ORANGE));
-            differences.Add(COLOR_DARK_GREEN, GetColorDifferences(color, COLOR_DARK_GREEN));
-            differences.Add(COLOR_YELLOW, GetColorDifferences(color, COLOR_YELLOW));
-            differences.Add(COLOR_GRAY, GetColorDifferences(color, COLOR_GRAY));
+            differences.Add(COLOR_VERY_LIGHT_BROWN, GetColorHSLDifferences(color, COLOR_VERY_LIGHT_BROWN));
+            differences.Add(COLOR_LIGHT_BROWN, GetColorHSLDifferences(color, COLOR_LIGHT_BROWN));
+            differences.Add(COLOR_BLACK, GetColorHSLDifferences(color, COLOR_BLACK));
+            differences.Add(COLOR_MORRON, GetColorHSLDifferences(color, COLOR_MORRON));
+            differences.Add(COLOR_BRIGHT_RED, GetColorHSLDifferences(color, COLOR_BRIGHT_RED));
+            differences.Add(COLOR_ORANGE, GetColorHSLDifferences(color, COLOR_ORANGE));
+            differences.Add(COLOR_DARK_GREEN, GetColorHSLDifferences(color, COLOR_DARK_GREEN));
+            differences.Add(COLOR_YELLOW, GetColorHSLDifferences(color, COLOR_YELLOW));
+            differences.Add(COLOR_GRAY, GetColorHSLDifferences(color, COLOR_GRAY));
 
             // Order the dictionary of differences table by value ascending
             List<KeyValuePair<Color, float>> list = new List<KeyValuePair<Color, float>>(differences);
@@ -305,6 +306,24 @@ namespace Pooper
             return difference;
         }
 
+        public static float GetColorHSLDifferences(Color a, Color b)
+        {
+            ColorHSL ColorA = RGB2HSL(a);
+            ColorHSL ColorB = RGB2HSL(b);
+
+            Debug.WriteLine("Color H => " + ColorA.Hue + " compare to " + ColorB.Hue);
+            Debug.WriteLine("Color S => " + ColorA.Saturation + " compare to " + ColorB.Saturation);
+            Debug.WriteLine("Color L => " + ColorA.Lightness + " compare to " + ColorB.Lightness);
+
+            //float difference = (float)Math.Abs(ColorA.Hue - ((ColorA.Hue + ColorB.Hue) / 2));
+            float difference = (float)Math.Abs(ColorA.Hue - ColorB.Hue);
+
+            Debug.WriteLine("GetColorHSLDifferences " + a + " and " + b + " => " + difference);
+            Debug.WriteLine("----------");
+
+            return difference;
+        }
+
         /*public static float GetColorDifferencesNew(Color a, Color b)
         {
             System.Drawing.Color color = System.Drawing.Color.FromArgb(red, green, blue);
@@ -346,65 +365,6 @@ namespace Pooper
             value = max / 255d;
         }
 
-        public static void RGB2HSL(Color rgb, out double h, out double s, out double l)
-        {
-            double r = rgb.R / 255.0;
-            double g = rgb.G / 255.0;
-            double b = rgb.B / 255.0;
-
-            double v;
-            double m;
-            double vm;
-
-            double r2, g2, b2;
-
-            h = 0; // default to black
-            s = 0;
-            l = 0;
-
-            v = Math.Max(r, g);
-            v = Math.Max(v, b);
-            m = Math.Min(r, g);
-            m = Math.Min(m, b);
-
-            l = (m + v) / 2.0;
-
-            if (l <= 0.0)
-            {
-                return;
-            }
-
-            vm = v - m;
-            s = vm;
-
-            if (s > 0.0)
-            {
-                s /= (l <= 0.5) ? (v + m) : (2.0 - v - m);
-            }
-            else
-            {
-                return;
-            }
-
-            r2 = (v - r) / vm;
-            g2 = (v - g) / vm;
-            b2 = (v - b) / vm;
-
-            if (r == v)
-            {
-                h = (g == m ? 5.0 + b2 : 1.0 - g2);
-            }
-            else if (g == v)
-            {
-                h = (b == m ? 1.0 + r2 : 3.0 - b2);
-            }
-            else
-            {
-                h = (r == m ? 3.0 + g2 : 5.0 - r2);
-            }
-            h /= 6.0;
-        }
-
         public static Color ColorFromHSV(double hue, double saturation, double value)
         {
             int hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6;
@@ -431,5 +391,64 @@ namespace Pooper
                 return Color.FromArgb(255, v, p, q);
         }*/
 
+        public static ColorHSL RGB2HSL(Color rgb)
+        {
+            double r = rgb.R / 255.0;
+            double g = rgb.G / 255.0;
+            double b = rgb.B / 255.0;
+
+            double v;
+            double m;
+            double vm;
+
+            double r2, g2, b2;
+
+            ColorHSL hsl = new ColorHSL(0, 0, 0); // default to black
+
+            v = Math.Max(r, g);
+            v = Math.Max(v, b);
+            m = Math.Min(r, g);
+            m = Math.Min(m, b);
+
+            hsl.Lightness = (m + v) / 2.0;
+
+            if (hsl.Lightness <= 0.0)
+            {
+                return hsl;
+            }
+
+            vm = v - m;
+            hsl.Saturation = vm;
+
+            if (hsl.Saturation > 0.0)
+            {
+                hsl.Saturation /= (hsl.Lightness <= 0.5) ? (v + m) : (2.0 - v - m);
+            }
+            else
+            {
+                return hsl;
+            }
+
+            r2 = (v - r) / vm;
+            g2 = (v - g) / vm;
+            b2 = (v - b) / vm;
+
+            if (r == v)
+            {
+                hsl.Hue = (g == m ? 5.0 + b2 : 1.0 - g2);
+            }
+            else if (g == v)
+            {
+                hsl.Hue = (b == m ? 1.0 + r2 : 3.0 - b2);
+            }
+            else
+            {
+                hsl.Hue = (r == m ? 3.0 + g2 : 5.0 - r2);
+            }
+
+            hsl.Hue /= 6.0;
+
+            return hsl;
+        }
     }
 }
