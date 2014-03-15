@@ -88,7 +88,7 @@ namespace Poopor
                 return null;
         }
 
-        public static async Task<bool> Logout()
+        public static void Logout()
         {
             if (settings.Contains(LOGIN_STATUS))
                 settings.Remove(LOGIN_STATUS);
@@ -97,7 +97,6 @@ namespace Poopor
             if (settings.Contains(USER_LASTEST_RESULT_AND_RECOMMENDATION))
                 settings.Remove(USER_LASTEST_RESULT_AND_RECOMMENDATION);
             settings.Save();
-            return true;
         }
     }
 }

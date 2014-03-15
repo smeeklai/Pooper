@@ -405,7 +405,7 @@ namespace Poopor
 
         private async void logoutAppBar_Click(object sender, EventArgs e)
         {
-            await SessionManagement.Logout();
+            SessionManagement.Logout();
             NavigationService.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
         }
 

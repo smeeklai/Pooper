@@ -41,5 +41,14 @@ namespace Poopor
                 cancerSignMsg_area.Children.Add(msgHolder);
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (!SessionManagement.IsLoggedIn())
+            {
+                SessionManagement.Logout();
+            }
+            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+        }
     }
 }

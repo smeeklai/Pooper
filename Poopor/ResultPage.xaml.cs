@@ -29,6 +29,10 @@ namespace Poopor
         public ResultPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
             if (SessionManagement.IsLoggedIn())
             {
                 userLastestPoopData = new SQLiteFunctions().GetUserPoopData(SessionManagement.GetEmail()).Last();
@@ -71,7 +75,7 @@ namespace Poopor
                 newBgColor2.Color = Color.FromArgb(255, 241, 145, 32);
                 resultArea.Background = newBgColor;
                 cancer_area.Background = newBgColor2;
-                resultHeader_textBlock.Text = "TAP HERE!";
+                resultHeader_textBlock.Text = "WARNING!";
                 resultImage.Source = new BitmapImage(new Uri("/Assets/img/risk/genrisk.png", UriKind.RelativeOrAbsolute));
                 resultExplaination_textBlock.Text = "Marginal risks of colon-rectum cancer have been detected";
             }
@@ -213,6 +217,29 @@ namespace Poopor
             }
         }
 
+
+        private void okayResult_button_Click(object sender, RoutedEventArgs e)
+        {
+            if (!SessionManagement.IsLoggedIn())
+            {
+                SessionManagement.Logout();
+            }
+            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+        }
+
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            if (SessionManagement.IsLoggedIn())
+            {
+                IsolatedStorageSettings.ApplicationSettings.Save();
+            }
+            else
+            {
+                SessionManagement.Logout();
+            }
+            Application.Current.Terminate();
+        }
+
         private Dictionary<string, List<string>> userLastestResultAndRecommendation;
         private SolidColorBrush newBgColor = new SolidColorBrush();
         private SolidColorBrush newBgColor2 = new SolidColorBrush();
@@ -236,16 +263,5 @@ namespace Poopor
             {"Supplements", new BitmapImage(new Uri("/Assets/img/recIcons/Supplements.png", UriKind.RelativeOrAbsolute))},
             {"Water or fluids", new BitmapImage(new Uri("/Assets/img/recIcons/Water or fluids.png", UriKind.RelativeOrAbsolute))},
         };
-
-        private void okayResult_button_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
-        }
-
-        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
-        {
-            IsolatedStorageSettings.ApplicationSettings.Save();
-            Application.Current.Terminate();
-        }
     }
 }

@@ -51,7 +51,7 @@
                     <VideoBrush x:Name="viewfinderBrush" />
                 </Canvas.Background>
             </Canvas>
-            <es:Arc ArcThicknessUnit="Percent" EndAngle="360" HorizontalAlignment="Center" Height="300" Stretch="None" Stroke="White" StartAngle="0" UseLayoutRounding="False" VerticalAlignment="Center" Width="300" Margin="90,233,90,163" StrokeThickness="5"/>
+            <es:Arc ArcThicknessUnit="Percent" EndAngle="360" HorizontalAlignment="Center" Height="200" Stretch="None" Stroke="White" StartAngle="0" UseLayoutRounding="False" VerticalAlignment="Center" Width="200" Margin="90,233,90,163" StrokeThickness="5"/>
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="2.5*"/>
@@ -68,17 +68,17 @@
 					<TextBlock TextWrapping="Wrap" Text="Hold your phone steady and carefully" FontFamily="Segoe WP Semibold" FontSize="32" TextAlignment="Center" Margin="0,30,0,0"/>
 				</StackPanel>
 				<Grid Grid.Row="1" Visibility="Collapsed"/>
-				<StackPanel Grid.Row="2" Grid.RowSpan="2" VerticalAlignment="Center">
+				<StackPanel Grid.Row="2" Grid.RowSpan="2">
 					<StackPanel.Background>
 						<SolidColorBrush Color="Black" Opacity="0.7"/>
 					</StackPanel.Background>
-					<TextBlock TextWrapping="Wrap" Text="Take the picture when your poop is in the circle" Margin="0" FontSize="21.333" Foreground="#FFC7C7C7" HorizontalAlignment="Center"/>
+					<TextBlock TextWrapping="Wrap" Text="Take the picture when your poop is in the circle" Margin="0,25,0,0" FontSize="21.333" Foreground="#FFC7C7C7" HorizontalAlignment="Center"/>
 					<TextBlock TextWrapping="Wrap" Text="Pooper can automatically detect the color " Foreground="#FFC7C7C7" HorizontalAlignment="Center" FontSize="21.333"/>
 				</StackPanel>
 			</Grid>
 		</Grid>
 		<StackPanel Grid.RowSpan="2" Grid.Row="1" Background="White">
-            <Button x:Name="ShutterButton" Content="Take a picture" Background="#FF1BA1E2"/>
+            <Button x:Name="ShutterButton" Content="Take a picture" Background="#FF1BA1E2" Margin="0,0,0,20"/>
 		</StackPanel>
 	</Grid>
 

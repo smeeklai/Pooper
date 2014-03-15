@@ -24,10 +24,6 @@ namespace Poopor
 
             colorPicker.ItemsSource = ColorExtensions.AccentColors();
             shapePicker.ItemsSource = ShapeData.ShapeNames();
-            painLevel_slider.ValueChanged += painLevel_slider_ValueChanged;
-            blood_amount_slider.ValueChanged += blood_amount_slider_ValueChanged;
-            colorPicker.SelectionChanged += colorPicker_SelectionChanged;
-            shapePicker.SelectionChanged += shapePicker_SelectionChanged;
 
         }
 
@@ -38,6 +34,11 @@ namespace Poopor
             isMelena = Convert.ToBoolean(NavigationContext.QueryString["melenaResult"]);
             havingMedicines = Convert.ToBoolean(NavigationContext.QueryString["havingMedicines"]);
             colorPicker.SelectedItem = poopColor;
+
+            painLevel_slider.ValueChanged += painLevel_slider_ValueChanged;
+            blood_amount_slider.ValueChanged += blood_amount_slider_ValueChanged;
+            colorPicker.SelectionChanged += colorPicker_SelectionChanged;
+            shapePicker.SelectionChanged += shapePicker_SelectionChanged;
         }
 
         private async void newPoop_submit_button_Click(object sender, RoutedEventArgs e)
