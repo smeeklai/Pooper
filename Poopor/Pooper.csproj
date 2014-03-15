@@ -134,9 +134,6 @@
     <Compile Include="Data\SamplePoopImageData.cs" />
     <Compile Include="Data\ShapeData.cs" />
     <Compile Include="Data\ShapeTypeToImg.cs" />
-    <Compile Include="PDFPage.xaml.cs">
-      <DependentUpon>PDFPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PoopImageProcessing.cs" />
     <Compile Include="FecesAnalyzer.cs" />
     <Compile Include="Long_Rec_SQLite.cs" />
@@ -204,10 +201,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LoginPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PDFPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -322,27 +315,6 @@
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZLib.Phone">
       <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ICSharpCode.SharpZLib.Phone.dll</HintPath>
-    </Reference>
-    <Reference Include="ImageTools">
-      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.dll</HintPath>
-    </Reference>
-    <Reference Include="ImageTools.Controls">
-      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.Controls.dll</HintPath>
-    </Reference>
-    <Reference Include="ImageTools.Filtering">
-      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.Filtering.dll</HintPath>
-    </Reference>
-    <Reference Include="ImageTools.IO.Bmp">
-      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.IO.Bmp.dll</HintPath>
-    </Reference>
-    <Reference Include="ImageTools.IO.Gif">
-      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.IO.Gif.dll</HintPath>
-    </Reference>
-    <Reference Include="ImageTools.IO.Png">
-      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.IO.Png.dll</HintPath>
-    </Reference>
-    <Reference Include="ImageTools.Utils">
-      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.Utils.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.OData.Portable">
       <HintPath>..\packages\Microsoft.Data.OData.5.6.1\lib\portable-net40+sl5+wp8+win8\Microsoft.Data.OData.Portable.dll</HintPath>

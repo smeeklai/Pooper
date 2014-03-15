@@ -116,10 +116,10 @@ namespace Pooper
             int xCenter = bitmap.PixelWidth / 2;
             int yCenter = bitmap.PixelHeight / 2;
 
-            int xTopLeft = (xCenter - 40) < 0 ? 0 : xCenter - 40;
-            int yTopLeft = (yCenter - 40) < 0 ? 0 : yCenter - 40;
-            int xBottomRight = (xTopLeft + 80) > bitmap.PixelWidth ? bitmap.PixelWidth : xTopLeft + 80;
-            int yBottomRight = (yTopLeft + 80) > bitmap.PixelHeight ? bitmap.PixelHeight : yTopLeft + 80;
+            int xTopLeft = (xCenter - 50) < 0 ? 0 : xCenter - 50;
+            int yTopLeft = (yCenter - 50) < 0 ? 0 : yCenter - 50;
+            int xBottomRight = (xTopLeft + 100) > bitmap.PixelWidth ? bitmap.PixelWidth : xTopLeft + 100;
+            int yBottomRight = (yTopLeft + 100) > bitmap.PixelHeight ? bitmap.PixelHeight : yTopLeft + 100;
 
             return GetDominantColor(bitmap, xTopLeft, yTopLeft, xBottomRight, yBottomRight);
         }
@@ -305,7 +305,7 @@ namespace Pooper
             return difference;
         }
 
-        public static float GetColorDifferencesNew(Color a, Color b)
+        /*public static float GetColorDifferencesNew(Color a, Color b)
         {
             System.Drawing.Color color = System.Drawing.Color.FromArgb(red, green, blue);
             float hue = color.GetHue();
@@ -313,7 +313,7 @@ namespace Pooper
             float lightness = color.GetBrightness();
         }
 
-        public static float GetColorDifferencesNew(Color a, Color b)
+        public static float GetColorDifferencesNew2(Color a, Color b)
         {
             Color original = Color.FromArgb(255, 50, 120, 200);
             // original = {Name=ff3278c8, ARGB=(255, 50, 120, 200)}
@@ -429,7 +429,7 @@ namespace Pooper
                 return Color.FromArgb(255, t, p, v);
             else
                 return Color.FromArgb(255, v, p, q);
-        }
+        }*/
 
     }
 }
