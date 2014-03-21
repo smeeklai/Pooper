@@ -333,7 +333,7 @@ namespace Poopor
             List<string> list = new List<string>();
             using (var db = new SQLiteConnection(dbPath))
             {
-                var existing = db.Query<Shape_Meaning_Table_SQLite>("select * from PainLevel_Meaning_Table_SQLite    where Name='" + painLv + "'");
+                var existing = db.Query<PainLevel_Meaning_Table_SQLite>("select * from PainLevel_Meaning_Table_SQLite where Name='" + painLv + "'");
                 if (existing != null)
                 {
                     foreach (var data in existing)
@@ -352,7 +352,7 @@ namespace Poopor
             List<string> list = new List<string>();
             using (var db = new SQLiteConnection(dbPath))
             {
-                var existing = db.Query<Shape_Meaning_Table_SQLite>("select * from BloodAmount_Meaning_Table_SQLite  where Name='" + bloodAmt + "'");
+                var existing = db.Query<BloodAmount_Meaning_Table_SQLite>("select * from BloodAmount_Meaning_Table_SQLite where Name='" + bloodAmt + "'");
                 if (existing != null)
                 {
                     foreach (var data in existing)

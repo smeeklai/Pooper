@@ -75,7 +75,7 @@ namespace Poopor
 
                 var userInfo = sqliteFunctions.GetUserInfo(SessionManagement.GetEmail());
                 int userAge = Convert.ToInt32(DateTime.Now.Subtract(userInfo.DOB).TotalDays / 360);
-                var result = new FecesAnalyzer().analyzeData(poopColor, shape, painLevel, bloodAmount, userInfo.Height, userInfo.Weight, userInfo.Gender, userAge,
+                var result = await new FecesAnalyzer().analyzeData(poopColor, shape, painLevel, bloodAmount, userInfo.Height, userInfo.Weight, userInfo.Gender, userAge,
                     userInfo.HealthInfo1, userInfo.HealthInfo2, userInfo.HealthInfo3, userInfo.HealthInfo4, userInfo.HealthInfo5, isMelena, havingMedicines);
 
                 List<ResultAndRecommendationDictionary> serializedResult = SystemFunctions.SerializeUserResultAndRecommendationData(result);
@@ -91,11 +91,14 @@ namespace Poopor
 
                 SystemFunctions.SetProgressIndicatorProperties(false);
 
-                Boolean isAdditionalAskingNeeded = Convert.ToBoolean(necessaryInfo[0]);
-                if (isAdditionalAskingNeeded == false)
-                    NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
-                else
-                    NavigationService.Navigate(new Uri("/AdditionalHealthInfomation2.xaml", UriKind.Relative));
+                if (insertationResult == true)
+                {
+                    Boolean isAdditionalAskingNeeded = Convert.ToBoolean(necessaryInfo[0]);
+                    if (isAdditionalAskingNeeded == false)
+                        NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
+                    else
+                        NavigationService.Navigate(new Uri("/AdditionalHealthInfomation2.xaml", UriKind.Relative));
+                }
             }
         }
 
@@ -187,13 +190,13 @@ namespace Poopor
         {
             if (e.NewValue == 1)
             {
-                pain_level_picture.Source = new BitmapImage(new Uri("/Assets/img/painLevel/nohurt.png", UriKind.RelativeOrAbsolute));
+                pain_level_picture.Source = new BitmapImage(new Uri("/Assets/img/painLevel/None.png", UriKind.RelativeOrAbsolute));
                 pain_level_description.Text = AppResources.PainLevel_Normal;
             }
             else if (e.NewValue <= 2)
             {
                 painLevel_slider.Value = 2;
-                pain_level_picture.Source = new BitmapImage(new Uri("/Assets/img/painLevel/mild.png", UriKind.RelativeOrAbsolute));
+                pain_level_picture.Source = new BitmapImage(new Uri("/Assets/img/painLevel/Mild.png", UriKind.RelativeOrAbsolute));
                 pain_level_description.Text = AppResources.PainLevel_Mild;
             }
             else if (e.NewValue <= 3)
@@ -211,7 +214,7 @@ namespace Poopor
             else if (e.NewValue <= 5)
             {
                 painLevel_slider.Value = 5;
-                pain_level_picture.Source = new BitmapImage(new Uri("/Assets/img/painLevel/worst.png", UriKind.RelativeOrAbsolute));
+                pain_level_picture.Source = new BitmapImage(new Uri("/Assets/img/painLevel/Worst.png", UriKind.RelativeOrAbsolute));
                 pain_level_description.Text = AppResources.PainLevel_worst;
             }
         }
@@ -220,33 +223,42 @@ namespace Poopor
         {
             if (e.NewValue == 1)
             {
-                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/bloodAmount/noblood.png", UriKind.RelativeOrAbsolute));
+                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/bloodAmount/None.png", UriKind.RelativeOrAbsolute));
                 blood_amount_description.Text = AppResources.PainLevel_Normal;
             }
             else if (e.NewValue <= 2)
             {
                 blood_amount_slider.Value = 2;
-                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/bloodAmount/littleblood.png", UriKind.RelativeOrAbsolute));
+                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/bloodAmount/Little blood.png", UriKind.RelativeOrAbsolute));
                 blood_amount_description.Text = AppResources.PainLevel_Mild;
             }
             else if (e.NewValue <= 3)
             {
                 blood_amount_slider.Value = 3;
-                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/bloodAmount/mediumblood.png", UriKind.RelativeOrAbsolute));
+                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/bloodAmount/Medium blood.png", UriKind.RelativeOrAbsolute));
                 blood_amount_description.Text = AppResources.PainLevel_Moderate;
             }
             else if (e.NewValue <= 4)
             {
                 blood_amount_slider.Value = 4;
-                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/bloodAmount/muchblood.png", UriKind.RelativeOrAbsolute));
+                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/bloodAmount/Much blood.png", UriKind.RelativeOrAbsolute));
                 blood_amount_description.Text = AppResources.PainLevel_Severe;
             }
             else if (e.NewValue <= 5)
             {
                 blood_amount_slider.Value = 5;
-                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/bloodAmount/alotofblood.png", UriKind.RelativeOrAbsolute));
+                blood_amount_picture.Source = new BitmapImage(new Uri("/Assets/img/bloodAmount/A lot of blood.png", UriKind.RelativeOrAbsolute));
                 blood_amount_description.Text = AppResources.PainLevel_worst;
             }
+        }
+
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            if (!SessionManagement.IsLoggedIn())
+            {
+                SessionManagement.Logout();
+            }
+            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
         }
 
         private string poopColor;
@@ -257,18 +269,18 @@ namespace Poopor
         private Boolean azureResult = false;
         private Boolean sqliteResult = false;
         private Dictionary<double, string> painLevel_dictionary = new Dictionary<double, string>(){
-            {1, "none"},
-            {2, "mild"},
-            {3, "moderate"},
-            {4, "severe"},
-            {5, "worst"}
+            {1, "None"},
+            {2, "Mild"},
+            {3, "Moderate"},
+            {4, "Severe"},
+            {5, "Worst"}
         };
         private Dictionary<double, string> bloodAmount_dictionary = new Dictionary<double, string>(){
-            {1, "none"},
-            {2, "little blood"},
-            {3, "medium blood"},
-            {4, "much blood"},
-            {5, "a lot of blood"}
+            {1, "None"},
+            {2, "Little blood"},
+            {3, "Medium blood"},
+            {4, "Much blood"},
+            {5, "A lot of blood"}
         };
     }
 }

@@ -18,6 +18,7 @@ namespace Poopor
 {
     public partial class ResultPage : PhoneApplicationPage
     {
+        private SQLiteFunctions sqliteFunctions = new SQLiteFunctions();
         private Poop_Table_SQLite userLastestPoopData;
         private string poopColor;
         private string poopShape;
@@ -35,7 +36,7 @@ namespace Poopor
         {
             if (SessionManagement.IsLoggedIn())
             {
-                userLastestPoopData = new SQLiteFunctions().GetUserPoopData(SessionManagement.GetEmail()).Last();
+                userLastestPoopData = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail()).Last();
                 poopColor = userLastestPoopData.Color;
                 poopShape = userLastestPoopData.Shape;
                 painLevel = userLastestPoopData.Pain_Level;
@@ -58,12 +59,9 @@ namespace Poopor
             dateTimeRecord_textBlock.Text = userPoopDateTime;
 
             userLastestResultAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
-            if (userLastestResultAndRecommendation != null)
-            {
-                AdjustResultArea();
-                AdjustRecommendationArea();
-                AdjustMeaningArea();
-            }
+            AdjustResultArea();
+            AdjustRecommendationArea();
+            AdjustMeaningArea();
         }
 
         private void AdjustResultArea()
@@ -173,6 +171,14 @@ namespace Poopor
             shapeMeaning_image.Source = ShapeTypeToImg.ConvertShapeStringToImg(poopShape);
             shapeResult_textBlock.Text = poopShape;
 
+            string painLv_imagePath = "/Assets/img/painLevel/" + painLevel + ".png";
+            painLvMeaning_image.Source = new BitmapImage(new Uri(painLv_imagePath, UriKind.RelativeOrAbsolute));
+            painLvResult_textBlock.Text = painLevel;
+
+            string bloodAmt_imagePath = "/Assets/img/bloodAmount/" + bloodAmount + ".png";
+            bloodAmtMeaning_image.Source = new BitmapImage(new Uri(bloodAmt_imagePath, UriKind.RelativeOrAbsolute));
+            bloodAmtResult_textBlock.Text = bloodAmount;
+
             List<string> poopColorMeaning = userLastestResultAndRecommendation["UserPoopColorMeaning"] as List<string>;
             foreach (string item in SystemFunctions.SortByLength(poopColorMeaning))
             {
@@ -192,6 +198,30 @@ namespace Poopor
                 newPoopMeaning_textBlock.Text = "- " + item;
                 newPoopMeaning_textBlock.TextWrapping = TextWrapping.Wrap;
                 poopShapeMeaning_lists.Children.Add(newPoopMeaning_textBlock);
+            }
+
+            List<string> painLvMeaning = userLastestResultAndRecommendation["UserPainLvMeaning"] as List<string>;
+            Debug.WriteLine(painLvMeaning.Count);
+            foreach (string item in SystemFunctions.SortByLength(painLvMeaning))
+            {
+                TextBlock newPainLevelMeaning_textBlock = new TextBlock();
+                newPainLevelMeaning_textBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 60, 60, 60));
+                newPainLevelMeaning_textBlock.FontFamily = new FontFamily("Segoe WP SemiLight");
+                newPainLevelMeaning_textBlock.Text = "- " + item;
+                newPainLevelMeaning_textBlock.TextWrapping = TextWrapping.Wrap;
+                painLvMeaning_lists.Children.Add(newPainLevelMeaning_textBlock);
+            }
+
+            List<string> bloodAmtMeaning = userLastestResultAndRecommendation["UserBloodAmtMeaning"] as List<string>;
+            Debug.WriteLine(bloodAmtMeaning.Count);
+            foreach (string item in SystemFunctions.SortByLength(bloodAmtMeaning))
+            {
+                TextBlock newBloodAmtMeaning_textBlock = new TextBlock();
+                newBloodAmtMeaning_textBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 60, 60, 60));
+                newBloodAmtMeaning_textBlock.FontFamily = new FontFamily("Segoe WP SemiLight");
+                newBloodAmtMeaning_textBlock.Text = "- " + item;
+                newBloodAmtMeaning_textBlock.TextWrapping = TextWrapping.Wrap;
+                bloodAmtMeaning_lists.Children.Add(newBloodAmtMeaning_textBlock);
             }
         }
 

@@ -45,6 +45,8 @@ namespace Poopor
                 userLastestResultsAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
                 if (userLastestResultsAndRecommendation != null)
                 {
+                    lastRecommendation_button.Opacity = 100;
+                    lastRecommendation_button.Click += lastRecommendation_button_Click;
                     List<string> necessaryInfo = null;
                     if (userLastestResultsAndRecommendation.TryGetValue("NecessaryInfo", out necessaryInfo))
                     {
@@ -97,58 +99,61 @@ namespace Poopor
                 {
                     userLastestPoopDataInSQLite = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail());
                     userLastestPoopDataInAzure = await azureFunctions.GetUserPoopDataInAzure(SessionManagement.GetEmail());
-                    if (userLastestPoopDataInAzure.Count != 0 || userLastestPoopDataInSQLite.Count != 0)
+                    if (userLastestPoopDataInAzure != null)
                     {
-                        if (userLastestPoopDataInAzure.Count == 0)
+                        if (userLastestPoopDataInAzure.Count != 0 || userLastestPoopDataInSQLite.Count != 0)
                         {
-                            Debug.WriteLine("No data in Azure, sync data from SQLite to Azure");
-                            isUpdateNeeded = 1;
-                        }
-                        else if (userLastestPoopDataInSQLite.Count == 0)
-                        {
-                            Debug.WriteLine("No data in SQLite, sync data from Azure to SQLite");
-                            isUpdateNeeded = -1;
-                        }
-                        else
-                        {
-                            userLastestPoopRecordInAzure = userLastestPoopDataInAzure.Last();
-                            userLastestPoopRecordInSqlite = userLastestPoopDataInSQLite.Last();
-                            DateTime dateTimeInSQLite = userLastestPoopRecordInSqlite.Date_Time;
-                            DateTime dateTimeInAzure = userLastestPoopRecordInAzure.Date_Time;
-                            isUpdateNeeded = DateTime.Compare(new DateTime(dateTimeInSQLite.Year, dateTimeInSQLite.Month, dateTimeInSQLite.Day, dateTimeInSQLite.Hour, dateTimeInSQLite.Minute, dateTimeInSQLite.Second),
-                                new DateTime(dateTimeInAzure.Year, dateTimeInAzure.Month, dateTimeInAzure.Day, dateTimeInAzure.Hour, dateTimeInAzure.Minute, dateTimeInAzure.Second));
-                            Debug.WriteLine("Lastest time in Sqlite: " + userLastestPoopRecordInSqlite.Date_Time);
-                            Debug.WriteLine("Lastest time in azure: " + userLastestPoopRecordInAzure.Date_Time);
-                        }
-
-
-                        Debug.WriteLine(isUpdateNeeded);
-                        if (isUpdateNeeded == 0)
-                        {
-                            SystemTray.ProgressIndicator = new ProgressIndicator();
-                            SystemTray.ProgressIndicator.Text = "Data is up-to-date";
-                            SystemTray.ProgressIndicator.IsVisible = true;
-
-                            timer.Interval = TimeSpan.FromMilliseconds(3000);
-
-                            timer.Tick += (sender, args) =>
+                            if (userLastestPoopDataInAzure.Count == 0)
                             {
-                                try
-                                {
-                                    SystemTray.ProgressIndicator.IsVisible = false;
-                                    timer.Stop();
-                                }
-                                catch (NullReferenceException b)
-                                {
+                                Debug.WriteLine("No data in Azure, sync data from SQLite to Azure");
+                                isUpdateNeeded = 1;
+                            }
+                            else if (userLastestPoopDataInSQLite.Count == 0)
+                            {
+                                Debug.WriteLine("No data in SQLite, sync data from Azure to SQLite");
+                                isUpdateNeeded = -1;
+                            }
+                            else
+                            {
+                                userLastestPoopRecordInAzure = userLastestPoopDataInAzure.Last();
+                                userLastestPoopRecordInSqlite = userLastestPoopDataInSQLite.Last();
+                                DateTime dateTimeInSQLite = userLastestPoopRecordInSqlite.Date_Time;
+                                DateTime dateTimeInAzure = userLastestPoopRecordInAzure.Date_Time;
+                                isUpdateNeeded = DateTime.Compare(new DateTime(dateTimeInSQLite.Year, dateTimeInSQLite.Month, dateTimeInSQLite.Day, dateTimeInSQLite.Hour, dateTimeInSQLite.Minute, dateTimeInSQLite.Second),
+                                    new DateTime(dateTimeInAzure.Year, dateTimeInAzure.Month, dateTimeInAzure.Day, dateTimeInAzure.Hour, dateTimeInAzure.Minute, dateTimeInAzure.Second));
+                                Debug.WriteLine("Lastest time in Sqlite: " + userLastestPoopRecordInSqlite.Date_Time);
+                                Debug.WriteLine("Lastest time in azure: " + userLastestPoopRecordInAzure.Date_Time);
+                            }
 
-                                }
-                            };
 
-                            timer.Start();
-                        }
-                        else
-                        {
-                            StartSyncUserLastestData();
+                            Debug.WriteLine(isUpdateNeeded);
+                            if (isUpdateNeeded == 0)
+                            {
+                                SystemTray.ProgressIndicator = new ProgressIndicator();
+                                SystemTray.ProgressIndicator.Text = "Data is up-to-date";
+                                SystemTray.ProgressIndicator.IsVisible = true;
+
+                                timer.Interval = TimeSpan.FromMilliseconds(3000);
+
+                                timer.Tick += (sender, args) =>
+                                {
+                                    try
+                                    {
+                                        SystemTray.ProgressIndicator.IsVisible = false;
+                                        timer.Stop();
+                                    }
+                                    catch (NullReferenceException b)
+                                    {
+
+                                    }
+                                };
+
+                                timer.Start();
+                            }
+                            else
+                            {
+                                StartSyncUserLastestData();
+                            }
                         }
                     }
                 }
@@ -416,6 +421,11 @@ namespace Poopor
                 IsolatedStorageSettings.ApplicationSettings.Save();
                 Application.Current.Terminate();
             }
+        }
+
+        private void lastRecommendation_button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
         }
     }
 }

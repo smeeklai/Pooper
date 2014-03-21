@@ -98,7 +98,7 @@
         		<RowDefinition Height="Auto"/>
         		<RowDefinition/>
         	</Grid.RowDefinitions>
-        	<Grid Grid.Row="1" Visibility="Collapsed">
+        	<Grid Grid.Row="1">
         		<Grid.ColumnDefinitions>
         			<ColumnDefinition/>
         			<ColumnDefinition/>
@@ -119,19 +119,21 @@
         				<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="GET REPORT" TextAlignment="Center"/>
         			</StackPanel>
         		</Button>
-        		<Button x:Name="contactUs_button" BorderThickness="0" Background="#FF1BA1E2" FontFamily="Segoe WP" FontSize="24" Grid.Row="1" Grid.Column="1" Margin="-7,-7,0,0">
+                <Button x:Name="lastRecommendation_button" BorderThickness="0" FontFamily="Segoe WP" FontSize="24" Grid.Row="1" Grid.Column="1" Margin="-7,-7,0,0" Opacity="0.5" >
+        			<Button.Background>
+        				<SolidColorBrush Color="#FF1BA1E2" />
+        			</Button.Background>
         			<StackPanel HorizontalAlignment="Center">
-        				<Image Source="contact.png" Height="103" Width="143"/>
-        				<TextBlock TextWrapping="Wrap" Text="CONTACT US" HorizontalAlignment="Center" TextAlignment="Center"/>
+        				<TextBlock TextWrapping="Wrap" Text="LAST RECOMMENDATION" HorizontalAlignment="Center" TextAlignment="Center" FontSize="20"/>
+        			</StackPanel>
+        		</Button>
+        		<Button x:Name="newPoop_button" BorderThickness="0" Background="#FF1BA1E2" FontFamily="Segoe WP" FontSize="24" Padding="10,5,10,6" Margin="0" Click="newPoop_button_Click">
+        			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        				<Image Source="newrec.png" Width="150" VerticalAlignment="Center" Margin="0"/>
+        				<TextBlock TextWrapping="Wrap" Text="NEW POOP" FontSize="24" Foreground="White" HorizontalAlignment="Center" Margin="0" TextAlignment="Center"/>
         			</StackPanel>
         		</Button>
         	</Grid>
-        	<Button x:Name="newPoop_button" BorderThickness="0" Background="#FF1BA1E2" FontFamily="Segoe WP" FontSize="24" Padding="10,5,10,6" Margin="0,20" Click="newPoop_button_Click" Grid.RowSpan="2">
-        		<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        			<Image Source="newrec.png" Width="248" VerticalAlignment="Center"/>
-        			<TextBlock TextWrapping="Wrap" Text="NEW POOP" FontSize="40" Foreground="White" HorizontalAlignment="Center" Margin="0" TextAlignment="Center"/>
-        		</StackPanel>
-        	</Button>
         </Grid>
     </Grid>
 

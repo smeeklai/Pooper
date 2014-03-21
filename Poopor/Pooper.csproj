@@ -231,15 +231,15 @@
     <Content Include="Assets\img\dashboard.png" />
     <Content Include="Assets\img\iconImages\check.png" />
     <Content Include="Assets\img\logo.png" />
-    <Content Include="Assets\img\bloodAmount\alotofblood.png" />
-    <Content Include="Assets\img\bloodAmount\littleblood.png" />
-    <Content Include="Assets\img\bloodAmount\mediumblood.png" />
-    <Content Include="Assets\img\painLevel\mild.png" />
+    <Content Include="Assets\img\bloodAmount\A lot of blood.png" />
+    <Content Include="Assets\img\bloodAmount\Little blood.png" />
+    <Content Include="Assets\img\bloodAmount\Medium blood.png" />
+    <Content Include="Assets\img\painLevel\Mild.png" />
     <Content Include="Assets\img\painLevel\Moderate.png" />
     <Content Include="Assets\img\newrec.png" />
-    <Content Include="Assets\img\bloodAmount\muchblood.png" />
-    <Content Include="Assets\img\bloodAmount\noblood.png" />
-    <Content Include="Assets\img\painLevel\nohurt.png" />
+    <Content Include="Assets\img\bloodAmount\Much blood.png" />
+    <Content Include="Assets\img\bloodAmount\None.png" />
+    <Content Include="Assets\img\painLevel\None.png" />
     <Content Include="Assets\img\poopShape\stype1.png" />
     <Content Include="Assets\img\poopShape\stype2.png" />
     <Content Include="Assets\img\poopShape\stype3.png" />
@@ -283,7 +283,7 @@
     <Content Include="Assets\img\samplePoopImage\Poop8.jpg" />
     <Content Include="Assets\img\samplePoopImage\Poop9.jpg" />
     <Content Include="Assets\img\tips today ex.jpg" />
-    <Content Include="Assets\img\painLevel\worst.png" />
+    <Content Include="Assets\img\painLevel\Worst.png" />
     <Content Include="Assets\img\welldone_rec.png" />
     <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

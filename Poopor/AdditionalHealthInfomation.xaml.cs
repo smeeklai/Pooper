@@ -80,7 +80,7 @@ namespace Poopor
                 {
                     await System.Threading.Tasks.Task.Run(() => SystemFunctions.InitializeResultCriterias());
                 }
-                var result = new FecesAnalyzer().analyzeData(poopColor, poopShape, painLevel, bloodAmount, userWeight, userHeight, userGender, userAge,
+                var result = await new FecesAnalyzer().analyzeData(poopColor, poopShape, painLevel, bloodAmount, userWeight, userHeight, userGender, userAge,
                     userHealthInfo1, userHealthInfo2, userHealthInfo3, userHealthInfo4, userHealthInfo5, isMelena, havingMedicines);
 
                 List<ResultAndRecommendationDictionary> serializedResult = SystemFunctions.SerializeUserResultAndRecommendationData(result);

@@ -384,63 +384,63 @@ namespace Poopor
             db_function.InsertData(new Short_Rec_SQLite() { Name = "Entirely liquid", S_Rec = "BRAT diet" });
 
             // ----- PainLevel_Meaning_Table_SQLite    : none -----                   
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "none", Meaning = "Well done!" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "None", Meaning = "Well done!" });
 
             // ----- PainLevel_Meaning_Table_SQLite    : mild -----                   
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "mild", Meaning = "Possibly insufficient water intake" });
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "mild", Meaning = "Possibly lack of fiber" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "Mild", Meaning = "Possibly insufficient water intake" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "Mild", Meaning = "Possibly lack of fiber" });
 
             // ----- PainLevel_Meaning_Table_SQLite    : moderate -----                   
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "moderate", Meaning = "Possible sign of hemorrhoids" });
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "moderate", Meaning = "Possible sign of anal fissure" });
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "moderate", Meaning = "Possible sign of proctitis" });
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "moderate", Meaning = "Possible sign of Crohn’s disease" });
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "moderate", Meaning = "Possible sign of anal cancer" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "Moderate", Meaning = "Possible sign of hemorrhoids" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "Moderate", Meaning = "Possible sign of anal fissure" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "Moderate", Meaning = "Possible sign of proctitis" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "Moderate", Meaning = "Possible sign of Crohn’s disease" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "Moderate", Meaning = "Possible sign of anal cancer" });
 
             // ----- PainLevel_Meaning_Table_SQLite    : severe -----                   
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "severe", Meaning = "Possible sign of hemorrhoids" });
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "severe", Meaning = "Possible sign of anal fissure" });
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "severe", Meaning = "Possible sign of proctitis" });
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "severe", Meaning = "Possible sign of Crohn’s disease" });
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "severe", Meaning = "Possible sign of anal cancer" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "Severe", Meaning = "Possible sign of hemorrhoids" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "Severe", Meaning = "Possible sign of anal fissure" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "Severe", Meaning = "Possible sign of proctitis" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "Severe", Meaning = "Possible sign of Crohn’s disease" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "Severe", Meaning = "Possible sign of anal cancer" });
 
             // ----- PainLevel_Meaning_Table_SQLite    : worst -----                   
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "worst", Meaning = "Possible sign of hemorrhoids" });
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "worst", Meaning = "Possible sign of anal fissure" });
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "worst", Meaning = "Possible sign of proctitis" });
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "worst", Meaning = "Possible sign of Crohn’s disease" });
-            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "worst", Meaning = "Possible sign of anal cancer" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "Worst", Meaning = "Possible sign of hemorrhoids" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "Worst", Meaning = "Possible sign of anal fissure" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "Worst", Meaning = "Possible sign of proctitis" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "Worst", Meaning = "Possible sign of Crohn’s disease" });
+            db_function.InsertData(new PainLevel_Meaning_Table_SQLite() { Name = "Worst", Meaning = "Possible sign of anal cancer" });
 
             // ----- BloodAmount_Meaning_Table_SQLite     : none -----                   
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "none", Meaning = "Well done!" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "None", Meaning = "Well done!" });
 
             // ----- BloodAmount_Meaning_Table_SQLite    : little blood -----                   
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "little blood", Meaning = "Possible sign of hemorrhoids" });
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "little blood", Meaning = "Possible sign of anal fissure" });
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "little blood", Meaning = "Possible sign of proctitis" });
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "little blood", Meaning = "Possible sign of Crohn’s disease" });
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "little blood", Meaning = "Possible sign of anal cancer" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "Little blood", Meaning = "Possible sign of hemorrhoids" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "Little blood", Meaning = "Possible sign of anal fissure" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "Little blood", Meaning = "Possible sign of proctitis" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "Little blood", Meaning = "Possible sign of Crohn’s disease" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "Little blood", Meaning = "Possible sign of anal cancer" });
 
             // ----- BloodAmount_Meaning_Table_SQLite    : medium blood -----                   
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "medium blood", Meaning = "Possible sign of hemorrhoids" });
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "medium blood", Meaning = "Possible sign of anal fissure" });
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "medium blood", Meaning = "Possible sign of proctitis" });
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "medium blood", Meaning = "Possible sign of Crohn’s disease" });
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "medium blood", Meaning = "Possible sign of anal cancer" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "Medium blood", Meaning = "Possible sign of hemorrhoids" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "Medium blood", Meaning = "Possible sign of anal fissure" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "Medium blood", Meaning = "Possible sign of proctitis" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "Medium blood", Meaning = "Possible sign of Crohn’s disease" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "Medium blood", Meaning = "Possible sign of anal cancer" });
 
             // ----- BloodAmount_Meaning_Table_SQLite    : much blood -----                   
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "much blood", Meaning = "Possible sign of hemorrhoids" });
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "much blood", Meaning = "Possible sign of anal fissure" });
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "much blood", Meaning = "Possible sign of proctitis" });
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "much blood", Meaning = "Possible sign of Crohn’s disease" });
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "much blood", Meaning = "Possible sign of anal cancer" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "Much blood", Meaning = "Possible sign of hemorrhoids" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "Much blood", Meaning = "Possible sign of anal fissure" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "Much blood", Meaning = "Possible sign of proctitis" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "Much blood", Meaning = "Possible sign of Crohn’s disease" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "Much blood", Meaning = "Possible sign of anal cancer" });
 
             // ----- BloodAmount_Meaning_Table_SQLite    : a lot of blood -----                   
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "a lot of blood", Meaning = "Possible sign of hemorrhoids" });
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "a lot of blood", Meaning = "Possible sign of anal fissure" });
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "a lot of blood", Meaning = "Possible sign of proctitis" });
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "a lot of blood", Meaning = "Possible sign of Crohn’s disease" });
-            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "a lot of blood", Meaning = "Possible sign of anal cancer" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "A lot of blood", Meaning = "Possible sign of hemorrhoids" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "A lot of blood", Meaning = "Possible sign of anal fissure" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "A lot of blood", Meaning = "Possible sign of proctitis" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "A lot of blood", Meaning = "Possible sign of Crohn’s disease" });
+            db_function.InsertData(new BloodAmount_Meaning_Table_SQLite() { Name = "A lot of blood", Meaning = "Possible sign of anal cancer" });
 
             // ----- Long_Rec_SQLite : none (pain level, blood amount)----- no recommendation
 

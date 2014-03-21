@@ -135,7 +135,7 @@
             		<TextBlock TextWrapping="Wrap" Text="SHAPE" Foreground="Black" FontFamily="Segoe WP Semibold" FontSize="32" Margin="0,4,0,0"/>
             		<TextBlock x:Name="shapeResult_text" TextWrapping="Wrap" Foreground="#FF787B7C" Margin="0" Text="Separate hard lumps"/>
             	</StackPanel>
-            	<Image x:Name="shapeResult" Margin="30,0,0,0" HorizontalAlignment="Center" Width="107"/>
+            	<Image x:Name="shapeResult" Margin="30,0,0,0" HorizontalAlignment="Center" Width="107" Source="/Assets/img/poopShape/stype1.png"/>
             </Grid>
             <Border BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Grid.Row="1">
                 <Border.BorderBrush>
@@ -143,7 +143,7 @@
                 </Border.BorderBrush>
             </Border>
             <StackPanel Orientation="Horizontal" Margin="0,15" Grid.Row="2">
-                <Image x:Name="pain_level_picture" HorizontalAlignment="Center" Width="108" Margin="30,0,0,0" Source="/Assets/img/painLevel/nohurt.png"/>
+                <Image x:Name="pain_level_picture" HorizontalAlignment="Center" Width="108" Margin="30,0,0,0" Source="/Assets/img/painLevel/None.png"/>
                 <StackPanel Margin="15,0,0,0" Width="311">
                     <TextBlock TextWrapping="Wrap" Text="PAIN LEVEL" Foreground="Black" FontFamily="Segoe WP Semibold" FontSize="24"/>
                     <TextBlock x:Name="pain_level_description" TextWrapping="Wrap" Foreground="#FF787B7C" FontSize="17.333" Text="Normal pain"/>
@@ -163,7 +163,7 @@
                 </Border.BorderBrush>
             </Border>
             <StackPanel Orientation="Horizontal" Margin="0,15" Grid.Row="3">
-                <Image x:Name="blood_amount_picture" HorizontalAlignment="Center" Width="108" Margin="30,0,0,-1" Source="/Assets/img/bloodAmount/noblood.png"/>
+                <Image x:Name="blood_amount_picture" HorizontalAlignment="Center" Width="108" Margin="30,0,0,0" Source="/Assets/img/bloodAmount/None.png"/>
                 <StackPanel Margin="15,0,0,0">
                     <TextBlock TextWrapping="Wrap" Text="BLOOD AMOUNT" Foreground="Black" FontFamily="Segoe WP Semibold" FontSize="24"/>
                     <TextBlock x:Name="blood_amount_description" TextWrapping="Wrap" Foreground="#FF787B7C" FontSize="17.333" Text="5 Blood Amount Measurement"/>
