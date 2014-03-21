@@ -19,8 +19,8 @@ namespace Poopor
 {
     class SystemFunctions
     {
-        public SystemFunctions() { 
-            
+        public SystemFunctions() {
+
         }
 
         public static Boolean IsValidEmail(string strIn)
@@ -495,7 +495,6 @@ namespace Poopor
 
             // ----- Short_Rec_SQLite : a lot of blood (blood amount) -----
             db_function.InsertData(new Short_Rec_SQLite() { Name = "a lot of blood", S_Rec = "Consult a doctor" });
-            //return true;
         }
     }
 }

@@ -61,8 +61,6 @@ namespace Pooper
 
             String name = ColorNameDictionary[color];
 
-            Debug.WriteLine("GetDominantColorTypeName => " + name);
-
             return name;
         }
 
@@ -101,8 +99,6 @@ namespace Pooper
 
             // Get the first differences value
             KeyValuePair<Color, float> type = list.First();
-
-            Debug.WriteLine("GetDominantColorType => " + type.Key);
 
             // Get color
             return type.Key;
@@ -160,11 +156,6 @@ namespace Pooper
             b /= total;
 
             Color color = Color.FromArgb((byte)255, (byte)r, (byte)g, (byte)b);
-
-            Debug.WriteLine("Image Size => " + bitmap.PixelWidth + ", " + bitmap.PixelHeight);
-            Debug.WriteLine("TopLeft => " + xTopLeft + ", " + yTopLeft);
-            Debug.WriteLine("BottomRight => " + xBottomRight + ", " + yBottomRight);
-            Debug.WriteLine("GetDominantColor => " + color);
 
             return color;
         }
@@ -302,8 +293,6 @@ namespace Pooper
 
             float difference = ((pdr + pdg + pdb) / 3) * 100;
 
-            Debug.WriteLine("GetColorDifferences " + a + " and " + b + " => " + difference);
-
             return difference;
         }
 
@@ -312,15 +301,8 @@ namespace Pooper
             ColorHSL ColorA = RGB2HSL(a);
             ColorHSL ColorB = RGB2HSL(b);
 
-            Debug.WriteLine("Color H => " + ColorA.Hue + " compare to " + ColorB.Hue);
-            Debug.WriteLine("Color S => " + ColorA.Saturation + " compare to " + ColorB.Saturation);
-            Debug.WriteLine("Color L => " + ColorA.Lightness + " compare to " + ColorB.Lightness);
-
             //float difference = (float)Math.Abs(ColorA.Hue - ((ColorA.Hue + ColorB.Hue) / 2));
             float difference = (float)Math.Abs(ColorA.Hue - ColorB.Hue);
-
-            Debug.WriteLine("GetColorHSLDifferences " + a + " and " + b + " => " + difference);
-            Debug.WriteLine("----------");
 
             return difference;
         }

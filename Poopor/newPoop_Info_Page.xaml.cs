@@ -57,7 +57,7 @@ namespace Poopor
 
             if (SessionManagement.IsLoggedIn() == false)
             {
-                MessageBox.Show("Please answer us several health questions first. This can be avoided by siging up an account", "Health Infomation Required", 
+                MessageBox.Show("Please answer us several health questions first. This can be avoided by siging up an account", "Health Infomation Required",
                     MessageBoxButton.OK);
                 NavigationService.Navigate(new Uri("/AdditionalHealthInfomation.xaml?poopColor=" + poopColor + "&shape=" + shape + "&painLevel=" + painLevel
                     + "&bloodAmount=" + bloodAmount + "&melenaResult=" + isMelena + "&havingMedicines=" + havingMedicines
@@ -70,14 +70,14 @@ namespace Poopor
 
                 if (!SQLiteFunctions.IsResultCriteriaInitialized())
                 {
-                    SystemFunctions.InitializeResultCriterias();
+                    await System.Threading.Tasks.Task.Run(() => SystemFunctions.InitializeResultCriterias());
                 }
 
                 var userInfo = sqliteFunctions.GetUserInfo(SessionManagement.GetEmail());
                 int userAge = Convert.ToInt32(DateTime.Now.Subtract(userInfo.DOB).TotalDays / 360);
-                var result = await new FecesAnalyzer().analyzeData(poopColor, shape, painLevel, bloodAmount, userInfo.Height, userInfo.Weight, userInfo.Gender, userAge, 
+                var result = new FecesAnalyzer().analyzeData(poopColor, shape, painLevel, bloodAmount, userInfo.Height, userInfo.Weight, userInfo.Gender, userAge,
                     userInfo.HealthInfo1, userInfo.HealthInfo2, userInfo.HealthInfo3, userInfo.HealthInfo4, userInfo.HealthInfo5, isMelena, havingMedicines);
-                
+
                 List<ResultAndRecommendationDictionary> serializedResult = SystemFunctions.SerializeUserResultAndRecommendationData(result);
                 SessionManagement.StoreUserLastestResultsAndRecommendation(serializedResult);
 
@@ -88,7 +88,9 @@ namespace Poopor
                 string poopImgName = NavigationContext.QueryString["poopImgName"];
                 Boolean insertationResult = await InsertNewPoopData(poopColor, shape, painLevel, bloodAmount, havingMedicines, poopImgName, userPoopStoredDateTime,
                     diarrhea, constipation, isMelena);
+
                 SystemFunctions.SetProgressIndicatorProperties(false);
+
                 Boolean isAdditionalAskingNeeded = Convert.ToBoolean(necessaryInfo[0]);
                 if (isAdditionalAskingNeeded == false)
                     NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));

@@ -66,14 +66,13 @@ namespace Poopor
         {
             if (SessionManagement.IsLoggedIn())
             {
-                userLastestPoopDataInSQLite = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail());
                 if (!NetworkInterface.GetIsNetworkAvailable())
                 {
-                    if (userLastestPoopDataInSQLite.Count != 0)
+                    DateTime userLatestPoopTimeInAzure = SessionManagement.GetUserLatestPoopTime();
+                    if (!userLatestPoopTimeInAzure.Equals(new DateTime()))
                     {
-                        userLastestPoopRecordInSqlite = userLastestPoopDataInSQLite.Last();
                         SystemTray.ProgressIndicator = new ProgressIndicator();
-                        SystemTray.ProgressIndicator.Text = GetLastUpdatedTimeInText(userLastestPoopRecordInSqlite.Date_Time);
+                        SystemTray.ProgressIndicator.Text = GetLastUpdatedTimeInText(userLatestPoopTimeInAzure);
                         SystemTray.ProgressIndicator.IsVisible = true;
 
                         timer.Interval = TimeSpan.FromMilliseconds(3000);
@@ -96,6 +95,7 @@ namespace Poopor
                 }
                 else
                 {
+                    userLastestPoopDataInSQLite = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail());
                     userLastestPoopDataInAzure = await azureFunctions.GetUserPoopDataInAzure(SessionManagement.GetEmail());
                     if (userLastestPoopDataInAzure.Count != 0 || userLastestPoopDataInSQLite.Count != 0)
                     {

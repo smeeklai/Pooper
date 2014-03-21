@@ -108,6 +108,7 @@ namespace Poopor
             else
             {
                 List<string> userShortRecommendation = userLastestResultAndRecommendation["UserShortRecommendation"];
+                Debug.WriteLine(userShortRecommendation.Count());
                 try
                 {
                     if (userShortRecommendation[0] != null)

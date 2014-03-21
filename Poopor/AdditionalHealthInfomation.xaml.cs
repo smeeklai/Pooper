@@ -8,6 +8,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Poopor.Resources;
+using System.Diagnostics;
 
 namespace Poopor
 {
@@ -64,6 +65,7 @@ namespace Poopor
             {
                 SystemFunctions.SetProgressIndicatorProperties(true);
                 SystemTray.ProgressIndicator.Text = "Analyzing...";
+
                 double userWeight = Convert.ToDouble(temWeight_textBox.Text);
                 double userHeight = Convert.ToDouble(temHeight_textBox.Text);
                 int userAge = Convert.ToInt32(temAge_textBox.Text);
@@ -73,12 +75,14 @@ namespace Poopor
                 Boolean userHealthInfo3 = (Boolean)temHealthInfo_checkBox3.IsChecked;
                 Boolean userHealthInfo4 = (Boolean)temHealthInfo_checkBox4.IsChecked;
                 Boolean userHealthInfo5 = userGender == "Female" ? (Boolean)temHealthInfo_checkBox5.IsChecked : false;
+
                 if (!SQLiteFunctions.IsResultCriteriaInitialized())
                 {
-                    //await SystemFunctions.InitializeResultCriterias();
+                    await System.Threading.Tasks.Task.Run(() => SystemFunctions.InitializeResultCriterias());
                 }
-                var result = await new FecesAnalyzer().analyzeData(poopColor, poopShape, painLevel, bloodAmount, userWeight, userHeight, userGender, userAge,
+                var result = new FecesAnalyzer().analyzeData(poopColor, poopShape, painLevel, bloodAmount, userWeight, userHeight, userGender, userAge,
                     userHealthInfo1, userHealthInfo2, userHealthInfo3, userHealthInfo4, userHealthInfo5, isMelena, havingMedicines);
+
                 List<ResultAndRecommendationDictionary> serializedResult = SystemFunctions.SerializeUserResultAndRecommendationData(result);
                 SessionManagement.StoreUserLastestResultsAndRecommendation(serializedResult);
                 SystemFunctions.SetProgressIndicatorProperties(false);
@@ -95,7 +99,5 @@ namespace Poopor
                     + "&userPoopStoredDateTime=" + userPoopDateTime, UriKind.Relative));
             }
         }
-
-
     }
 }

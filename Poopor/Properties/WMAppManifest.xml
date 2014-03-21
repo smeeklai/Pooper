@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{1e062818-3f12-49b7-98ec-a3d23670fc57}" Title="Poopor" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Poopor author" Description="Sample description" Publisher="Poopor" PublisherID="{c87735bb-8a71-402c-85ad-24ce4ce9581e}">
+  <App xmlns="" ProductID="{1e062818-3f12-49b7-98ec-a3d23670fc57}" Title="Pooper" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Poopor author" Description="Sample description" Publisher="Poopor" PublisherID="{c87735bb-8a71-402c-85ad-24ce4ce9581e}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
@@ -17,7 +17,7 @@
     <Tokens>
       <PrimaryToken TokenID="PooporToken" TaskName="_default">
         <TemplateFlip>
-          <SmallImageURI IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</SmallImageURI>
+          <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
           <Count>0</Count>
           <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
           <Title>Poopor</Title>

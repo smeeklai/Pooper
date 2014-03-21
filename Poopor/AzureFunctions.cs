@@ -41,6 +41,7 @@ namespace Poopor
                 {
                     //Insert data into Poop_Table
                     await azure_poop_table.InsertAsync((Poop_Table_Azure)data);
+                    SessionManagement.RememberUserLatestPoopTime(((Poop_Table_Azure)data).Date_Time);
                     Debug.WriteLine("Success");
                 }
                 return true;

@@ -14,7 +14,8 @@ namespace Poopor
         private static readonly String LOGIN_STATUS = "loginStatus";
         private static readonly String EMAIL = "email";
         private static readonly String IMAGE_SAVED_COUNTER = "imageSavedCounter";
-        private static readonly String USER_LASTEST_RESULT_AND_RECOMMENDATION = "userLastestResultAndRecommendation";
+        private static readonly String USER_LASTEST_RESULT_AND_RECOMMENDATION = "userLatestResultAndRecommendation";
+        private static readonly String USER_LATEST_POOP_TIME = "userLatestPoopTime";
 
         public static Boolean IsLoggedIn()
         {
@@ -88,6 +89,23 @@ namespace Poopor
                 return null;
         }
 
+        public static void RememberUserLatestPoopTime(DateTime time)
+        {
+            if (settings.Contains(USER_LATEST_POOP_TIME))
+                settings[USER_LATEST_POOP_TIME] = time;
+            else
+                settings.Add(USER_LATEST_POOP_TIME, time);
+            settings.Save();
+        }
+
+        public static DateTime GetUserLatestPoopTime()
+        {
+            if (settings.Contains(USER_LATEST_POOP_TIME))
+                return Convert.ToDateTime(settings[USER_LATEST_POOP_TIME]);
+            else
+                return new DateTime();
+        }
+
         public static void Logout()
         {
             if (settings.Contains(LOGIN_STATUS))
@@ -96,6 +114,8 @@ namespace Poopor
                 settings.Remove(EMAIL);
             if (settings.Contains(USER_LASTEST_RESULT_AND_RECOMMENDATION))
                 settings.Remove(USER_LASTEST_RESULT_AND_RECOMMENDATION);
+            if (settings.Contains(USER_LATEST_POOP_TIME))
+                settings.Remove(USER_LATEST_POOP_TIME);
             settings.Save();
         }
     }
