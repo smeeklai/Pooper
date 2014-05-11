@@ -219,7 +219,7 @@ namespace Poopor
                 {
                     resultOfInsertation = sqliteFunctions.InsertData(new Poop_Table_SQLite()
                     {
-                        Email = SessionManagement.GetEmail(),
+                        Username = SessionManagement.GetEmail(),
                         Color = item.Color,
                         Shape = item.Shape,
                         Blood_Amount = item.Blood_Amount,
@@ -264,7 +264,7 @@ namespace Poopor
                 {
                     resultOfInsertation = await azureFunctions.InsertDataAsync(new Poop_Table_Azure()
                     {
-                        Email = SessionManagement.GetEmail(),
+                        Username = SessionManagement.GetEmail(),
                         Color = item.Color,
                         Shape = item.Shape,
                         Blood_Amount = item.Blood_Amount,
@@ -274,7 +274,9 @@ namespace Poopor
                         Date_Time = item.Date_Time,
                         Diarrhea = item.Diarrhea,
                         Constipation = item.Constipation,
-                        MelenaPoop = item.MelenaPoop
+                        MelenaPoop = item.MelenaPoop,
+                        ImageUri = "",
+                        SasQueryString = ""
                     });
                     Debug.WriteLine("Azure: " + resultOfInsertation + " Datetime: " + item.Date_Time);
                 }

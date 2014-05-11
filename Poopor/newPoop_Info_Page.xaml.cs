@@ -13,11 +13,14 @@ using Poopor.Resources;
 using Poopor.Data;
 using System.Threading.Tasks;
 using Microsoft.Phone.Net.NetworkInformation;
+using System.IO.IsolatedStorage;
+using System.IO;
 
 namespace Poopor
 {
     public partial class Poop_info_page : PhoneApplicationPage
     {
+        private string poopImgName;
         public Poop_info_page()
         {
             InitializeComponent();
@@ -85,7 +88,7 @@ namespace Poopor
                 List<string> necessaryInfo = result["NecessaryInfo"];
                 Boolean constipation = Convert.ToBoolean(necessaryInfo[3]);
                 Boolean diarrhea = Convert.ToBoolean(necessaryInfo[4]);
-                string poopImgName = NavigationContext.QueryString["poopImgName"];
+                poopImgName = NavigationContext.QueryString["poopImgName"];
                 Boolean insertationResult = await InsertNewPoopData(poopColor, shape, painLevel, bloodAmount, havingMedicines, poopImgName, userPoopStoredDateTime,
                     diarrhea, constipation, isMelena);
 
@@ -125,9 +128,10 @@ namespace Poopor
         private async Task<Boolean> InsertNewPoopDataToAzure(string poopColor, string poopShape, string painLv, string bloodAmt, Boolean havingMedicines,
             string poopImageName, DateTime userPoopStoredDateTime, Boolean diarrhea, Boolean constipation, Boolean isMelena)
         {
+            Debug.WriteLine("Username : " + SessionManagement.GetEmail());
             Boolean result = await new AzureFunctions().InsertDataAsync(new Poop_Table_Azure()
             {
-                Email = SessionManagement.GetEmail(),
+                Username = SessionManagement.GetEmail(),
                 Color = poopColor,
                 Shape = poopShape,
                 Pain_Level = painLv,
@@ -137,7 +141,9 @@ namespace Poopor
                 Date_Time = userPoopStoredDateTime,
                 Diarrhea = diarrhea,
                 Constipation = constipation,
-                MelenaPoop = isMelena
+                MelenaPoop = isMelena,
+                ImageUri = "",
+                SasQueryString = ""
             });
 
             if (result == false)
@@ -152,7 +158,7 @@ namespace Poopor
         {
             Boolean result = new SQLiteFunctions().InsertData(new Poop_Table_SQLite()
             {
-                Email = SessionManagement.GetEmail(),
+                Username = SessionManagement.GetEmail(),
                 Color = poopColor,
                 Shape = poopShape,
                 Pain_Level = painLv,

@@ -159,6 +159,7 @@ namespace Poopor
             String imgName = SessionManagement.GetEmail() + "Poop" + SessionManagement.GetImageSavedCounter() + ".jpg";
             BitmapImage img = new BitmapImage();
             img.SetSource(stImg);
+            
             poopImage = new WriteableBitmap(img);
             poopImage = poopImage.Resize(653, 490, WriteableBitmapExtensions.Interpolation.Bilinear);
 

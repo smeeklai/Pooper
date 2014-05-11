@@ -75,7 +75,7 @@ namespace Poopor
                         var data = await new AzureFunctions().GetUserInfoDataAsync(email_textBox.Text);
                         try
                         {
-                            string test = new SQLiteFunctions().GetUserInfo(email_textBox.Text).Email;
+                            string test = new SQLiteFunctions().GetUserInfo(email_textBox.Text).Username;
                         }
                         catch (NullReferenceException b)
                         {
@@ -84,7 +84,7 @@ namespace Poopor
                             {
                                 resultOfInsertation = new SQLiteFunctions().InsertData(new UserInfo_Table_SQLite()
                                 {
-                                    Email = data.Email,
+                                    Username = data.Username,
                                     Password = data.Password,
                                     FirstName = data.FirstName,
                                     LastName = data.LastName,

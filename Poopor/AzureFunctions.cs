@@ -9,6 +9,10 @@ using Poopor.Resources;
 using System.Windows;
 using System.Windows.Navigation;
 using Microsoft.Phone.Shell;
+using System.IO.IsolatedStorage;
+using System.IO;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Poopor
 {
@@ -40,7 +44,40 @@ namespace Poopor
                 else if (IsPoop_Data(data))
                 {
                     //Insert data into Poop_Table
-                    await azure_poop_table.InsertAsync((Poop_Table_Azure)data);
+                    var poopData = (Poop_Table_Azure)data;
+                    await azure_poop_table.InsertAsync(poopData);
+                    using (IsolatedStorageFile isStore = IsolatedStorageFile.GetUserStoreForApplication())
+                    {
+                        if (!isStore.DirectoryExists("PoopImage"))
+                        {
+                            isStore.CreateDirectory("PoopImage");
+                        }
+                        var stream = isStore.OpenFile(System.IO.Path.Combine("PoopImage", poopData.Poop_Picture_Name), FileMode.Open, FileAccess.Read);
+                        if (stream != null)
+                        {
+                            if (!string.IsNullOrEmpty(poopData.SasQueryString))
+                            {
+                                // Get the URI generated that contains the SAS 
+                                // and extract the storage credentials.
+                                StorageCredentials cred = new StorageCredentials(poopData.SasQueryString);
+                                var imageUri = new Uri(poopData.ImageUri);
+
+                                // Instantiate a Blob store container based on the info in the returned item.
+                                CloudBlobContainer container = new CloudBlobContainer(
+                                    new Uri(string.Format("https://{0}/{1}",
+                                        imageUri.Host, poopData.Username)), cred);
+
+                                // Upload the new image as a BLOB from the stream.
+                                CloudBlockBlob blobFromSASCredential =
+                                    container.GetBlockBlobReference(poopData.Poop_Picture_Name);
+                                await blobFromSASCredential.UploadFromStreamAsync(stream);
+
+                                // When you request an SAS at the container-level instead of the blob-level,
+                                // you are able to upload multiple streams using the same container credentials.
+                            }
+                        }
+                        stream.Close();
+                    }
                     SessionManagement.RememberUserLatestPoopTime(((Poop_Table_Azure)data).Date_Time);
                     Debug.WriteLine("Success");
                 }
@@ -72,7 +109,7 @@ namespace Poopor
                 Debug.WriteLine("Retrieve data successfully");
                 foreach (var item in items)
                 {
-                    if (item.Email.Equals(userEmail) && item.Password.Equals(userPassword))
+                    if (item.Username.Equals(userEmail) && item.Password.Equals(userPassword))
                     {
                         SystemFunctions.SetProgressIndicatorProperties(false);
                         Debug.WriteLine("email and password are matched");
@@ -92,7 +129,7 @@ namespace Poopor
         {
             try
             {
-                var items = await azure_poop_table.Where(Poop_Table_Azure => Poop_Table_Azure.Email == userEmail).ToCollectionAsync();
+                var items = await azure_poop_table.Where(Poop_Table_Azure => Poop_Table_Azure.Username == userEmail).ToCollectionAsync();
                 return items;
             }
             catch (MobileServiceInvalidOperationException e)
@@ -106,7 +143,7 @@ namespace Poopor
         {
             try
             {
-                var items = await azure_poop_table.Where(Poop_Table_Azure => Poop_Table_Azure.Email == userEmail).Where(Poop_Table_Azure => Poop_Table_Azure.Date_Time > dateTime).ToCollectionAsync();
+                var items = await azure_poop_table.Where(Poop_Table_Azure => Poop_Table_Azure.Username == userEmail).Where(Poop_Table_Azure => Poop_Table_Azure.Date_Time > dateTime).ToCollectionAsync();
                 return items;
             }
             catch (MobileServiceInvalidOperationException e)
@@ -139,7 +176,7 @@ namespace Poopor
         {
             try
             {
-                var items = await azure_userInfo_table.Where(UserInfo_Table_Azure => UserInfo_Table_Azure.Email == userEmail).ToCollectionAsync();
+                var items = await azure_userInfo_table.Where(UserInfo_Table_Azure => UserInfo_Table_Azure.Username == userEmail).ToCollectionAsync();
                 var result = items.FirstOrDefault();
                 return result;
             }

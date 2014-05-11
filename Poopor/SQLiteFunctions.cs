@@ -126,11 +126,11 @@ namespace Poopor
 
         }
 
-        public void DeleteUserPoopData(string userEmail)
+        public void DeleteUserPoopData(string username)
         {
             using (var db = new SQLiteConnection(dbPath))
             {
-                var existing = db.Query<Poop_Table_SQLite>("select * from Poop_Table_SQLite where Email='" + userEmail + "'");
+                var existing = db.Query<Poop_Table_SQLite>("select * from Poop_Table_SQLite where Username='" + username + "'");
                 if (existing != null)
                 {
                     foreach (var item in existing)
@@ -148,10 +148,10 @@ namespace Poopor
         /// In 7 days ago from today. Find pattern of constipation swap diarrhea
         /// Return : true or false
         /// </summary>
-        /// <param name="userEmail"></param>
+        /// <param name="username"></param>
         /// <returns></returns>
 
-        public bool IsConstipationSwapDiarrheaPattern(string userEmail)
+        public bool IsConstipationSwapDiarrheaPattern(string username)
         {
             int correctPatternCount = 0;
             bool isNowConstipation = false;
@@ -165,7 +165,7 @@ namespace Poopor
             {
                 DateTime StartDate = DateTime.Today.AddDays(-6); // We count today is the last date, so just look back only 6 day from today
                 DateTime EndDate = DateTime.Today;
-                var existing = db.Query<Poop_Table_SQLite>("select * from Poop_Table_SQLite where Email='" + userEmail + "' order by date_time desc");
+                var existing = db.Query<Poop_Table_SQLite>("select * from Poop_Table_SQLite where Username='" + username + "' order by date_time desc");
 
 
                 if (existing != null)
@@ -248,17 +248,17 @@ namespace Poopor
         /// In 7 days ago from today. Find total bowel movement times, number of melena, number of pain level severe, and number of pain level worst 
         /// Return : List of int that index 0 = total bowel movement times, index 1 = number of melena, index 2 = number of pain level severe, index 3 = number of pain level worst
         /// </summary>
-        /// <param name="userEmail"></param>
+        /// <param name="username"></param>
         /// <returns></returns>
 
-        public List<int> CountMelenaAndPainLevel(string userEmail)
+        public List<int> CountMelenaAndPainLevel(string username)
         {
             List<int> countMelenaAndPainLevelList = new List<int>();
             using (var db = new SQLiteConnection(dbPath))
             {
                 DateTime StartDate = DateTime.Today.AddDays(-6); // We count today is the last date, so just look back only 6 day from today
                 DateTime EndDate = DateTime.Today;
-                var existing = db.Query<Poop_Table_SQLite>("select * from Poop_Table_SQLite where Email='" + userEmail + "' order by date_time desc");
+                var existing = db.Query<Poop_Table_SQLite>("select * from Poop_Table_SQLite where Username='" + username + "' order by date_time desc");
 
                 int totalBowelMovementTimesIn_7_Days = 0;
                 int melenaCount = 0;
@@ -406,11 +406,11 @@ namespace Poopor
             }
         }
 
-        public UserInfo_Table_SQLite GetUserInfo(string userEmail)
+        public UserInfo_Table_SQLite GetUserInfo(string username)
         {
             using (var db = new SQLiteConnection(dbPath))
             {
-                var existing = db.Query<UserInfo_Table_SQLite>("select * from UserInfo_Table_SQLite where Email='" + userEmail + "'").FirstOrDefault();
+                var existing = db.Query<UserInfo_Table_SQLite>("select * from UserInfo_Table_SQLite where Username='" + username + "'").FirstOrDefault();
                 if (existing != null)
                     return existing;
                 else
@@ -418,11 +418,11 @@ namespace Poopor
             }
         }
 
-        public List<Poop_Table_SQLite> GetUserPoopData(string userEmail)
+        public List<Poop_Table_SQLite> GetUserPoopData(string username)
         {
             using (var db = new SQLiteConnection(dbPath))
             {
-                var existing = db.Query<Poop_Table_SQLite>("select * from Poop_Table_SQLite where Email='" + userEmail + "'");
+                var existing = db.Query<Poop_Table_SQLite>("select * from Poop_Table_SQLite where Username='" + username + "'");
                 if (existing != null)
                     return existing;
                 else

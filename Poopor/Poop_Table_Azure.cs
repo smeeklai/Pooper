@@ -11,7 +11,7 @@ namespace Poopor
     {
         public String Id { get; set; }
 
-        public String Email { get; set; }
+        public String Username { get; set; }
         public String Color { get; set; }
         public String Shape { get; set; }
         public String Blood_Amount { get; set; }
@@ -22,5 +22,7 @@ namespace Poopor
         public Boolean Diarrhea { get; set; }
         public Boolean Constipation { get; set; }
         public Boolean MelenaPoop { get; set; }
+        public String ImageUri { get; set; }
+        public String SasQueryString { get; set; }
     }
 }

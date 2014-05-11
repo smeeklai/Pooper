@@ -17,7 +17,7 @@ namespace Poopor
 {
     public partial class RegisterPage : PhoneApplicationPage
     {
-        private Boolean email_validation = false;
+        private Boolean username_validation = false;
         private Boolean password_validation = false;
         private Boolean confirmPassword_validation = false;
         private Boolean firstName_validation = false;
@@ -146,7 +146,7 @@ namespace Poopor
         {
             Boolean result = await new AzureFunctions().InsertDataAsync(new UserInfo_Table_Azure()
                 {
-                    Email = regisEmail_textBox.Text,
+                    Username = regisEmail_textBox.Text,
                     Password = regisPassword_textBox.Password,
                     FirstName = firstName_textBox.Text,
                     LastName = lastName_textBox.Text,
@@ -172,7 +172,7 @@ namespace Poopor
         {
             Boolean result = new SQLiteFunctions().InsertData(new UserInfo_Table_SQLite()
                 {
-                    Email = regisEmail_textBox.Text,
+                    Username = regisEmail_textBox.Text,
                     Password = regisPassword_textBox.Password,
                     FirstName = firstName_textBox.Text,
                     LastName = lastName_textBox.Text,
@@ -214,7 +214,7 @@ namespace Poopor
 
         private Boolean CheckFirstValidation()
         {
-            if (email_validation && password_validation && confirmPassword_validation && firstName_validation && lastName_validation && weight_validation &&
+            if (username_validation && password_validation && confirmPassword_validation && firstName_validation && lastName_validation && weight_validation &&
                     height_validation == true)
                 return true;
             else
@@ -233,13 +233,13 @@ namespace Poopor
         {
             if (SystemFunctions.IsValidEmail(regisEmail_textBox.Text) == true)
             {
-                regisEmail_textBox.BorderBrush = new SolidColorBrush(Colors.Green);
-                email_validation = true;
+                regisEmail_textBox.BorderBrush = new SolidColorBrush(Colors.Red);
+                username_validation = false;
             }
             else
             {
-                regisEmail_textBox.BorderBrush = new SolidColorBrush(Colors.Red);
-                email_validation = false;
+                regisEmail_textBox.BorderBrush = new SolidColorBrush(Colors.Green);
+                username_validation = true;
             }
         }
 
@@ -330,7 +330,7 @@ namespace Poopor
         private void ShowErrorMessageBox()
         {
             String errorMsg = "";
-            if (email_validation == false)
+            if (username_validation == false)
             {
                 errorMsg += "Your email is not valid\r\n";
                 regisEmail_textBox.BorderBrush = new SolidColorBrush(Colors.Red);
