@@ -131,7 +131,7 @@ namespace Poopor
             Debug.WriteLine("Username : " + SessionManagement.GetEmail());
             Boolean result = await new AzureFunctions().InsertDataAsync(new Poop_Table_Azure()
             {
-                Username = SessionManagement.GetEmail(),
+                Email = SessionManagement.GetEmail(),
                 Color = poopColor,
                 Shape = poopShape,
                 Pain_Level = painLv,

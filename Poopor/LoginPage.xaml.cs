@@ -84,7 +84,7 @@ namespace Poopor
                             {
                                 resultOfInsertation = new SQLiteFunctions().InsertData(new UserInfo_Table_SQLite()
                                 {
-                                    Username = data.Username,
+                                    Username = data.Email,
                                     Password = data.Password,
                                     FirstName = data.FirstName,
                                     LastName = data.LastName,

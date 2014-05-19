@@ -86,9 +86,9 @@ namespace Poopor
                                 SystemTray.ProgressIndicator.IsVisible = false;
                                 timer.Stop();
                             }
-                            catch (NullReferenceException c)
+                            catch (Exception c)
                             {
-
+                                Debug.WriteLine(c.Message);
                             }
                         };
 
@@ -142,9 +142,9 @@ namespace Poopor
                                         SystemTray.ProgressIndicator.IsVisible = false;
                                         timer.Stop();
                                     }
-                                    catch (NullReferenceException b)
+                                    catch (Exception b)
                                     {
-
+                                        Debug.WriteLine(b.Message);
                                     }
                                 };
 
@@ -264,7 +264,7 @@ namespace Poopor
                 {
                     resultOfInsertation = await azureFunctions.InsertDataAsync(new Poop_Table_Azure()
                     {
-                        Username = SessionManagement.GetEmail(),
+                        Email = SessionManagement.GetEmail(),
                         Color = item.Color,
                         Shape = item.Shape,
                         Blood_Amount = item.Blood_Amount,
@@ -428,6 +428,11 @@ namespace Poopor
         private void lastRecommendation_button_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("/ResultPage.xaml", UriKind.Relative));
+        }
+
+        private void getReport_button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/ReportPage.xaml", UriKind.Relative));
         }
     }
 }

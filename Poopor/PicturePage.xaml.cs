@@ -156,7 +156,8 @@ namespace Poopor
 
         private String StoreImage(Stream stImg)
         {
-            String imgName = SessionManagement.GetEmail() + "Poop" + SessionManagement.GetImageSavedCounter() + ".jpg";
+            //String imgName = SessionManagement.GetEmail() + "Poop" + SessionManagement.GetImageSavedCounter() + ".jpg";
+            String imgName = System.IO.Path.GetRandomFileName() + ".jpg";
             BitmapImage img = new BitmapImage();
             img.SetSource(stImg);
             

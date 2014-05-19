@@ -146,7 +146,7 @@ namespace Poopor
         {
             Boolean result = await new AzureFunctions().InsertDataAsync(new UserInfo_Table_Azure()
                 {
-                    Username = regisEmail_textBox.Text,
+                    Email = regisEmail_textBox.Text,
                     Password = regisPassword_textBox.Password,
                     FirstName = firstName_textBox.Text,
                     LastName = lastName_textBox.Text,
@@ -233,13 +233,13 @@ namespace Poopor
         {
             if (SystemFunctions.IsValidEmail(regisEmail_textBox.Text) == true)
             {
-                regisEmail_textBox.BorderBrush = new SolidColorBrush(Colors.Red);
-                username_validation = false;
+                regisEmail_textBox.BorderBrush = new SolidColorBrush(Colors.Green);
+                username_validation = true;
             }
             else
             {
-                regisEmail_textBox.BorderBrush = new SolidColorBrush(Colors.Green);
-                username_validation = true;
+                regisEmail_textBox.BorderBrush = new SolidColorBrush(Colors.Red);
+                username_validation = false;
             }
         }
 

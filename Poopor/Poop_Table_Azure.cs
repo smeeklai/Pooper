@@ -11,7 +11,7 @@ namespace Poopor
     {
         public String Id { get; set; }
 
-        public String Username { get; set; }
+        public String Email { get; set; }
         public String Color { get; set; }
         public String Shape { get; set; }
         public String Blood_Amount { get; set; }

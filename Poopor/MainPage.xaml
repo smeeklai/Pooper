@@ -113,7 +113,7 @@
         				<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="DASHBOARD" VerticalAlignment="Top" Margin="0,-20,0,0" TextAlignment="Center"/>
         			</StackPanel>
         		</Button>
-        		<Button x:Name="getReport_button" BorderThickness="0" Background="#FF1BA1E2" FontFamily="Segoe WP" FontSize="24" Grid.Row="1" Margin="0,-7,-7,0">
+        		<Button x:Name="getReport_button" BorderThickness="0" Background="#FF1BA1E2" FontFamily="Segoe WP" FontSize="24" Grid.Row="1" Margin="0,-7,-7,0" Click="getReport_button_Click">
         			<StackPanel>
         				<Image Source="report.png" Height="103" Width="98"/>
         				<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="GET REPORT" TextAlignment="Center"/>

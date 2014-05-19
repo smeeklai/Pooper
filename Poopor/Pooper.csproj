@@ -128,6 +128,9 @@
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Poop_Table_Azure.cs" />
+    <Compile Include="ReportPage.xaml.cs">
+      <DependentUpon>ReportPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ResultAndRecommendationDictionary.cs" />
     <Compile Include="SamplePoopPictures.xaml.cs">
       <DependentUpon>SamplePoopPictures.xaml</DependentUpon>
@@ -201,6 +204,10 @@
     <Page Include="newPoop_Info_Page.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ReportPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ResultPage.xaml">
       <SubType>Designer</SubType>
