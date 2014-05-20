@@ -12,7 +12,6 @@ using System.Windows.Media;
 using Poopor.Resources;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
-using AmCharts.Windows.QuickCharts;
 
 namespace Poopor
 {
