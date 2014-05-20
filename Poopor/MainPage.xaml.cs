@@ -434,5 +434,10 @@ namespace Poopor
         {
             NavigationService.Navigate(new Uri("/ReportPage.xaml", UriKind.Relative));
         }
+
+        private void dashboard_button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/DashboardPage.xaml", UriKind.Relative));
+        }
     }
 }

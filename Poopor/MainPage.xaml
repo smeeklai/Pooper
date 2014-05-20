@@ -107,7 +107,7 @@
         			<RowDefinition/>
         			<RowDefinition/>
         		</Grid.RowDefinitions>
-        		<Button x:Name="dashboard_button" BorderThickness="0" Background="#FF1BA1E2" FontFamily="Segoe WP" FontSize="24" Grid.Column="1" Margin="-7,0,0,-7">
+        		<Button x:Name="dashboard_button" BorderThickness="0" Background="#FF1BA1E2" FontFamily="Segoe WP" FontSize="24" Grid.Column="1" Margin="-7,0,0,-7" Click="dashboard_button_Click">
         			<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
         				<Image Source="dashboard.png" Margin="0,-15,0,0"/>
         				<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="DASHBOARD" VerticalAlignment="Top" Margin="0,-20,0,0" TextAlignment="Center"/>
