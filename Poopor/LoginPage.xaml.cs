@@ -14,10 +14,12 @@ using System.Net.NetworkInformation;
 using Poopor.Resources;
 using System.Windows.Controls.Primitives;
 using System.IO.IsolatedStorage;
+
 namespace Poopor
 {
     public partial class LoginPage : PhoneApplicationPage
     {
+        
         private readonly DependencyProperty NetProperty = DependencyProperty.Register("NetworkAvailability",
                                          typeof(string),
                                          typeof(MainPage),
