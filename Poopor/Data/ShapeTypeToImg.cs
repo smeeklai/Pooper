@@ -14,7 +14,7 @@ namespace Poopor.Data
         {
             {"Separated hard lumps", new BitmapImage(new Uri("/Assets/img/poopShape/stype1.png", UriKind.RelativeOrAbsolute))},
             {"Lumpy sausage", new BitmapImage(new Uri("/Assets/img/poopShape/stype2.png", UriKind.RelativeOrAbsolute))},
-            {"cracked surface sausage", new BitmapImage(new Uri("/Assets/img/poopShape/stype3.png", UriKind.RelativeOrAbsolute))},
+            {"Cracked surface sausage", new BitmapImage(new Uri("/Assets/img/poopShape/stype3.png", UriKind.RelativeOrAbsolute))},
             {"Smooth soft snake", new BitmapImage(new Uri("/Assets/img/poopShape/stype4.png", UriKind.RelativeOrAbsolute))},
             {"Soft blobs with clear cut", new BitmapImage(new Uri("/Assets/img/poopShape/stype5.png", UriKind.RelativeOrAbsolute))},
             {"Mushy and fluffy pieces", new BitmapImage(new Uri("/Assets/img/poopShape/stype6.png", UriKind.RelativeOrAbsolute))},

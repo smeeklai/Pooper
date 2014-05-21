@@ -261,7 +261,8 @@ namespace Poopor
                         color = poopColor_dictionary[item.Color], 
                         shape = poopShape_dictionary[item.Shape], 
                         bloodAmount = bloodAmount_dictionary[item.Blood_Amount], 
-                        painLevel = painLevel_dictionary[item.Pain_Level] });
+                        painLevel = painLevel_dictionary[item.Pain_Level],
+                        date = item.Date_Time.ToString("MM/dd")});
                     Debug.WriteLine(item.Date_Time);
                 }
                 Debug.WriteLine("Initialize Finished");
@@ -326,5 +327,6 @@ namespace Poopor
         public int shape { get; set; }
         public int bloodAmount { get; set; }
         public int painLevel { get; set; }
+        public string date { get; set; }
     }
 }
