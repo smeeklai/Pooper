@@ -19,7 +19,8 @@ namespace Poopor
 {
     class SystemFunctions
     {
-        public SystemFunctions() {
+        public SystemFunctions()
+        {
 
         }
 

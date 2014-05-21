@@ -13,14 +13,14 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True" Loaded="PhoneApplicationPage_Loaded">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
 	<Grid x:Name="LayoutRoot" Background="White">
 		<!--Pivot Control-->
 		<phone:Pivot Title="POOPER" Foreground="#FF787B7C" FontSize="24">
 			<!--Pivot item one-->
-			<phone:PivotItem Header="Overview" Foreground="#FF787B7C" Background="White" Margin="0,10,0,0">
+			<phone:PivotItem x:Name="overviewPivot" Header="Overview" Foreground="#FF787B7C" Background="White" Margin="0,10,0,0">
 				<ScrollViewer>
 					<Grid Height="621" Width="480">
 						<Grid.RowDefinitions>
@@ -33,7 +33,7 @@
 						<Grid Background="#FF1BA1E2">
 							<StackPanel Margin="25,5,0,10" Orientation="Horizontal">
 								<TextBlock TextWrapping="Wrap" Text="DURATION : " Foreground="White" Margin="0" FontSize="32" VerticalAlignment="Center"/>
-								<toolkit:ListPicker Margin="0" FontFamily="Segoe WP SemiLight" Width="250" HorizontalAlignment="Right" Padding="0">
+								<toolkit:ListPicker x:Name="durationPicker1" Margin="0" FontFamily="Segoe WP SemiLight" Width="250" HorizontalAlignment="Right" Padding="0">
 									<sys:String>1 week ago</sys:String>
 									<sys:String>2 weeks ago</sys:String>
 									<sys:String>3 weeks ago</sys:String>
@@ -45,7 +45,7 @@
 				</ScrollViewer>
 			</phone:PivotItem>
 
-			<phone:PivotItem Header="Color" Foreground="#FF787B7C" Background="White" Margin="0,10,0,0">
+			<phone:PivotItem x:Name="colorPivot" Header="Color" Foreground="#FF787B7C" Background="White" Margin="0,10,0,0">
 				<ScrollViewer>
 					<Grid Height="621" Width="480">
 						<Grid.RowDefinitions>
@@ -58,7 +58,7 @@
 						<Grid Background="#FF1BA1E2">
 							<StackPanel Margin="25,5,0,10" Orientation="Horizontal">
 								<TextBlock TextWrapping="Wrap" Text="DURATION : " Foreground="White" Margin="0" FontSize="32" VerticalAlignment="Center"/>
-								<toolkit:ListPicker Margin="0" FontFamily="Segoe WP SemiLight" Width="250" HorizontalAlignment="Right" Padding="0">
+								<toolkit:ListPicker x:Name="durationPicker2" Margin="0" FontFamily="Segoe WP SemiLight" Width="250" HorizontalAlignment="Right" Padding="0">
 									<sys:String>1 week ago</sys:String>
 									<sys:String>2 weeks ago</sys:String>
 									<sys:String>3 weeks ago</sys:String>
@@ -70,7 +70,7 @@
 				</ScrollViewer>
 			</phone:PivotItem>
 
-			<phone:PivotItem Header="Shape" Foreground="#FF787B7C" Background="White" Margin="0,10,0,0">
+			<phone:PivotItem x:Name="shapePivot" Header="Shape" Foreground="#FF787B7C" Background="White" Margin="0,10,0,0">
 				<ScrollViewer>
 					<Grid Height="621" Width="480">
 						<Grid.RowDefinitions>
@@ -83,7 +83,7 @@
 						<Grid Background="#FF1BA1E2">
 							<StackPanel Margin="25,5,0,10" Orientation="Horizontal">
 								<TextBlock TextWrapping="Wrap" Text="DURATION : " Foreground="White" Margin="0" FontSize="32" VerticalAlignment="Center"/>
-								<toolkit:ListPicker Margin="0" FontFamily="Segoe WP SemiLight" Width="250" HorizontalAlignment="Right" Padding="0">
+								<toolkit:ListPicker x:Name="durationPicker3" Margin="0" FontFamily="Segoe WP SemiLight" Width="250" HorizontalAlignment="Right" Padding="0">
 									<sys:String>1 week ago</sys:String>
 									<sys:String>2 weeks ago</sys:String>
 									<sys:String>3 weeks ago</sys:String>
@@ -94,7 +94,7 @@
 					</Grid>
 				</ScrollViewer>
 			</phone:PivotItem>
-			<phone:PivotItem Header="Blood Amt" Foreground="#FF787B7C" Background="White" Margin="0,10,0,0">
+			<phone:PivotItem x:Name="bloodAmtPivot" Header="Blood Amt" Foreground="#FF787B7C" Background="White" Margin="0,10,0,0">
 				<ScrollViewer>
 					<Grid Height="621" Width="480">
 						<Grid.RowDefinitions>
@@ -107,7 +107,7 @@
 						<Grid Background="#FF1BA1E2">
 							<StackPanel Margin="25,5,0,10" Orientation="Horizontal">
 								<TextBlock TextWrapping="Wrap" Text="DURATION : " Foreground="White" Margin="0" FontSize="32" VerticalAlignment="Center"/>
-								<toolkit:ListPicker Margin="0" FontFamily="Segoe WP SemiLight" Width="250" HorizontalAlignment="Right" Padding="0">
+								<toolkit:ListPicker x:Name="durationPicker4" Margin="0" FontFamily="Segoe WP SemiLight" Width="250" HorizontalAlignment="Right" Padding="0">
 									<sys:String>1 week ago</sys:String>
 									<sys:String>2 weeks ago</sys:String>
 									<sys:String>3 weeks ago</sys:String>
@@ -118,7 +118,7 @@
 					</Grid>
 				</ScrollViewer>
 			</phone:PivotItem>
-			<phone:PivotItem Header="Pain Level" Foreground="#FF787B7C" Background="White" Margin="0,10,0,0">
+			<phone:PivotItem x:Name="painLevelPivot" Header="Pain Level" Foreground="#FF787B7C" Background="White" Margin="0,10,0,0">
 				<ScrollViewer>
 					<Grid Height="621" Width="480">
 						<Grid.RowDefinitions>
@@ -131,7 +131,7 @@
 						<Grid Background="#FF1BA1E2">
 							<StackPanel Margin="25,5,0,10" Orientation="Horizontal">
 								<TextBlock TextWrapping="Wrap" Text="DURATION : " Foreground="White" Margin="0" FontSize="32" VerticalAlignment="Center"/>
-								<toolkit:ListPicker Margin="0" FontFamily="Segoe WP SemiLight" Width="250" HorizontalAlignment="Right" Padding="0">
+								<toolkit:ListPicker x:Name="durationPicker5" Margin="0" FontFamily="Segoe WP SemiLight" Width="250" HorizontalAlignment="Right" Padding="0">
 									<sys:String>1 week ago</sys:String>
 									<sys:String>2 weeks ago</sys:String>
 									<sys:String>3 weeks ago</sys:String>

@@ -11,7 +11,7 @@ namespace Poopor.Data
     {
         private static string[] _shapeNames = { "Separated hard lumps",
                                                "Lumpy sausage",
-                                               "cracked surface sausage",
+                                               "Cracked surface sausage",
                                                "Smooth soft snake",
                                                "Soft blobs with clear cut",
                                                "Mushy and fluffy pieces",
