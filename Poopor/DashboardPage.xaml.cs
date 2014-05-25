@@ -466,8 +466,6 @@ namespace Poopor
             }
         }
 
-        }
-
         private static DateTime previousInputDate;
         private DateTime inputDate;
         private static readonly TimeSpan START_TIME_OF_DAYS = new TimeSpan(0, 0, 0);
@@ -538,6 +536,9 @@ namespace Poopor
             {"11_PM", 0}, // 23:00 - 23:59 pattern 12
         };
     }
+        }
+
+        
 
     public class UserPoopData
     {
@@ -553,4 +554,3 @@ namespace Poopor
         public string title { get; set; }
         public double value { get; set; }
     }
-}
