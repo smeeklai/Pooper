@@ -129,6 +129,7 @@ namespace Poopor
             string poopImageName, DateTime userPoopStoredDateTime, Boolean diarrhea, Boolean constipation, Boolean isMelena)
         {
             Debug.WriteLine("Username : " + SessionManagement.GetEmail());
+            var containerName = SystemFunctions.RemoveSpecialCharacters(SessionManagement.GetEmail());
             Boolean result = await new AzureFunctions().InsertDataAsync(new Poop_Table_Azure()
             {
                 Email = SessionManagement.GetEmail(),
@@ -143,7 +144,8 @@ namespace Poopor
                 Constipation = constipation,
                 MelenaPoop = isMelena,
                 ImageUri = "",
-                SasQueryString = ""
+                SasQueryString = "",
+                ContainerName = containerName
             });
 
             if (result == false)

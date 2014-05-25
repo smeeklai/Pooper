@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace Poopor
 {
@@ -42,7 +43,10 @@ namespace Poopor
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            this.DataContext = this;
+            colorChart.DataSource = _data;
+            shapeChart.DataSource = _data;
+            bloodAmountChart.DataSource = _data;
+            painLevelChart.DataSource = _data;
             pie1.DataSource = PieData;
         }
 
@@ -63,7 +67,7 @@ namespace Poopor
             durationPicker5.SelectionChanged += durationPicker5_SelectionChanged;
         }
 
-        void durationPicker5_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        async void durationPicker5_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var picker = sender as ListPicker;
             int totalDays = 0;
@@ -94,14 +98,15 @@ namespace Poopor
             if (inputDate != previousInputDate)
             {
                 previousInputDate = inputDate;
-                PlotGraph(RetrieveUserPoopData(inputDate));
+                var data = await RetrieveUserPoopData(inputDate);
+                PlotGraph(data);
                 ChangeValueOtherDurationPickers(durationPicker5, picker.SelectedItem.ToString());
                 setFreqText(totalDays); // Done the upper task in Overview (You num, You type)
                 createTransitRepresentation(); // Done lower task in Overview (You transit, pie)
             }
         }
 
-        void durationPicker4_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        async void durationPicker4_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var picker = sender as ListPicker;
             int totalDays = 0;
@@ -132,14 +137,15 @@ namespace Poopor
             if (inputDate != previousInputDate)
             {
                 previousInputDate = inputDate;
-                PlotGraph(RetrieveUserPoopData(inputDate));
+                var data = await RetrieveUserPoopData(inputDate);
+                PlotGraph(data);
                 ChangeValueOtherDurationPickers(durationPicker4, picker.SelectedItem.ToString());
                 setFreqText(totalDays); // Done the upper task in Overview (You num, You type)
                 createTransitRepresentation(); // Done lower task in Overview (You transit, pie)
             }
         }
 
-        void durationPicker3_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        async void durationPicker3_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var picker = sender as ListPicker;
             int totalDays = 0;
@@ -170,14 +176,15 @@ namespace Poopor
             if (inputDate != previousInputDate)
             {
                 previousInputDate = inputDate;
-                PlotGraph(RetrieveUserPoopData(inputDate));
+                var data = await RetrieveUserPoopData(inputDate);
+                PlotGraph(data);
                 ChangeValueOtherDurationPickers(durationPicker3, picker.SelectedItem.ToString());
                 setFreqText(totalDays); // Done the upper task in Overview (You num, You type)
                 createTransitRepresentation(); // Done lower task in Overview (You transit, pie)
             }
         }
 
-        void durationPicker2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        async void durationPicker2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var picker = sender as ListPicker;
             int totalDays = 0;
@@ -208,16 +215,17 @@ namespace Poopor
             if (inputDate != previousInputDate)
             {
                 previousInputDate = inputDate;
-                PlotGraph(RetrieveUserPoopData(inputDate));
+                var data = await RetrieveUserPoopData(inputDate);
+                PlotGraph(data);
                 ChangeValueOtherDurationPickers(durationPicker2, picker.SelectedItem.ToString());
                 setFreqText(totalDays); // Done the upper task in Overview (You num, You type)
                 createTransitRepresentation(); // Done lower task in Overview (You transit, pie)
             }
         }
 
-        void durationPicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        async void durationPicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var picker = sender as ListPicker;
+            var picker = sender as ListPicker; 
             int totalDays = 0;
             if (picker.SelectedItem.ToString().Equals("1 week ago"))
             {
@@ -246,7 +254,8 @@ namespace Poopor
             if (inputDate != previousInputDate)
             {
                 previousInputDate = inputDate;
-                PlotGraph(RetrieveUserPoopData(inputDate));
+                var data = await RetrieveUserPoopData(inputDate);
+                PlotGraph(data);
                 ChangeValueOtherDurationPickers(durationPicker1, picker.SelectedItem.ToString());
                 setFreqText(totalDays); // Done the upper task in Overview (You num, You type)
                 createTransitRepresentation(); // Done lower task in Overview (You transit, pie)
@@ -353,48 +362,45 @@ namespace Poopor
             }
         }
 
-        private ObservableCollection<UserPoopData> RetrieveUserPoopData(DateTime inputDate)
+        private async Task<ObservableCollection<UserPoopData>> RetrieveUserPoopData(DateTime inputDate)
         {
             ObservableCollection<UserPoopData> _data = new ObservableCollection<UserPoopData>();
-            userLastestPoopDataInSQLite = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail());
-            if (userLastestPoopDataInSQLite.Count < 2)
-            {
-                MessageBox.Show("Your data is not enough to represent in dashboard", "Sorry", MessageBoxButton.OK);
-                _data = null;
-                setDefaultForTransitDic(); // clear all value to 0 in transit dic
-            }
-            else
-            {
                 List<Poop_Table_SQLite> userPoopData = new List<Poop_Table_SQLite>();
-                userLastestPoopDataInSQLite.Reverse();
+            userLastestPoopDataInSQLite = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail());
+            //userLastestPoopDataInSQLite.Reverse();
                 foreach (var item in userLastestPoopDataInSQLite)
                 {
+                //Debug.WriteLine("inputDate: {0} itemDate: {1}", inputDate, item.Date_Time);
                     if (item.Date_Time > inputDate)
                         userPoopData.Add(item);
                     else
                         break;
                 }
-                userPoopData.Reverse();
-                Debug.WriteLine("User poop data " + userPoopData.Count());
-
+            //userPoopData.Reverse();
+            //Debug.WriteLine("User poop data " + userPoopData.Count());
+            if (userPoopData.Count >= 2)
+            {
                 foreach (var item in userPoopData)
                 {
                     _data.Add(new UserPoopData()
                     {
-                        color = poopColor_dictionary[item.Color],
-                        shape = poopShape_dictionary[item.Shape],
-                        bloodAmount = bloodAmount_dictionary[item.Blood_Amount],
-                        painLevel = painLevel_dictionary[item.Pain_Level]
+                        color = poopColor_dictionary[item.Color], 
+                        shape = poopShape_dictionary[item.Shape], 
+                        bloodAmount = bloodAmount_dictionary[item.Blood_Amount], 
+                        painLevel = painLevel_dictionary[item.Pain_Level],
+                        date = item.Date_Time.ToString()
                     });
-                    Debug.WriteLine(item.Date_Time);
-
                     // add data into the transit dicitonary
                     DateTime dt = item.Date_Time;
                     string you_transit_dic_key = dt.ToString("hh") + "_" + dt.ToString("tt");
                     you_transit_dictionary[you_transit_dic_key] += 1;
                 }
-                Debug.WriteLine("Initialize Finished");
             }
+            else{
+                setDefaultForTransitDic(); // clear all value to 0 in transit dic
+                _data = null;
+            }   
+
             return _data;
         }
 
@@ -441,11 +447,24 @@ namespace Poopor
 
         private void PlotGraph(ObservableCollection<UserPoopData> userPoopData)
         {
-            if (_data != null)
+            if (userPoopData != null)
             {
-                _data.Clear();
-                _data = userPoopData;
+            _data.Clear();
+            _data = userPoopData;
+                colorChart.DataSource = _data;
+                shapeChart.DataSource = _data;
+                bloodAmountChart.DataSource = _data;
+                painLevelChart.DataSource = _data;
             }
+            else
+            {
+                colorChart.Opacity = 30;
+                shapeChart.Opacity = 30;
+                bloodAmountChart.Opacity = 30;
+                painLevelChart.Opacity = 30;
+                MessageBox.Show("Data is insufficient in this duration. Please change to other durations", "Sorry", MessageBoxButton.OK);
+            }
+        }
 
         }
 
@@ -454,11 +473,10 @@ namespace Poopor
         private static readonly TimeSpan START_TIME_OF_DAYS = new TimeSpan(0, 0, 0);
         private bool isInit;
         private ListPicker[] pickers = new ListPicker[5];
-        public ObservableCollection<UserPoopData> Data { get { return _data; } }
         private ObservableCollection<UserPoopData> _data = new ObservableCollection<UserPoopData>();
         private List<Poop_Table_SQLite> userLastestPoopDataInSQLite = null;
         private SQLiteFunctions sqliteFunctions = new SQLiteFunctions();
-        private Dictionary<string, int> poopColor_dictionary = new Dictionary<string, int>(){
+        private Dictionary<string, double> poopColor_dictionary = new Dictionary<string, double>(){
             {"Very light brown", 1},
             {"Medium brown", 2},
             {"Black", 3},
@@ -469,7 +487,7 @@ namespace Poopor
             {"Yellow", 8},
             {"Gray", 9}
         };
-        private Dictionary<string, int> poopShape_dictionary = new Dictionary<string, int>(){
+        private Dictionary<string, double> poopShape_dictionary = new Dictionary<string, double>(){
             {"Separated hard lumps", 1},
             {"Lumpy sausage", 2},
             {"Cracked surface sausage", 3},
@@ -478,14 +496,14 @@ namespace Poopor
             {"Mushy and fluffy pieces", 6},
             {"Entirely liquid", 7}
         };
-        private Dictionary<string, int> painLevel_dictionary = new Dictionary<string, int>(){
+        private Dictionary<string, double> painLevel_dictionary = new Dictionary<string, double>(){
             {"None", 1},
             {"Mild", 2},
             {"Moderate", 3},
             {"Severe", 4},
             {"Worst", 5}
         };
-        private Dictionary<string, int> bloodAmount_dictionary = new Dictionary<string, int>(){
+        private Dictionary<string, double> bloodAmount_dictionary = new Dictionary<string, double>(){
             {"None", 1},
             {"Little blood", 2},
             {"Medium blood", 3},
@@ -523,10 +541,11 @@ namespace Poopor
 
     public class UserPoopData
     {
-        public int color { get; set; }
-        public int shape { get; set; }
-        public int bloodAmount { get; set; }
-        public int painLevel { get; set; }
+        public double color { get; set; }
+        public double shape { get; set; }
+        public double bloodAmount { get; set; }
+        public double painLevel { get; set; }
+        public string date { get; set; }
     }
 
     public class PData

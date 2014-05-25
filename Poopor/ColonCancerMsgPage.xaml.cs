@@ -23,14 +23,6 @@ namespace Poopor
         private void ListUserCancerSignMsg(List<string> listMsg){
             foreach (string item in SystemFunctions.SortByLength(listMsg))
             {
-                //StackPanel msgHolder = new StackPanel();
-                //msgHolder.Margin = new System.Windows.Thickness { Left = 15 };
-                //msgHolder.Orientation = System.Windows.Controls.Orientation.Horizontal;
-                //TextBlock dash = new TextBlock();
-                //dash.Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
-                //dash.FontFamily = new FontFamily("Segoe WP SemiLight");
-                //dash.FontSize = 24;
-                //dash.Text = "- ";
                 TextBlock msg = new TextBlock();
                 msg.Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
                 msg.FontFamily = new FontFamily("Segoe WP SemiLight");

@@ -43,6 +43,12 @@ namespace Poopor
             if (SessionManagement.IsLoggedIn())
             {
                 userLastestResultsAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
+                userLastestPoopDataInSQLite = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail());
+                if (userLastestPoopDataInSQLite.Count >= 2)
+                {
+                    dashboard_button.Opacity = 100;
+                    dashboard_button.Click += dashboard_button_Click;
+                }
                 if (userLastestResultsAndRecommendation != null)
                 {
                     lastRecommendation_button.Opacity = 100;
@@ -68,6 +74,25 @@ namespace Poopor
         {
             if (SessionManagement.IsLoggedIn())
             {
+                //Boolean resultOfInsertation = false;
+                //while (resultOfInsertation == false)
+                //{
+                //    resultOfInsertation = sqliteFunctions.InsertData(new Poop_Table_SQLite()
+                //    {
+                //        Email = SessionManagement.GetEmail(),
+                //        Color = "Black",
+                //        Shape = "Lumpy sausage",
+                //        Blood_Amount = "None",
+                //        Pain_Level = "None",
+                //        Having_Medicines = false,
+                //        Poop_Picture_Name = "test",
+                //        Date_Time = new DateTime(2014, 5, 10),
+                //        Diarrhea = false,
+                //        Constipation = false,
+                //        MelenaPoop = false
+                //    });
+                //    Debug.WriteLine("SQLite: " + resultOfInsertation + "userna);
+                //}
                 if (!NetworkInterface.GetIsNetworkAvailable())
                 {
                     DateTime userLatestPoopTimeInAzure = SessionManagement.GetUserLatestPoopTime();
@@ -97,7 +122,6 @@ namespace Poopor
                 }
                 else
                 {
-                    userLastestPoopDataInSQLite = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail());
                     userLastestPoopDataInAzure = await azureFunctions.GetUserPoopDataInAzure(SessionManagement.GetEmail());
                     if (userLastestPoopDataInAzure != null)
                     {
@@ -259,6 +283,7 @@ namespace Poopor
             Debug.WriteLine("Poop data to be added " + poopDataToBeAdded.Count());
             foreach (var item in poopDataToBeAdded)
             {
+                var containerName = SystemFunctions.RemoveSpecialCharacters(SessionManagement.GetEmail());
                 Boolean resultOfInsertation = false;
                 while (resultOfInsertation == false)
                 {
@@ -276,7 +301,8 @@ namespace Poopor
                         Constipation = item.Constipation,
                         MelenaPoop = item.MelenaPoop,
                         ImageUri = "",
-                        SasQueryString = ""
+                        SasQueryString = "",
+                        ContainerName = containerName
                     });
                     Debug.WriteLine("Azure: " + resultOfInsertation + " Datetime: " + item.Date_Time);
                 }
