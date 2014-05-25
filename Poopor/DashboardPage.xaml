@@ -18,7 +18,6 @@
 
     <!--LayoutRoot is the root grid where all page content is placed-->
 	<Grid x:Name="LayoutRoot">
-		<!--Pivot Control-->
 		<phone:Pivot Title="POOPER" Foreground="#FF787B7C" FontSize="24" Background="White">
 
 			<!--Pivot item one-->
@@ -58,14 +57,13 @@
 							<RowDefinition Height="Auto"/>
 						</Grid.RowDefinitions>
 						<Grid Grid.Row="1" Margin="20,20,20,0" Height="510" Background="White">
-                            <QuickCharts:SerialChart x:Name="colorChart" CategoryValueMemberPath="date" AxisForeground="Black" DataSource="{Binding Data}">
-                                <QuickCharts:SerialChart.Graphs>
-                                    <QuickCharts:LineGraph ValueMemberPath="color"
-                                                           Title="Color"
-                                                           Brush="Blue"/>
-                                </QuickCharts:SerialChart.Graphs>
-                            </QuickCharts:SerialChart>
-                        </Grid>
+							<QuickCharts:SerialChart x:Name="colorChart" CategoryValueMemberPath="date" AxisForeground="Black" FontSize="13.333" Foreground="Black" GridStroke="LightGray">
+								<QuickCharts:SerialChart.Graphs>
+									<QuickCharts:LineGraph ValueMemberPath="color"
+										Brush="#FF8DCAF3"/>
+								</QuickCharts:SerialChart.Graphs>
+							</QuickCharts:SerialChart>
+						</Grid>
 						<Grid Background="#FF1BA1E2">
 							<StackPanel Margin="25,5,0,10" Orientation="Horizontal">
 								<TextBlock TextWrapping="Wrap" Text="DURATION : " Foreground="White" Margin="0" FontSize="32" VerticalAlignment="Center"/>
@@ -88,8 +86,13 @@
 							<RowDefinition Height="Auto"/>
 							<RowDefinition Height="Auto"/>
 						</Grid.RowDefinitions>
-						<Grid Grid.Row="1">
-							<StackPanel/>
+						<Grid Grid.Row="1" Margin="20,20,20,0" Height="510" Background="White">
+							<QuickCharts:SerialChart x:Name="shapeChart" CategoryValueMemberPath="date" AxisForeground="Black" FontSize="13.333" Foreground="Black">
+								<QuickCharts:SerialChart.Graphs>
+									<QuickCharts:LineGraph ValueMemberPath="shape"
+										Brush="Red"/>
+								</QuickCharts:SerialChart.Graphs>
+							</QuickCharts:SerialChart>
 						</Grid>
 						<Grid Background="#FF1BA1E2">
 							<StackPanel Margin="25,5,0,10" Orientation="Horizontal">
@@ -105,6 +108,7 @@
 					</Grid>
 				</ScrollViewer>
 			</phone:PivotItem>
+            
 			<phone:PivotItem x:Name="bloodAmtPivot" Header="Blood Amt" Foreground="#FF787B7C" Background="#FFEFEFEF" Margin="0,10,0,0">
 				<ScrollViewer>
 					<Grid Height="621" Width="480">
@@ -112,8 +116,13 @@
 							<RowDefinition Height="Auto"/>
 							<RowDefinition Height="Auto"/>
 						</Grid.RowDefinitions>
-						<Grid Grid.Row="1">
-							<StackPanel/>
+						<Grid Grid.Row="1" Margin="20,20,20,0" Height="510" Background="White">
+							<QuickCharts:SerialChart x:Name="bloodAmountChart" CategoryValueMemberPath="date" AxisForeground="Black" FontSize="13.333" Foreground="Black">
+								<QuickCharts:SerialChart.Graphs>
+									<QuickCharts:LineGraph ValueMemberPath="bloodAmount"
+										Brush="Green"/>
+								</QuickCharts:SerialChart.Graphs>
+							</QuickCharts:SerialChart>
 						</Grid>
 						<Grid Background="#FF1BA1E2">
 							<StackPanel Margin="25,5,0,10" Orientation="Horizontal">
@@ -129,6 +138,7 @@
 					</Grid>
 				</ScrollViewer>
 			</phone:PivotItem>
+            
 			<phone:PivotItem x:Name="painLevelPivot" Header="Pain Level" Foreground="#FF787B7C" Background="#FFEFEFEF" Margin="0,10,0,0">
 				<ScrollViewer>
 					<Grid Height="621" Width="480">
@@ -136,8 +146,13 @@
 							<RowDefinition Height="Auto"/>
 							<RowDefinition Height="Auto"/>
 						</Grid.RowDefinitions>
-						<Grid Grid.Row="1">
-							<StackPanel/>
+						<Grid Grid.Row="1" Margin="20,20,20,0" Height="510" Background="White">
+							<QuickCharts:SerialChart x:Name="painLevelChart" CategoryValueMemberPath="date" AxisForeground="Black" FontSize="13.333" Foreground="Black">
+								<QuickCharts:SerialChart.Graphs>
+									<QuickCharts:LineGraph ValueMemberPath="painLevel"
+										Brush="Gold"/>
+								</QuickCharts:SerialChart.Graphs>
+							</QuickCharts:SerialChart>
 						</Grid>
 						<Grid Background="#FF1BA1E2">
 							<StackPanel Margin="25,5,0,10" Orientation="Horizontal">
@@ -155,6 +170,7 @@
 			</phone:PivotItem>
 
 		</phone:Pivot>
+		<!--Pivot Control-->
 	</Grid>
     
 </phone:PhoneApplicationPage>

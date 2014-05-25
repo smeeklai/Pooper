@@ -24,5 +24,6 @@ namespace Poopor
         public bool MelenaPoop { get; set; }
         public string ImageUri { get; set; }
         public string SasQueryString { get; set; }
+        public string ContainerName { get; set; }
     }
 }

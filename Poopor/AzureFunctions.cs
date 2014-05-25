@@ -63,12 +63,10 @@ namespace Poopor
                                 var imageUri = new Uri(poopData.ImageUri);
 
                                 // Instantiate a Blob store container based on the info in the returned item.
-                                int index = poopData.Email.LastIndexOf("@");
-                                if (index > 0)
-                                    poopData.Email = poopData.Email.Substring(0, index);
+                                Debug.WriteLine("Container name: {0}", poopData.ContainerName);
                                 CloudBlobContainer container = new CloudBlobContainer(
                                     new Uri(string.Format("https://{0}/{1}",
-                                        imageUri.Host, poopData.Email)), cred);
+                                        imageUri.Host, poopData.ContainerName)), cred);
 
                                 // Upload the new image as a BLOB from the stream.
                                 CloudBlockBlob blobFromSASCredential =
