@@ -61,6 +61,8 @@ namespace Pooper
 
             String name = ColorNameDictionary[color];
 
+            Debug.WriteLine("GetDominantColorTypeName => " + name);
+
             return name;
         }
 
@@ -75,7 +77,7 @@ namespace Pooper
             Color color = GetDominantColor(bitmap);
 
             // Generate differences table
-            Dictionary<Color, float> differences = new Dictionary<Color, float>();
+            Dictionary<Color, float[]> differences = new Dictionary<Color, float[]>();
 
             // add differences key and value to table
             differences.Add(COLOR_VERY_LIGHT_BROWN, GetColorHSLDifferences(color, COLOR_VERY_LIGHT_BROWN));
@@ -89,16 +91,31 @@ namespace Pooper
             differences.Add(COLOR_GRAY, GetColorHSLDifferences(color, COLOR_GRAY));
 
             // Order the dictionary of differences table by value ascending
-            List<KeyValuePair<Color, float>> list = new List<KeyValuePair<Color, float>>(differences);
+            List<KeyValuePair<Color, float[]>> list = new List<KeyValuePair<Color, float[]>>(differences);
             list.Sort(
-                delegate(KeyValuePair<Color, float> first, KeyValuePair<Color, float> next)
+                delegate(KeyValuePair<Color, float[]> first, KeyValuePair<Color, float[]> next)
                 {
-                    return first.Value.CompareTo(next.Value);
+                    return first.Value[0].CompareTo(next.Value[0]);
                 }
             );
 
             // Get the first differences value
-            KeyValuePair<Color, float> type = list.First();
+            KeyValuePair<Color, float[]> type;
+
+            KeyValuePair<Color, float[]> firstType = list[0];
+            KeyValuePair<Color, float[]> secondType = list[1];
+
+            // check saturation
+            if (firstType.Value[0] == secondType.Value[0])
+            {
+                type = (firstType.Value[1] > secondType.Value[1]) ? secondType : firstType;
+            }
+            else
+            {
+                type = firstType;
+            }
+
+            Debug.WriteLine("GetDominantColorType => " + type.Key);
 
             // Get color
             return type.Key;
@@ -156,6 +173,11 @@ namespace Pooper
             b /= total;
 
             Color color = Color.FromArgb((byte)255, (byte)r, (byte)g, (byte)b);
+
+            Debug.WriteLine("Image Size => " + bitmap.PixelWidth + ", " + bitmap.PixelHeight);
+            Debug.WriteLine("TopLeft => " + xTopLeft + ", " + yTopLeft);
+            Debug.WriteLine("BottomRight => " + xBottomRight + ", " + yBottomRight);
+            Debug.WriteLine("GetDominantColor => " + color);
 
             return color;
         }
@@ -293,16 +315,31 @@ namespace Pooper
 
             float difference = ((pdr + pdg + pdb) / 3) * 100;
 
+            Debug.WriteLine("GetColorDifferences " + a + " and " + b + " => " + difference);
+
             return difference;
         }
 
-        public static float GetColorHSLDifferences(Color a, Color b)
+        public static float[] GetColorHSLDifferences(Color a, Color b)
         {
             ColorHSL ColorA = RGB2HSL(a);
             ColorHSL ColorB = RGB2HSL(b);
 
-            //float difference = (float)Math.Abs(ColorA.Hue - ((ColorA.Hue + ColorB.Hue) / 2));
-            float difference = (float)Math.Abs(ColorA.Hue - ColorB.Hue);
+            Debug.WriteLine("Color H => " + ColorA.Hue + " compare to " + ColorB.Hue);
+            Debug.WriteLine("Color S => " + ColorA.Saturation + " compare to " + ColorB.Saturation);
+            Debug.WriteLine("Color L => " + ColorA.Lightness + " compare to " + ColorB.Lightness);
+
+            float[] difference = new float[3];
+
+            //difference[0] = (float)Math.Abs(ColorA.Hue - ((ColorA.Hue + ColorB.Hue) / 2));
+            difference[0] = (float)Math.Abs(ColorA.Hue - ColorB.Hue);
+            difference[1] = (float)Math.Abs(ColorA.Saturation - ColorB.Saturation);
+            difference[2] = (float)Math.Abs(ColorA.Lightness - ColorB.Lightness);
+
+            Debug.WriteLine("GetColorHSLDifferencesHue " + a + " and " + b + " => " + difference[0]);
+            Debug.WriteLine("GetColorHSLDifferencesSaturation " + a + " and " + b + " => " + difference[1]);
+            Debug.WriteLine("GetColorHSLDifferencesLightness " + a + " and " + b + " => " + difference[2]);
+            Debug.WriteLine("----------");
 
             return difference;
         }

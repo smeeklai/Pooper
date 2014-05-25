@@ -387,7 +387,7 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\amCharts-Quick-Charts-master\QuickChartsWP\QuickChartsWP.csproj">
+    <ProjectReference Include="..\..\amCharts-Quick-Charts-master\QuickChartsWP\QuickChartsWP.csproj">
       <Project>{31FDBFD7-6F93-4D3C-8C1A-58D87E915EC5}</Project>
       <Name>QuickChartsWP</Name>
     </ProjectReference>
