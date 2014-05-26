@@ -430,6 +430,18 @@ namespace Poopor
             }
         }
 
+        public List<Poop_Table_SQLite> GetUserPoopDataOrderByDateTime(string username)
+        {
+            using (var db = new SQLiteConnection(dbPath))
+            {
+                var existing = db.Query<Poop_Table_SQLite>("select * from Poop_Table_SQLite where Username='" + username + "' order by Date_Time");
+                if (existing != null)
+                    return existing;
+                else
+                    return null;
+            }
+        }
+
         public List<UserInfo_Table_SQLite> GetUserInfoByQuery(string query)
         {
             using (var db = new SQLiteConnection(dbPath))

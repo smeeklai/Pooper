@@ -10,6 +10,7 @@ using Microsoft.Phone.Shell;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace Poopor
 {
@@ -225,7 +226,7 @@ namespace Poopor
 
         async void durationPicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var picker = sender as ListPicker; 
+            var picker = sender as ListPicker;
             int totalDays = 0;
             if (picker.SelectedItem.ToString().Equals("1 week ago"))
             {
@@ -253,6 +254,7 @@ namespace Poopor
             }
             if (inputDate != previousInputDate)
             {
+                //Debug.WriteLine("Bank Test inputDate = " + inputDate.ToString("yyyy-MM-dd HH:mm:ss") + " previousInputDate = " + previousInputDate.ToString("yyyy-MM-dd HH:mm:ss"));
                 previousInputDate = inputDate;
                 var data = await RetrieveUserPoopData(inputDate);
                 PlotGraph(data);
@@ -265,7 +267,6 @@ namespace Poopor
         private void setFreqText(double totalDays) // Done overview upper task
         {
             int userRecordCount = (_data != null) ? _data.Count : 0;
-
             double dividedNum = 0;
             if (userRecordCount != 0)
             {
@@ -365,18 +366,19 @@ namespace Poopor
         private async Task<ObservableCollection<UserPoopData>> RetrieveUserPoopData(DateTime inputDate)
         {
             ObservableCollection<UserPoopData> _data = new ObservableCollection<UserPoopData>();
-                List<Poop_Table_SQLite> userPoopData = new List<Poop_Table_SQLite>();
-            userLastestPoopDataInSQLite = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail());
-            //userLastestPoopDataInSQLite.Reverse();
-                foreach (var item in userLastestPoopDataInSQLite)
-                {
-                //Debug.WriteLine("inputDate: {0} itemDate: {1}", inputDate, item.Date_Time);
-                    if (item.Date_Time > inputDate)
-                        userPoopData.Add(item);
-                    else
-                        break;
-                }
-            //userPoopData.Reverse();
+            List<Poop_Table_SQLite> userPoopData = new List<Poop_Table_SQLite>();
+            //userLastestPoopDataInSQLite = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail());
+            userLastestPoopDataInSQLite = sqliteFunctions.GetUserPoopDataOrderByDateTime(SessionManagement.GetEmail());
+            userLastestPoopDataInSQLite.Reverse();
+            foreach (var item in userLastestPoopDataInSQLite)
+            {
+                Debug.WriteLine("inputDate: {0} itemDate: {1}", inputDate, item.Date_Time);
+                if (item.Date_Time >= inputDate)
+                    userPoopData.Add(item);
+                else
+                    break;
+            }
+            userPoopData.Reverse();
             //Debug.WriteLine("User poop data " + userPoopData.Count());
             if (userPoopData.Count >= 2)
             {
@@ -384,9 +386,9 @@ namespace Poopor
                 {
                     _data.Add(new UserPoopData()
                     {
-                        color = poopColor_dictionary[item.Color], 
-                        shape = poopShape_dictionary[item.Shape], 
-                        bloodAmount = bloodAmount_dictionary[item.Blood_Amount], 
+                        color = poopColor_dictionary[item.Color],
+                        shape = poopShape_dictionary[item.Shape],
+                        bloodAmount = bloodAmount_dictionary[item.Blood_Amount],
                         painLevel = painLevel_dictionary[item.Pain_Level],
                         date = item.Date_Time.ToString()
                     });
@@ -396,10 +398,11 @@ namespace Poopor
                     you_transit_dictionary[you_transit_dic_key] += 1;
                 }
             }
-            else{
+            else
+            {
                 setDefaultForTransitDic(); // clear all value to 0 in transit dic
                 _data = null;
-            }   
+            }
 
             return _data;
         }
@@ -449,8 +452,8 @@ namespace Poopor
         {
             if (userPoopData != null)
             {
-            _data.Clear();
-            _data = userPoopData;
+                _data.Clear();
+                _data = userPoopData;
                 colorChart.DataSource = _data;
                 shapeChart.DataSource = _data;
                 bloodAmountChart.DataSource = _data;
@@ -464,6 +467,11 @@ namespace Poopor
                 painLevelChart.Opacity = 30;
                 MessageBox.Show("Data is insufficient in this duration. Please change to other durations", "Sorry", MessageBoxButton.OK);
             }
+        }
+
+        protected override void OnBackKeyPress(CancelEventArgs e)
+        {
+            previousInputDate = new DateTime();
         }
 
         private static DateTime previousInputDate;
@@ -536,21 +544,21 @@ namespace Poopor
             {"11_PM", 0}, // 23:00 - 23:59 pattern 12
         };
     }
-        }
+}
 
-        
 
-    public class UserPoopData
-    {
-        public double color { get; set; }
-        public double shape { get; set; }
-        public double bloodAmount { get; set; }
-        public double painLevel { get; set; }
-        public string date { get; set; }
-    }
 
-    public class PData
-    {
-        public string title { get; set; }
-        public double value { get; set; }
-    }
+public class UserPoopData
+{
+    public double color { get; set; }
+    public double shape { get; set; }
+    public double bloodAmount { get; set; }
+    public double painLevel { get; set; }
+    public string date { get; set; }
+}
+
+public class PData
+{
+    public string title { get; set; }
+    public double value { get; set; }
+}

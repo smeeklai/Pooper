@@ -40,34 +40,41 @@ namespace Poopor
         public MainPage()
         {
             InitializeComponent();
+            //if (SessionManagement.IsLoggedIn())
+            //{
+            //    userLastestResultsAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
+            //    userLastestPoopDataInSQLite = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail());
+            //    if (userLastestPoopDataInSQLite.Count >= 2)
+            //    {
+            //        dashboard_button.Opacity = 100;
+            //        dashboard_button.Click += dashboard_button_Click;
+            //    }
+            //    if (userLastestResultsAndRecommendation != null)
+            //    {
+            //        lastRecommendation_button.Opacity = 100;
+            //        lastRecommendation_button.Click += lastRecommendation_button_Click;
+            //        List<string> necessaryInfo = null;
+            //        if (userLastestResultsAndRecommendation.TryGetValue("NecessaryInfo", out necessaryInfo))
+            //        {
+            //            userHealth = necessaryInfo[1];
+            //            if (!userHealth.Equals("none"))
+            //                AdaptDashboardToUserCancerSign(userHealth);
+            //        }
+            //        else
+            //            Debug.WriteLine("No UserCancerSign key");
+            //    }
+            //    else
+            //        Debug.WriteLine("No user lastest result and recommendation");
+
+            //    buildApplicationBar();
+            //}
+
             if (SessionManagement.IsLoggedIn())
             {
-                userLastestResultsAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation();
-                userLastestPoopDataInSQLite = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail());
-                if (userLastestPoopDataInSQLite.Count >= 2)
-                {
-                    dashboard_button.Opacity = 100;
-                    dashboard_button.Click += dashboard_button_Click;
-                }
-                if (userLastestResultsAndRecommendation != null)
-                {
-                    lastRecommendation_button.Opacity = 100;
-                    lastRecommendation_button.Click += lastRecommendation_button_Click;
-                    List<string> necessaryInfo = null;
-                    if (userLastestResultsAndRecommendation.TryGetValue("NecessaryInfo", out necessaryInfo))
-                    {
-                        userHealth = necessaryInfo[1];
-                        if (!userHealth.Equals("none"))
-                            AdaptDashboardToUserCancerSign(userHealth);
-                    }
-                    else
-                        Debug.WriteLine("No UserCancerSign key");
-                }
-                else
-                    Debug.WriteLine("No user lastest result and recommendation");
-
+                userLastestPoopDataInSQLite = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail()); // get data at first for make decision about sync data
                 buildApplicationBar();
             }
+
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -118,6 +125,7 @@ namespace Poopor
                         };
 
                         timer.Start();
+                        checkAndSet_Dashboard_LastRec();
                     }
                 }
                 else
@@ -173,6 +181,7 @@ namespace Poopor
                                 };
 
                                 timer.Start();
+                                checkAndSet_Dashboard_LastRec();
                             }
                             else
                             {
@@ -181,6 +190,39 @@ namespace Poopor
                         }
                     }
                 }
+            }
+        }
+
+        private void checkAndSet_Dashboard_LastRec()
+        {
+            if (SessionManagement.IsLoggedIn())
+            {
+                userLastestResultsAndRecommendation = SessionManagement.GetUserLastestResultsAndRecommendation(); // get new data again for latest update
+                userLastestPoopDataInSQLite = sqliteFunctions.GetUserPoopData(SessionManagement.GetEmail()); // get new data again for latest update
+
+                if (userLastestPoopDataInSQLite.Count >= 2)
+                {
+                    dashboard_button.Opacity = 100;
+                    dashboard_button.Click += dashboard_button_Click;
+                }
+                if (userLastestResultsAndRecommendation != null)
+                {
+                    lastRecommendation_button.Opacity = 100;
+                    lastRecommendation_button.Click += lastRecommendation_button_Click;
+                    List<string> necessaryInfo = null;
+                    if (userLastestResultsAndRecommendation.TryGetValue("NecessaryInfo", out necessaryInfo))
+                    {
+                        userHealth = necessaryInfo[1];
+                        if (!userHealth.Equals("none"))
+                            AdaptDashboardToUserCancerSign(userHealth);
+                    }
+                    else
+                        Debug.WriteLine("No UserCancerSign key");
+                }
+                else
+                    Debug.WriteLine("No user lastest result and recommendation");
+
+                //buildApplicationBar();
             }
         }
 
@@ -216,12 +258,14 @@ namespace Poopor
                 }
                 );
             }
+
         }
 
         private void backroungWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Debug.WriteLine("Finished");
             SystemTray.ProgressIndicator.IsVisible = false;
+            checkAndSet_Dashboard_LastRec();
         }
 
         private async void SyncDataToSQLite()
