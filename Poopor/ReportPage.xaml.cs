@@ -112,7 +112,7 @@ namespace Poopor
                 request.ContentLength = byteArray.Length;
                 request.BeginGetRequestStream(new AsyncCallback(GetRequestStreamCallback), request);
                 isSending = true;
-                Debug.WriteLine("sending: " + isSending);
+                Debug.WriteLine("sending: " + isSending + " data: " + postData.ToString());
             }
 
         }
@@ -138,15 +138,23 @@ namespace Poopor
             {
                 string result = httpWebStreamReader.ReadToEnd();
 
-                //For debug: show results
-                dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(result);
-                isSending = false;
-                Debug.WriteLine("sending: " + isSending);
-                Dispatcher.BeginInvoke(() =>
+                try
                 {
-                    SystemFunctions.SetProgressIndicatorProperties(false);
-                    MessageBox.Show((string)data.message, (string)data.status, MessageBoxButton.OK);
-                });
+                    //For debug: show results
+                    dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(result);
+                    isSending = false;
+                    Debug.WriteLine("sending: " + isSending);
+                    Dispatcher.BeginInvoke(() =>
+                    {
+                        SystemFunctions.SetProgressIndicatorProperties(false);
+                        MessageBox.Show((string)data.message, (string)data.status, MessageBoxButton.OK);
+                    });
+                }
+                catch (Newtonsoft.Json.JsonReaderException e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+
             }
         }
 
@@ -154,7 +162,7 @@ namespace Poopor
         {
             if (isSending == false)
                 NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
-            else 
+            else
             {
                 CustomMessageBox messageBox = new CustomMessageBox()
                 {

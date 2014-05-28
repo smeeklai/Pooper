@@ -66,7 +66,8 @@
 								<StackPanel HorizontalAlignment="Left" Height="45" VerticalAlignment="Top" Width="210" Background="#FF27DB91">
 									<TextBlock TextWrapping="Wrap" Text="YOU" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="25.333" Margin="46,6,46,0"/>
 								</StackPanel>
-								<TextBlock x:Name="you_number" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="7,46,0,0" Width="90" FontSize="82.667" Height="116" Foreground="Black" Text="2 " TextAlignment="Right"/>
+								<TextBlock x:Name="you_number" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="7,46,0,0" Width="90" FontSize="82.667" Height="116" Foreground="Black" Text="2
+" TextAlignment="Right"/>
 								<StackPanel HorizontalAlignment="Left" Height="116" VerticalAlignment="Top" Width="120" Margin="90,46,0,0">
 									<TextBlock x:Name="you_type" TextWrapping="Wrap" Text="times/day" FontSize="18.667" HorizontalAlignment="Left" Margin="12,68,0,0"/>
 									<TextBlock x:Name="you_type_insufficient_data" TextWrapping="Wrap" Text=": insufficient data" FontSize="18.667" HorizontalAlignment="Left" Margin="12,68,0,0" TextAlignment="Center"/>
