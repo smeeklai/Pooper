@@ -9,6 +9,7 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:QuickCharts="clr-namespace:AmCharts.Windows.QuickCharts;assembly=AmCharts.Windows.QuickCharts.WP"
+    xmlns:es="clr-namespace:Microsoft.Expression.Shapes;assembly=Microsoft.Expression.Drawing"
     x:Class="Poopor.DashboardPage"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -48,7 +49,7 @@
 								<TextBlock TextWrapping="Wrap" Text="Average Frequency" Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="25,10,10,10" FontWeight="Bold" FontSize="25.333"/>
 							</StackPanel>
 							<Grid HorizontalAlignment="Left" Height="162" VerticalAlignment="Top" Width="210" Margin="25,49,0,0" Background="White">
-								<StackPanel HorizontalAlignment="Left" Height="45" VerticalAlignment="Top" Width="210" Background="#FFF45460">
+								<StackPanel HorizontalAlignment="Left" Height="45" VerticalAlignment="Top" Width="210" Background="#FF27DB91">
 									<TextBlock TextWrapping="Wrap" Text="MAJORITY" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="25.333" Margin="46,6,46,0"/>
 								</StackPanel>
 								<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="36,46,0,0" Width="48" FontSize="82.667" Height="116" Foreground="Black">
@@ -63,11 +64,10 @@
 								</StackPanel>
 							</Grid>
 							<Grid HorizontalAlignment="Left" Height="162" VerticalAlignment="Top" Width="210" Margin="245,49,0,0" Background="White">
-								<StackPanel HorizontalAlignment="Left" Height="45" VerticalAlignment="Top" Width="210" Background="#FF27DB91">
+								<StackPanel x:Name="you_color" HorizontalAlignment="Left" Height="45" VerticalAlignment="Top" Width="210" Background="#FFF45460">
 									<TextBlock TextWrapping="Wrap" Text="YOU" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="25.333" Margin="46,6,46,0"/>
 								</StackPanel>
-								<TextBlock x:Name="you_number" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="7,46,0,0" Width="90" FontSize="82.667" Height="116" Foreground="Black" Text="2
-" TextAlignment="Right"/>
+								<TextBlock x:Name="you_number" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="7,46,0,0" Width="90" FontSize="82.667" Height="116" Foreground="Black" Text="2 " TextAlignment="Right"/>
 								<StackPanel HorizontalAlignment="Left" Height="116" VerticalAlignment="Top" Width="120" Margin="90,46,0,0">
 									<TextBlock x:Name="you_type" TextWrapping="Wrap" Text="times/day" FontSize="18.667" HorizontalAlignment="Left" Margin="12,68,0,0"/>
 									<TextBlock x:Name="you_type_insufficient_data" TextWrapping="Wrap" Text=": insufficient data" FontSize="18.667" HorizontalAlignment="Left" Margin="12,68,0,0" TextAlignment="Center"/>
@@ -75,27 +75,37 @@
 							</Grid>
 						</Grid>
 						<Grid Grid.Row="1" Margin="0,233,0,-325">
-                            <TextBlock TextWrapping="Wrap" Text="Transit Time" FontSize="25.333" FontWeight="Bold" Foreground="Black" Margin="25,0,0,273"/>
-                            <Grid x:Name="ContentGrid" Margin="0,26,0,41">
-                            	<amq:PieChart x:Name="pie1" 
-                            		TitleMemberPath="title" 
-                            		ValueMemberPath="value" Foreground="{x:Null}"
+							<TextBlock TextWrapping="Wrap" Text="Transit Time" FontSize="25.333" FontWeight="Bold" Foreground="Black" Margin="25,0,0,273"/>
+							<TextBlock TextWrapping="Wrap" Text="A.M." HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontSize="20" Margin="104,40,323,242" FontWeight="Bold"/>
+							<Grid x:Name="ContentGrid" Margin="25,74,245,77" Width="210" Height="162">
+								<QuickCharts:PieChart x:Name="pie1" 
+									TitleMemberPath="title" 
+									ValueMemberPath="value" Foreground="{x:Null}" Width="210" Height="162" Margin="1,0,-1,0"
                           />
-                            </Grid>
-                            <Grid HorizontalAlignment="Left" Height="63" VerticalAlignment="Top" Width="210" Margin="25,250,0,0">
-                            	<StackPanel HorizontalAlignment="Left" Height="63" VerticalAlignment="Top" Width="210">
-                            		<TextBlock TextWrapping="Wrap" Text="BEST" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontSize="22.667" Margin="46,0" FontWeight="Bold"/>
-                            		<TextBlock TextWrapping="Wrap" Text="5.00 A.M. - 7.00 A.M." HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF787B7C" FontSize="18.667" Width="210" TextAlignment="Center"/>
-                            	</StackPanel>
-                            </Grid>
-                            <Grid HorizontalAlignment="Left" Height="63" VerticalAlignment="Top" Width="210" Margin="245,250,0,0">
-                            	<StackPanel HorizontalAlignment="Left" Height="63" VerticalAlignment="Top" Width="210">
-                            		<TextBlock TextWrapping="Wrap" Text="YOU" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontSize="22.667" Margin="46,0" FontWeight="Bold"/>
-                                    <TextBlock TextWrapping="Wrap" x:Name="you_transit_time" Text="9.00 A.M. - 10.00 A.M." HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF787B7C" FontSize="18.667" Width="210" TextAlignment="Center"/>
-                            	</StackPanel>
-                            </Grid>
+							</Grid>
+							<Grid x:Name="ContentGrid_Copy" Margin="245,74,25,77" Width="210" Height="162">
+								<QuickCharts:PieChart x:Name="pie2" 
+									TitleMemberPath="title" 
+									ValueMemberPath="value" Foreground="{x:Null}" Width="210" Height="162"
+                          />
+							</Grid>
+							<Grid HorizontalAlignment="Left" Height="63" VerticalAlignment="Top" Width="210" Margin="25,250,0,0">
+								<StackPanel HorizontalAlignment="Left" Height="63" VerticalAlignment="Top" Width="210">
+									<TextBlock TextWrapping="Wrap" Text="BEST" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontSize="20" Margin="55,0,46,0" FontWeight="Bold"/>
+									<TextBlock TextWrapping="Wrap" Text="5.00 A.M. - 7.00 A.M." HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF787B7C" FontSize="17.333" Width="210" TextAlignment="Center"/>
+								</StackPanel>
+							</Grid>
+							<Grid HorizontalAlignment="Left" Height="63" VerticalAlignment="Top" Width="210" Margin="245,250,0,0">
+								<StackPanel HorizontalAlignment="Left" Height="63" VerticalAlignment="Top" Width="210">
+									<TextBlock TextWrapping="Wrap" Text="YOU" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontSize="20" Margin="55,0,46,0" FontWeight="Bold"/>
+									<TextBlock TextWrapping="Wrap" x:Name="you_transit_time" Text="9.00 A.M. - 10.00 A.M." HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF787B7C" FontSize="17.333" Width="210" TextAlignment="Center"/>
+								</StackPanel>
+							</Grid>
+							<TextBlock TextWrapping="Wrap" Text="P.M." HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontSize="20" Margin="329,42,111,244" FontWeight="Bold"/>
 						</Grid>
 						<Path Data="M0,305.462 L470.691,305.462" Fill="WhiteSmoke" HorizontalAlignment="Left" Height="1" Margin="0,223.5,0,-3.5" Grid.Row="1" Stretch="Fill" Stroke="Black" UseLayoutRounding="False" VerticalAlignment="Top" Width="480"/>
+						<es:RegularPolygon Fill="#FF27DB91" HorizontalAlignment="Left" Height="16" InnerRadius="1" Margin="92,489,0,-284" PointCount="3" Grid.Row="1" Stretch="Fill" Stroke="#FF27DB91" UseLayoutRounding="False" VerticalAlignment="Top" Width="16"/>
+						<es:RegularPolygon x:Name="you_transit_color" Fill="#FFF45460" HorizontalAlignment="Left" Height="16" InnerRadius="1" Margin="317,489,0,-284" PointCount="3" Grid.Row="1" Stretch="Fill" Stroke="#FFF45460" UseLayoutRounding="False" VerticalAlignment="Top" Width="16"/>
 					</Grid>
 				</ScrollViewer>
 			</phone:PivotItem>

@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Windows.Media;
 
 namespace Poopor
 {
@@ -42,6 +43,22 @@ namespace Poopor
             new PData() { title = "slice #12", value = 10 },
         };
 
+        public ObservableCollection<PData> PieData2 = new ObservableCollection<PData>()
+        {
+            new PData() { title = "slice #1", value = 10 },
+            new PData() { title = "slice #2", value = 10 },
+            new PData() { title = "slice #3", value = 10 },
+            new PData() { title = "slice #4", value = 10 },
+            new PData() { title = "slice #5", value = 10 },
+            new PData() { title = "slice #6", value = 10 },
+            new PData() { title = "slice #7", value = 10 },
+            new PData() { title = "slice #8", value = 10 },
+            new PData() { title = "slice #9", value = 10 },
+            new PData() { title = "slice #10", value = 10 },
+            new PData() { title = "slice #11", value = 10 },
+            new PData() { title = "slice #12", value = 10 },
+        };
+
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
             colorChart.DataSource = _data;
@@ -49,6 +66,7 @@ namespace Poopor
             bloodAmountChart.DataSource = _data;
             painLevelChart.DataSource = _data;
             pie1.DataSource = PieData;
+            pie2.DataSource = PieData2;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -276,6 +294,14 @@ namespace Poopor
                 {
                     you_number.Text = "" + (int)dividedNum;
                     you_type.Text = ((int)dividedNum == 1) ? "time/day" : "times/day";
+                    if ((int)dividedNum <= 3) // set the title color
+                    {
+                        you_color.Background = new SolidColorBrush(Color.FromArgb(255, 39, 219, 145)); // Green
+                    }
+                    else
+                    {
+                        you_color.Background = new SolidColorBrush(Color.FromArgb(255, 244, 84, 96)); // Red
+                    }
                 }
                 else
                 {
@@ -289,6 +315,14 @@ namespace Poopor
                     you_number.Text = "" + i;
                     you_type.Visibility = System.Windows.Visibility.Visible;
                     you_type.Text = "days/time";
+                    if (i <= 3)
+                    {
+                        you_color.Background = new SolidColorBrush(Color.FromArgb(255, 39, 219, 145)); // Green
+                    }
+                    else
+                    {
+                        you_color.Background = new SolidColorBrush(Color.FromArgb(255, 244, 84, 96)); // Red
+                    }
                 }
             }
             else
@@ -296,6 +330,7 @@ namespace Poopor
                 //Data is not sufficient -> not represent or what ?
                 you_number.Text = "- ";
                 you_type.Visibility = System.Windows.Visibility.Collapsed;
+                you_color.Background = new SolidColorBrush(Color.FromArgb(255, 244, 84, 96)); // Red
                 Debug.WriteLine("Data is not sufficient for freq (Overview upper task)");
             }
         }
@@ -320,6 +355,29 @@ namespace Poopor
                 case 11: pie1.setBrushesPattern(11); break;
                 case 12: pie1.setBrushesPattern(12); break;
                 default: pie1.setBrushesPattern(0); break;
+            }
+        }
+
+        private void reCreatePie2(int pattern)
+        {
+            PieData2.Clear();
+            for (int i = 1; i <= 12; i++) PieData2.Add(new PData() { title = "slice #" + i, value = 10 });
+
+            switch (pattern)
+            {
+                case 1: pie2.setBrushesPattern2(1); break;
+                case 2: pie2.setBrushesPattern2(2); break;
+                case 3: pie2.setBrushesPattern2(3); break;
+                case 4: pie2.setBrushesPattern2(4); break;
+                case 5: pie2.setBrushesPattern2(5); break;
+                case 6: pie2.setBrushesPattern2(6); break;
+                case 7: pie2.setBrushesPattern2(7); break;
+                case 8: pie2.setBrushesPattern2(8); break;
+                case 9: pie2.setBrushesPattern2(9); break;
+                case 10: pie2.setBrushesPattern2(10); break;
+                case 11: pie2.setBrushesPattern2(11); break;
+                case 12: pie2.setBrushesPattern2(12); break;
+                default: pie2.setBrushesPattern2(0); break;
             }
         }
 
@@ -415,7 +473,10 @@ namespace Poopor
             {
                 setDefaultForTransitDic();
                 reCreatePie(0); // pattern 0
+                reCreatePie2(0); // pattern 0
                 you_transit_time.Text = "-  : insufficient data"; // set text
+                you_transit_color.Stroke = new SolidColorBrush(Color.FromArgb(255, 244, 84, 96)); // Red
+                you_transit_color.Fill = new SolidColorBrush(Color.FromArgb(255, 244, 84, 96)); // Red
             }
             else
             {
@@ -443,8 +504,39 @@ namespace Poopor
                 string fullTextForTransit = intHourNum + ".00 " + textAMPM + " - " + intHourNum + ".59 " + textAMPM;
 
                 int pattern = (intHourNum % 12 == 0) ? 1 : intHourNum + 1;
-                reCreatePie(pattern);
+                // Check about am pm first
+                // if am then pie2 pattern 0, pie1 pattern x
+                // if pm then pie1 pattern 0, pie2 pattern x
+                bool isAM = textAMPM.Equals("A.M.", StringComparison.Ordinal);
+                if (isAM) // true
+                {
+                    reCreatePie(pattern); // set pie1 follow the pattern
+                    reCreatePie2(0); // set pie 2 as default pattern
+
+                    // find real number to determine that it is a best period slice
+                    int numCalRealUserSlice = (pattern + 9) % 13;
+                    int realUserSliceAt = (numCalRealUserSlice < 10) ? numCalRealUserSlice + 1 : numCalRealUserSlice;
+                    // set color of you_transit_color follow by which slice
+                    if (realUserSliceAt == 3 || realUserSliceAt == 4)
+                    { // the record of the user at the best time
+                        you_transit_color.Stroke = new SolidColorBrush(Color.FromArgb(255, 39, 219, 145)); // Green
+                        you_transit_color.Fill = new SolidColorBrush(Color.FromArgb(255, 39, 219, 145)); // Green
+                    }
+                    else
+                    {
+                        you_transit_color.Stroke = new SolidColorBrush(Color.FromArgb(255, 250, 137, 0)); // Orange
+                        you_transit_color.Fill = new SolidColorBrush(Color.FromArgb(255, 250, 137, 0)); // Orange
+                    }
+                }
+                else // it is PM
+                {
+                    reCreatePie(0); // set pie 1 as default pattern
+                    reCreatePie2(pattern); // set pie2 follow the pattern
+                    you_transit_color.Stroke = new SolidColorBrush(Color.FromArgb(255, 244, 84, 96)); // Red
+                    you_transit_color.Fill = new SolidColorBrush(Color.FromArgb(255, 244, 84, 96)); // Red
+                }
                 you_transit_time.Text = fullTextForTransit; // set text
+
             }
         }
 
